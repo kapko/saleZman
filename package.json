@@ -1,10 +1,11 @@
 {
-  "name": "helloWorld",
+  "name": "saleZman",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "incentient",
+  "homepage": "http://www.incentient.com/",
   "private": true,
   "scripts": {
+    "start": "ionic serve",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",

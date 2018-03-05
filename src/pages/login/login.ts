@@ -40,15 +40,20 @@ export class LoginPage {
  }
 
  resetPassword(): void {
+  if (!this.data.email) {
+    this.appService.showToast('Please re-enter email');
+    return;
+  }
   this.authService.resetPassword(this.data.email)
-    .then(res => console.log('res', res))
-    .catch(err => console.log('err', err));
-
-  this.appService.showToast('We have sent you an email with instructions on how to reset your password.');
-  this.showReset = false;
+    .then(res => {
+      this.appService.showToast('We have sent you an email with instructions on how to reset your password.');
+      this.showReset = false;
+    })
+    .catch(err => this.appService.showToast(err.message));
  }
 
   ngOnDestroy(): void {
     this.userSubscription && this.userSubscription.unsubscribe();
   }
+
 }

@@ -1,25 +1,27 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <button ion-button button-clear full clear color="light">SaleZman</button>
+      <button ion-button button-clear full clear color="light">Login</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <img src="../../assets/imgs/logo.jpg">
   <ion-list>
-    <ion-item text-center class="no-padding">
+    <ion-item class="no-padding">
       <ion-label color="primary" floating>Email</ion-label>
-      <ion-input text-center [(ngModel)]="data.email" type="email" required></ion-input>
+      <ion-input [(ngModel)]="data.email" type="email" required></ion-input>
     </ion-item>
   
-    <ion-item *ngIf="!showReset" text-center class="no-padding">
+    <ion-item *ngIf="!showReset" class="no-padding">
       <ion-label color="primary" floating>Password</ion-label>
-      <ion-input text-center [(ngModel)]="data.password" type="password"></ion-input>
+      <ion-input [(ngModel)]="data.password" type="password"></ion-input>
     </ion-item>
   </ion-list>
 
-  <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="login()">login</button>
+  <button *ngIf="!showReset" ion-button ion-text float-left outline clear small (click)="login()">login</button>
   <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="showReset = true">Forgot Password</button>
-  <button *ngIf="showReset" ion-button ion-text float-right outline clear small (click)="resetPassword()">Reset</button>
+  <button *ngIf="showReset" ion-button ion-text float-left outline clear small (click)="resetPassword()">Reset</button>
+  <button *ngIf="showReset" ion-button ion-text float-right outline clear small (click)="showReset = false">Cancel</button>
 </ion-content>

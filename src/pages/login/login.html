@@ -1,24 +1,25 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <button ion-button button-clear full clear color="light">Login Page</button>
+      <button ion-button button-clear full clear color="light">SaleZman</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-    <ion-item class="no-padding">
+    <ion-item text-center class="no-padding">
       <ion-label color="primary" floating>Email</ion-label>
-      <ion-input [(ngModel)]="data.email" type="email" required></ion-input>
+      <ion-input text-center [(ngModel)]="data.email" type="email" required></ion-input>
     </ion-item>
   
-    <ion-item class="no-padding">
+    <ion-item *ngIf="!showReset" text-center class="no-padding">
       <ion-label color="primary" floating>Password</ion-label>
-      <ion-input [(ngModel)]="data.password" type="password"></ion-input>
+      <ion-input text-center [(ngModel)]="data.password" type="password"></ion-input>
     </ion-item>
   </ion-list>
 
-  <button ion-button ion-text float-right outline clear small (click)="login()">login</button>
-  
+  <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="login()">login</button>
+  <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="showReset = true">Forgot Password</button>
+  <button *ngIf="showReset" ion-button ion-text float-right outline clear small (click)="resetPassword()">Reset</button>
 </ion-content>

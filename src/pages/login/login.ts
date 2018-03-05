@@ -13,6 +13,7 @@ export class LoginPage {
   rootPage: any;
   data: any = {};
   toast: any;
+  showReset: boolean = false;
 
   userSubscription: Subscription;
 
@@ -38,4 +39,16 @@ export class LoginPage {
     .catch(err => this.appService.showToast(err.message));
  }
 
+ resetPassword(): void {
+  this.authService.resetPassword(this.data.email)
+    .then(res => console.log('res', res))
+    .catch(err => console.log('err', err));
+
+  this.appService.showToast('We have sent you an email with instructions on how to reset your password.');
+  this.showReset = false;
+ }
+
+  ngOnDestroy(): void {
+    this.userSubscription && this.userSubscription.unsubscribe();
+  }
 }

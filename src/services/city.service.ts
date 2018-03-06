@@ -19,11 +19,12 @@ export class CityService {
     return this.db.list(this.cityPath, ref => ref.orderByChild('name')).valueChanges();
   }
 
-  getStoreNames(query: storeName): Observable<any> {
+  getStoreNames(query: any): Observable<any> {
     return this.db.list(
       this.storeNamesPath,
-      ref => (Object.keys(query).length) 
-        ? ref.orderByChild('city').equalTo(query.city) : ref)
+      ref => (query.city) 
+        ? ref.orderByChild('city').equalTo(query.city) 
+        : ref.limitToFirst(query.limit))
       .valueChanges();
   }
 

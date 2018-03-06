@@ -34,6 +34,7 @@ export class SearchPage {
     this.cityService.getStoreNames(query)
       .do(() => this.appService.hideLoading())
       .take(1)
+      .map(names => names.sort((a, b) => a._name.localeCompare(b._name)))
       .subscribe(names => {
         this.storeNames = names;
         this.rawNames = names;

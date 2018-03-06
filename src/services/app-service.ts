@@ -12,9 +12,13 @@ export class AppService {
   constructor(private toastCtrl: ToastController,
               private alertCtrl: AlertController,
               private loadingCtrl: LoadingController
-  ) {
+  ) {}
 
+  presentLoading(active: boolean): void {
+    this.loading = this.loadingCtrl.create({content: 'Please wait'});
+    this.loading.present();
   }
+
 
   showToast(message: string, duration: number = 3e3): Promise<any> {
     if (this.toast) {
@@ -49,26 +53,13 @@ export class AppService {
     if (this.alert) {
       return this.alert.dismiss()
         .catch(error => {
-          // don't worry about it, it's okay
         });
     }
   }
 
-  showLoading(content: string): Promise<any> {
-    this.loading = this.loadingCtrl.create({
-      content: content,
-      spinner: 'crescent'
-    });
-
-    return this.loading.present();
-  }
-
   hideLoading(): Promise<any> {
     if (this.loading) {
-      return this.loading.dismiss()
-        .catch(error => {
-          // don't worry about it, it's okay
-        });
+      return this.loading.dismiss();
     }
   }
 

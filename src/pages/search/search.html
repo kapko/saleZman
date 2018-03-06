@@ -1,10 +1,4 @@
-<ion-header>
-  <ion-navbar>
-    <ion-icon class="white" name="contact" float-right></ion-icon>
-    <ion-icon class="white" name="home" float-right></ion-icon>
-    <span class="white" float-right>{{date}}</span>
-  </ion-navbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content padding>
   <ion-list>
@@ -18,10 +12,9 @@
   <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let item of this.storeNames">
-      <a>{{ item.name }}</a>
+      <a (click)="openStore(item)">{{ item.name }}</a>
     </ion-item>
   </ion-list>
 </ion-content>
-<ion-footer>
-  <ion-toolbar><ion-icon name="add-circle"></ion-icon></ion-toolbar>
-</ion-footer>
+
+<app-footer></app-footer>

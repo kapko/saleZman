@@ -13,8 +13,14 @@ import { AppService } from '../services/app-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+// pages
 import { SearchPage } from '../pages/search/search';
 import { CityService } from '../services/city.service';
+import { ProfilePage } from '../pages/profile/profile';
+// components
+import { HeaderComponent } from '../components/header';
+import { FooterComponent } from '../components/footer';
+import { StorePage } from '../pages/store/store';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -31,6 +37,10 @@ let fireBaseConfig = {
     HomePage,
     LoginPage,
     SearchPage,
+    ProfilePage,
+    HeaderComponent,
+    StorePage,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +54,11 @@ let fireBaseConfig = {
     MyApp,
     HomePage,
     LoginPage,
-    SearchPage    
+    SearchPage,
+    ProfilePage,
+    StorePage,
+    HeaderComponent,
+    FooterComponent,
   ],
   providers: [
     StatusBar,

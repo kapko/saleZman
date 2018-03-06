@@ -13,6 +13,8 @@ import { AppService } from '../services/app-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { SearchPage } from '../pages/search/search';
+import { CityService } from '../services/city.service';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -28,6 +30,7 @@ let fireBaseConfig = {
     MyApp,
     HomePage,
     LoginPage,
+    SearchPage,
   ],
   imports: [
     BrowserModule,
@@ -40,12 +43,14 @@ let fireBaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    SearchPage    
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AppService,
+    CityService,
     AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

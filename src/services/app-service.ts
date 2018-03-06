@@ -71,4 +71,14 @@ export class AppService {
         });
     }
   }
+
+  getCurrentDate(): string {
+    let days = ['Mon','Tue','Wed','Thu','Fri','Sat', 'Sun'];
+    let day = new Date();
+    let dd = (day.getDate() < 10) ? '0' + day.getDate() : day.getDate();
+    let m = day.getMonth()+1;
+    let mm = (m < 10) ? '0' + m : day.getMonth()+1;
+
+    return `${dd}.${mm}.${day.getFullYear()} ${days[day.getDay()]}`;
+  }
 }

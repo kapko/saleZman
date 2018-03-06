@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-icon class="white" name="contact" float-right></ion-icon>
+    <ion-icon class="white" name="home" float-right></ion-icon>
+    <span class="white" float-right>{{date}}</span>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>City</ion-label>
+      <ion-select [(ngModel)]="cityModel" (ionChange)="sortByCity(cityModel)">
+        <ion-option *ngFor="let city of cities | async">{{city.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let item of this.storeNames">
+      <a>{{ item.name }}</a>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar><ion-icon name="add-circle"></ion-icon></ion-toolbar>
+</ion-footer>

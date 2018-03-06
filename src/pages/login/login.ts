@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { HomePage } from '../home/home';
 import { AppService } from '../../services/app-service';
 import { AuthService } from '../../services/auth.service';
-import { Subscription } from 'rxjs';
+import { SearchPage } from '../search/search';
 
 @Component({
   selector: 'page-login',
@@ -14,8 +13,6 @@ export class LoginPage {
   data: any = {};
   toast: any;
   showReset: boolean = false;
-
-  userSubscription: Subscription;
 
   constructor(
     private navCtrl: NavController,
@@ -29,12 +26,12 @@ export class LoginPage {
       return;
     }
 
-    this.userSubscription = this.authService.signIn(
+    this.authService.signIn(
       this.data.email, this.data.password)
     .then(item => {
       localStorage.setItem('auth', item);
-      this.appService.showToast('Success');
-      this.navCtrl.setRoot(HomePage);
+      this.appService.showToast('Success Logged in');
+      this.navCtrl.setRoot(SearchPage);
     })
     .catch(err => this.appService.showToast(err.message));
  }
@@ -51,9 +48,5 @@ export class LoginPage {
     })
     .catch(err => this.appService.showToast(err.message));
  }
-
-  ngOnDestroy(): void {
-    this.userSubscription && this.userSubscription.unsubscribe();
-  }
 
 }

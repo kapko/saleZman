@@ -1,8 +1,7 @@
-import { Injectable, Query } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
-import { city, storeName } from '../interfaces/city.store';
+import { storeName } from '../interfaces/city.store';
 
 @Injectable()
 export class CityService {

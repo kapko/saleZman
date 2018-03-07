@@ -10,7 +10,7 @@ import { SearchPage } from '../pages/search/search';
   <ion-header>
     <ion-navbar>
       <ion-icon 
-        (click)="moveToProfile()"
+        menuToggle
         class="white icon" name="contact" float-right></ion-icon>
       <ion-icon 
         (click)="moveToHome()"

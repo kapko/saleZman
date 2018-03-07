@@ -44,7 +44,15 @@ let fireBaseConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    // IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{
+      menuType: 'push',
+      platforms: {
+        ios: {
+          menuType: 'overlay',
+        }
+      }
+    }),
     AngularFireModule.initializeApp(fireBaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,

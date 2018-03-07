@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, InfiniteScroll } from 'ionic-angular';
+import { NavController, InfiniteScroll, MenuController } from 'ionic-angular';
 import { CityService } from '../../services/city.service';
 import { StorePage } from '../store/store';
 // interface
@@ -8,7 +8,7 @@ import { AppService } from '../../services/app-service';
 // rxjs
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
-import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'search-page',
@@ -27,8 +27,10 @@ export class SearchPage {
   constructor(
     private navCtrl: NavController,
     private cityService: CityService,
-    private appService: AppService
+    private appService: AppService,
+    private menuController: MenuController
   ) {
+    this.menuController.enable(true);
     this.appService.presentLoading(true);
   
     this.cities = this.cityService.getCities().take(1);

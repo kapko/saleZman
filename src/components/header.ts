@@ -9,16 +9,15 @@ import { SearchPage } from '../pages/search/search';
   template: `
   <ion-header>
     <ion-navbar>
-      <ion-icon 
-        menuToggle
-        class="white icon" name="contact" float-right></ion-icon>
+      <ion-icon menuToggle class="white icon" name="menu" float-left></ion-icon>
+      <ion-icon class="white icon" name="contact" float-right></ion-icon>
       <ion-icon 
         (click)="moveToHome()"
         class="white icon" name="home" float-right></ion-icon>
       <span class="white" float-right>{{date}}</span>
     </ion-navbar>
   </ion-header>`,
-  styles: [`.white {color: white; padding: 0 10px; font-size: 18px} .icon {font-size: 21px}`]
+  styles: [`.white {color: white; padding: 0 10px; font-size: 18px} .icon {font-size: 21px} .bar-buttons-md {-webkit-order: 0; order: 0;}`]
 })
 
 export class HeaderComponent {

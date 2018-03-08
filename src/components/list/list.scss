@@ -24,20 +24,60 @@ app-list {
     }
 
     input {
-      display: block;
+      display: inline-block;
       border: 1px solid #d6f7ff;
       text-align: center;
-      width: 100%;
+      width: 40px;
       color: #0a86a2;
       font-size: 16px;
       border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    p {
+      display: flex;
+
+      ion-icon {
+        color: #f23b3b;
+      }
+
     }
 
   }
 
+  .parent-card {
+    position: relative;
+    height: 90px;
+  }
+
   .buttons {
-    p {
-      border-bottom: 1px solid #eee;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background: #05aacf;
+    bottom: 0;
+    input {
+      display: block;
+      width: 100%;
+      border: none;
+      background: #05aacf;
+      outline: none;
+      color:#fff;
+      padding: 7px;
+      padding-left: 13px;
+      border-bottom: 1px solid #5bcce5;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: white;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: white;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: white;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+      color: white;
     }
   }
 
@@ -47,6 +87,9 @@ app-list {
     flex-direction: row;
     justify-content: space-between;
     border-bottom: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 13px;
   }
 
   .product-raw {

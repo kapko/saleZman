@@ -14,17 +14,24 @@
     </div>
     <div class="counter">
       <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>
-      <input type="number" [(ngModel)]="product.counter">
+      <p>
+        <input type="number" [(ngModel)]="product.counter">
+        <ion-icon 
+          name="close-circle"
+          (click)="product.counter = 0"
+          *ngIf="product.counter"></ion-icon>
+      </p>
       <ion-icon name="add-circle" (click)="count(product, true)"></ion-icon>
     </div>
-    <div class="buttons" *ngIf="product.counter">
-      <p>
-        <input type="text" placeholder="Note">
-      </p>
-      <p class="buttons-parent">
-        <button ion-button color="danger">cancel</button>
-        <button ion-button>submit</button>
-      </p>
-    </div>
+    
   </ion-card-content>
 </ion-card>
+
+<div class="parent-card">
+  <div class="buttons">
+    <input type="text" placeholder="Comment ...">
+    <p class="buttons-parent">
+      <button ion-button>submit</button>
+    </p>
+  </div>
+</div>

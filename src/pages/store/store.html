@@ -6,6 +6,7 @@
       (click)="tabSwitch(tab)"
       [ngClass]="{'active-tab': activeTabName == tab}"></ion-icon>
   </div>
+
   <ion-item>
     <ion-label>Company</ion-label>
     <ion-select [(ngModel)]="company" (ionChange)="sortByCompany(company)">
@@ -13,6 +14,8 @@
         *ngFor="let company of companies | async">{{company.name}}</ion-option>
     </ion-select>
   </ion-item>
+
   <app-list [products]="products"></app-list>
+
 </ion-content>
 <app-footer></app-footer>

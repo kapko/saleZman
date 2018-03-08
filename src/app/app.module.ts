@@ -21,6 +21,8 @@ import { ProfilePage } from '../pages/profile/profile';
 import { HeaderComponent } from '../components/header';
 import { FooterComponent } from '../components/footer';
 import { StorePage } from '../pages/store/store';
+import { StoreService } from '../services/store.service';
+import { ListComponent } from '../components/list/list';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -41,6 +43,7 @@ let fireBaseConfig = {
     HeaderComponent,
     StorePage,
     FooterComponent,
+    ListComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,11 +70,13 @@ let fireBaseConfig = {
     StorePage,
     HeaderComponent,
     FooterComponent,
+    ListComponent,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AppService,
+    StoreService,
     CityService,
     AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

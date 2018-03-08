@@ -9,6 +9,7 @@ import { AppService } from '../../services/app-service';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
 import { Subject, Observable } from 'rxjs';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'search-page',
@@ -28,11 +29,12 @@ export class SearchPage {
     private navCtrl: NavController,
     private cityService: CityService,
     private appService: AppService,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private storeService: StoreService,
   ) {
     this.menuController.enable(true);
     this.appService.presentLoading(true);
-  
+
     this.cities = this.cityService.getCities().take(1);
     this.date = this.appService.getCurrentDate();
     this.getStoreNamesData({limit: this.limit});
@@ -90,8 +92,9 @@ export class SearchPage {
     this.getStoreNamesData({city: this.cityName, limit: this.limit});
   }
 
-  openStore(store: any): void {
-    this.navCtrl.push(StorePage, {store});
+  openStore(store: storeName): void {
+    this.storeService.setUserStoreName(store);
+    this.navCtrl.setRoot(StorePage);
   }
 
   ngOnDestroy(): void {

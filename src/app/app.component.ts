@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
+import { StorePage } from '../pages/store/store';
 @Component({
   templateUrl: 'app.html'
 })
@@ -25,7 +26,8 @@ export class MyApp {
       if (!localStorage.getItem('auth')) {
         this.rootPage = LoginPage;
       } else {
-        this.rootPage = SearchPage;
+        // this.rootPage = SearchPage;
+        this.rootPage = StorePage;
       }
     });
   }

@@ -8,4 +8,5 @@ export interface storeName {
   name: string,
   _name: string,
   city: string,
+  url: string,
 }

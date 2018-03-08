@@ -1,6 +1,18 @@
 <app-header></app-header>
 <ion-content padding>
-  <h1>Name: {{store.name}}</h1>
-  <h1>City: {{store.city}}</h1>
+  <h5>{{ store?.name }}</h5>
+  <div class="tabs">
+      <ion-icon *ngFor="let tab of tabs" name="{{tab}}" 
+      (click)="tabSwitch(tab)"
+      [ngClass]="{'active-tab': activeTabName == tab}"></ion-icon>
+  </div>
+  <ion-item>
+    <ion-label>Company</ion-label>
+    <ion-select [(ngModel)]="company" (ionChange)="sortByCompany(company)">
+      <ion-option 
+        *ngFor="let company of companies | async">{{company.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <app-list [products]="products"></app-list>
 </ion-content>
 <app-footer></app-footer>

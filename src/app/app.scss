@@ -1,3 +1,10 @@
 ion-content {
   top: 45px;
+  .scroll-content {
+    padding-bottom: 30px!important;
+  }
+}
+
+ion-tabs {
+  top: auto;
 }

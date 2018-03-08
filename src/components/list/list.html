@@ -1,15 +1,13 @@
 <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
 <ion-card *ngFor="let product of products">
   <ion-card-content>
-    <ion-card-title> {{ product.name }}</ion-card-title>
+    <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
     <div class="product-raw">
-      <span><b>weight: </b> {{product.Weight}}</span>
-      <span><b>life: </b> {{product.Life}}</span>
-      <span><b>tax: </b> {{product.TAX}}</span>
       <span><b>price: </b> {{product.Price}}</span>
       <span><b>ean: </b> {{product.EAN}}</span>
       <span><b>HSN: </b> {{product.HSN}}</span>
       <span><b>MRP: </b> {{product.MRP}}</span>
+      <span><b>tax: </b> {{product.TAX}}</span>
       <span><b>company: </b> {{product.company}}</span>
     </div>
     <div class="counter">
@@ -28,16 +26,15 @@
   <p *ngFor="let product of products">
     <ion-card *ngIf="product.counter">
       <ion-card-content>
-        <ion-card-title> {{ product.name }}</ion-card-title>
+        <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
         <div class="product-raw">
-          <span><b>weight: </b> {{product.Weight}}</span>
-          <span><b>life: </b> {{product.Life}}</span>
+          <span><b>MRP: </b> {{product.MRP}}</span>
           <span><b>tax: </b> {{product.TAX}}</span>
+          <!-- <span><b>life: </b> {{product.Life}}</span>
           <span><b>price: </b> {{product.Price}}</span>
           <span><b>ean: </b> {{product.EAN}}</span>
           <span><b>HSN: </b> {{product.HSN}}</span>
-          <span><b>MRP: </b> {{product.MRP}}</span>
-          <span><b>company: </b> {{product.company}}</span>
+          <span><b>company: </b> {{product.company}}</span> -->
         </div>
         <div class="counter">
           <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>

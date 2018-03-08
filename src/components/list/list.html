@@ -4,11 +4,8 @@
     <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
     <div class="product-raw">
       <span><b>price: </b> {{product.Price}}</span>
-      <span><b>ean: </b> {{product.EAN}}</span>
-      <span><b>HSN: </b> {{product.HSN}}</span>
       <span><b>MRP: </b> {{product.MRP}}</span>
       <span><b>tax: </b> {{product.TAX}}</span>
-      <span><b>company: </b> {{product.company}}</span>
     </div>
     <div class="counter">
       <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>
@@ -30,19 +27,15 @@
         <div class="product-raw">
           <span><b>MRP: </b> {{product.MRP}}</span>
           <span><b>tax: </b> {{product.TAX}}</span>
-          <!-- <span><b>life: </b> {{product.Life}}</span>
-          <span><b>price: </b> {{product.Price}}</span>
-          <span><b>ean: </b> {{product.EAN}}</span>
-          <span><b>HSN: </b> {{product.HSN}}</span>
-          <span><b>company: </b> {{product.company}}</span> -->
+          <div class="counter choosed-list-counter">
+            <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>
+            <p>
+              <input type="number" [(ngModel)]="product.counter">
+            </p>
+            <ion-icon name="add-circle" (click)="count(product, true)"></ion-icon>
+          </div>
         </div>
-        <div class="counter">
-          <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>
-          <p>
-            <input type="number" [(ngModel)]="product.counter">
-          </p>
-          <ion-icon name="add-circle" (click)="count(product, true)"></ion-icon>
-        </div>
+        
         <ion-icon 
           class="remove-product"
           name="close-circle"

@@ -9,11 +9,10 @@ app-list {
   .counter {
     display: flex;
     padding-top: 10px;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     ion-icon {
       display: block;
-      width: 100%;
       font-size: 25px;
       text-align: right;
       color: #02647a;
@@ -31,13 +30,19 @@ app-list {
       color: #0a86a2;
       font-size: 16px;
       border-radius: 3px;
-      margin-right: 5px;
+      margin: 0 5px;
     }
 
     p {
       display: flex;
     }
 
+  }
+
+  .choosed-list-counter {
+    margin-top: -4px;
+    padding-top: 0;
+    justify-content: flex-start;
   }
 
   .parent-card {
@@ -49,13 +54,13 @@ app-list {
     position: fixed;
     left: 0;
     width: 100%;
-    background: #05aacf;
+    background: #02b9e2;
     bottom: 0;
     input {
       display: block;
       width: 100%;
       border: none;
-      background: #05aacf;
+      background: #02b9e2;
       outline: none;
       color:#fff;
       padding: 7px;
@@ -96,7 +101,7 @@ app-list {
 
     span {
       font-size: 12px;
-      flex: 1 0 50%;
+      flex: 1 0 20%;
     }
 
   }
@@ -110,8 +115,8 @@ app-list {
     position: absolute;
     top: 2px;
     font-size: 25px;
-    color: #f70b0b;
-    right: 18px;
+    color: #04bae2;
+    right: 5px;
   }
 
   ion-card-title.card-title {
@@ -122,6 +127,11 @@ app-list {
   .choosed-list p {
     padding: 0;
     margin: 0;
+
+    ion-card.card {
+      background: #eee;
+    }
+
   }
 
   hr {

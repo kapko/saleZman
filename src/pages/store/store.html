@@ -15,6 +15,9 @@
     </ion-select>
   </ion-item>
 
-  <app-list [products]="products"></app-list>
+  <app-list  
+    *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'"
+    [activeTab]="activeTabName"
+    [products]="products"></app-list>
 
 </ion-content>

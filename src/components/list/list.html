@@ -18,10 +18,10 @@
   </ion-card-content>
 </ion-card>
 
-<div class="choosed-list">
+<div class="choosed-list" >
   <hr>
-  <p *ngFor="let product of products">
-    <ion-card *ngIf="product.counter">
+  <p *ngFor="let product of usersProduct">
+    <ion-card>
       <ion-card-content>
         <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
         <div class="product-raw">
@@ -35,23 +35,21 @@
             <ion-icon name="add-circle" (click)="count(product, true)"></ion-icon>
           </div>
         </div>
-        
-        <ion-icon 
+
+        <ion-icon
           class="remove-product"
           name="close-circle"
-          (click)="product.counter = 0"
-          *ngIf="product.counter"></ion-icon>
+          (click)="removeProduct(product)"></ion-icon>
       </ion-card-content>
     </ion-card>
   </p>
-  
 </div>
 
-<div class="parent-card">
+<!-- <div class="parent-card">
   <div class="buttons">
     <input type="text" placeholder="Comment ...">
     <p class="buttons-parent">
-      <button ion-button>submit</button>
+      <button class="light" ion-button>submit</button>
     </p>
   </div>
-</div>
+</div> -->

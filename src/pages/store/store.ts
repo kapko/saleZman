@@ -26,7 +26,6 @@ export class StorePage {
   ) {
     this.appService.presentLoading(true);
     this.storeService.getStoreNameOfProduct()
-      .do(() => this.appService.hideLoading())
       .take(1)
       .subscribe(store => {
         this.store = store;
@@ -39,10 +38,10 @@ export class StorePage {
   getProducts(storeNamePath: string, company: string = null): void {
     this.storeService
       .getProducts(storeNamePath, company)
+      .do(() => this.appService.hideLoading())
       .take(1)
       .subscribe(products => this.products = products);
   }
-
 
   sortByCompany(company: string): void {
     this.getProducts(this.store.url, company);
@@ -50,5 +49,7 @@ export class StorePage {
 
   tabSwitch(tabName: string): void {
     this.activeTabName = tabName;
+    this.appService.presentLoading(true);
+    this.getProducts(this.store.url);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, StaticInjector } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { storeName } from '../interfaces/city.store';
@@ -14,6 +14,10 @@ export class StoreService {
   storePath: string = '/store-names/';
 
   companyPath: string = '/companies/';
+
+  usersProductPath: string = '/users-product/';
+
+  usersOrderedProductPath: string = '/users-ordered-product/';
 
   constructor(
     private db: AngularFireDatabase,
@@ -42,5 +46,31 @@ export class StoreService {
       ref => (company) ? ref.orderByChild('company').equalTo(company) : ref
     ).valueChanges();
   }
+
+  getUserProductList(): Observable<any> {
+    return this.db.list(`${this.usersProductPath}${this.userId}`).valueChanges();
+  }
+
+  getUserOrderedList(): Observable<any> {
+    return this.db.list(`${this.usersOrderedProductPath}${this.userId}`).valueChanges();
+  }
+
+  updateUsersProductList(product: any): Promise<void> {
+    let data = (!product.counter) ? null : product;
+  
+    return this.db
+      .object(`${this.usersProductPath}${this.userId}/${product._name}${product.Weight}`)
+      .set(data);
+  }
+
+  updateUsersOrderedProductList(product: any): Promise<void> {
+    let data = (!product.counter) ? null : product;
+
+    return this.db
+      .object(`${this.usersOrderedProductPath}${this.userId}/${product._name}${product.Weight}`)
+      .set(data);
+  }
+
+
 
 }

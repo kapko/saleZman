@@ -18,6 +18,7 @@
   <app-list  
     *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'"
     [activeTab]="activeTabName"
+    [store]="store"
     [products]="products"></app-list>
 
   <app-supply 

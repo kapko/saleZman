@@ -22,6 +22,7 @@ export class SupplyComponent {
 
   subject: Subject<any>;
 
+
   constructor(
     private nav: NavController,
     private appService: AppService,

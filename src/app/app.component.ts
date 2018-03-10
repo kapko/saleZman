@@ -26,8 +26,8 @@ export class MyApp {
       if (!localStorage.getItem('auth')) {
         this.rootPage = LoginPage;
       } else {
-        this.rootPage = SearchPage;
-        // this.rootPage = StorePage;
+        // this.rootPage = SearchPage;
+        this.rootPage = StorePage;
       }
     });
   }

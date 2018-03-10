@@ -14,6 +14,7 @@ import 'rxjs';
 
 export class ListComponent {
   @Input() products: any;
+  @Input() store: any;
   @Input() activeTab: string;
 
   rowProducts: any;
@@ -35,6 +36,7 @@ export class ListComponent {
   ngOnChanges(): void {
     this.usersProduct = [];
     this.rowProducts = this.products;
+    if (!this.store) return;
     switch (this.activeTab) {
       case 'list-box':
         this.showOrdered = false;
@@ -49,14 +51,14 @@ export class ListComponent {
 
   getProductList(): void {
     this.storeService
-      .getUserProductList()
+      .getUserProductList(this.store.name)
       .takeUntil(this.subject)
       .subscribe(items => this.usersProduct = items);
   }
 
   getOrderedList(): void {
     this.storeService
-      .getUserOrderedList()
+      .getUserOrderedList(this.store.name)
       .takeUntil(this.subject)
       .subscribe(items => this.usersProduct = items);
   }
@@ -78,18 +80,18 @@ export class ListComponent {
     if (!count && +product.counter < 1) return;
     product.counter += (count) ? 1 : -1;
     if (this.showOrdered) {
-      this.storeService.updateUsersOrderedProductList(product);
+      this.storeService.updateUsersOrderedProductList(product, this.store.name);
     } else {
-      this.storeService.updateUsersProductList(product);
+      this.storeService.updateUsersProductList(product, this.store.name);
     }
   }
 
   removeProduct(product: any): void {
     product['counter'] = 0;
     if (this.showOrdered) {
-      this.storeService.updateUsersOrderedProductList(product);
+      this.storeService.updateUsersOrderedProductList(product, this.store.name);
     } else {
-      this.storeService.updateUsersProductList(product);
+      this.storeService.updateUsersProductList(product, this.store.name);
     }
   }
 

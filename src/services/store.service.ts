@@ -49,31 +49,31 @@ export class StoreService {
     ).valueChanges();
   }
 
-  getUserProductList(): Observable<any> {
-    return this.db.list(`${this.usersProductPath}${this.userId}`).valueChanges();
+  getUserProductList(storeName: string): Observable<any> {
+    return this.db.list(`${this.usersProductPath}${storeName}/${this.userId}`).valueChanges();
   }
 
   getSupplyList(): Observable<any> {
     return this.db.list(this.supplyListPath).valueChanges();
   }
 
-  getUserOrderedList(): Observable<any> {
-    return this.db.list(`${this.usersOrderedProductPath}${this.userId}`).valueChanges();
+  getUserOrderedList(storeName:string): Observable<any> {
+    return this.db.list(`${this.usersOrderedProductPath}${storeName}/${this.userId}`).valueChanges();
   }
 
-  updateUsersProductList(product: any): Promise<void> {
+  updateUsersProductList(product: any, storeName: string): Promise<void> {
     let data = (!product.counter) ? null : product;
   
     return this.db
-      .object(`${this.usersProductPath}${this.userId}/${product._name}${product.Weight}`)
+      .object(`${this.usersProductPath}${storeName}/${this.userId}/${product._name}${product.Weight}`)
       .set(data);
   }
 
-  updateUsersOrderedProductList(product: any): Promise<void> {
+  updateUsersOrderedProductList(product: any, storeName: string): Promise<void> {
     let data = (!product.counter) ? null : product;
 
     return this.db
-      .object(`${this.usersOrderedProductPath}${this.userId}/${product._name}${product.Weight}`)
+      .object(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${product._name}${product.Weight}`)
       .set(data);
   }
 

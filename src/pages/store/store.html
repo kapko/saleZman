@@ -20,4 +20,8 @@
     [activeTab]="activeTabName"
     [products]="products"></app-list>
 
+  <app-supply 
+    *ngIf="activeTabName === 'briefcase'"
+    [products]="supplyProduct"></app-supply>
+
 </ion-content>

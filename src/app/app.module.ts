@@ -23,6 +23,7 @@ import { FooterComponent } from '../components/footer';
 import { StorePage } from '../pages/store/store';
 import { StoreService } from '../services/store.service';
 import { ListComponent } from '../components/list/list';
+import { SupplyComponent } from '../components/supply/supply';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -44,6 +45,7 @@ let fireBaseConfig = {
     StorePage,
     FooterComponent,
     ListComponent,
+    SupplyComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,7 @@ let fireBaseConfig = {
     HeaderComponent,
     FooterComponent,
     ListComponent,
+    SupplyComponent,
   ],
   providers: [
     StatusBar,

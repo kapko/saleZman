@@ -1,4 +1,4 @@
-import { Injectable, StaticInjector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { storeName } from '../interfaces/city.store';
@@ -18,6 +18,8 @@ export class StoreService {
   usersProductPath: string = '/users-product/';
 
   usersOrderedProductPath: string = '/users-ordered-product/';
+
+  supplyListPath: string = '/supply/';
 
   constructor(
     private db: AngularFireDatabase,
@@ -49,6 +51,10 @@ export class StoreService {
 
   getUserProductList(): Observable<any> {
     return this.db.list(`${this.usersProductPath}${this.userId}`).valueChanges();
+  }
+
+  getSupplyList(): Observable<any> {
+    return this.db.list(this.supplyListPath).valueChanges();
   }
 
   getUserOrderedList(): Observable<any> {

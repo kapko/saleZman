@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavParams, Tabs } from 'ionic-angular';
+import { Tabs } from 'ionic-angular';
 import { storeName } from '../../interfaces/city.store';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
@@ -15,12 +15,13 @@ export class StorePage {
 
   store: storeName;
   products: any;
+  supplyProduct: any[] = [];
+
   activeTabName: string = 'list-box';
   tabs: any = ['list-box', 'basket', 'briefcase', 'card'];
   companies: Observable<any>;
 
   constructor(
-    private navParams: NavParams,
     private storeService: StoreService,
     private appService: AppService,
   ) {
@@ -47,9 +48,28 @@ export class StorePage {
     this.getProducts(this.store.url, company);
   }
 
+  getSupply(): void {
+    this.storeService.getSupplyList()
+      .do(() => this.appService.hideLoading())
+      .take(1)
+      .subscribe(items => this.supplyProduct = items);
+  }
+
   tabSwitch(tabName: string): void {
     this.activeTabName = tabName;
     this.appService.presentLoading(true);
-    this.getProducts(this.store.url);
+
+    switch (tabName) {
+      case 'list-box':
+      case 'basket':
+        this.getProducts(this.store.url);
+        break;
+      case 'briefcase':
+        this.getSupply();
+        break;
+      default:
+        this.appService.hideLoading();
+    }
+
   }
 }

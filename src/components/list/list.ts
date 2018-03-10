@@ -5,7 +5,7 @@ import { ProfilePage } from '../../pages/profile/profile';
 import { SearchPage } from '../../pages/search/search';
 import { StoreService } from '../../services/store.service';
 import { Subject } from 'rxjs';
-import 'rxjs';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-list',
@@ -25,6 +25,8 @@ export class ListComponent {
 
   showOrdered: boolean = false;
 
+  comments: string = '';
+
   constructor(
     private nav: NavController,
     private appService: AppService,
@@ -36,7 +38,12 @@ export class ListComponent {
   ngOnChanges(): void {
     this.usersProduct = [];
     this.rowProducts = this.products;
+    this.comments = '';
+
     if (!this.store) return;
+
+    this.getComments();
+
     switch (this.activeTab) {
       case 'list-box':
         this.showOrdered = false;
@@ -95,9 +102,22 @@ export class ListComponent {
     }
   }
 
+  submiteCommit(event: any): void {
+    let value = event.target.value;
+    let commentUrl = (this.activeTab === 'list-box') ? 'product' : 'ordered';
+    this.storeService.submitCommit(value, this.store._name, commentUrl)
+  }
+
+  getComments(): void {
+    let commentUrl = (this.activeTab === 'list-box') ? 'product' : 'ordered';
+    this.storeService
+      .getComment(this.store._name, commentUrl)
+      .take(1)
+      .subscribe(message => this.comments = message);
+  }
+
   ngOnDestroy(): void {
     this.subject.next();
     this.subject.complete();
   }
-
 }

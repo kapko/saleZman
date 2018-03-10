@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { storeName } from '../interfaces/city.store';
+import { AppService } from './app-service';
 
 @Injectable()
 export class StoreService {
@@ -23,6 +24,7 @@ export class StoreService {
 
   constructor(
     private db: AngularFireDatabase,
+    private appService: AppService,
   ) {}
 
   setUserStoreName(storeData: storeName): Promise<void> {
@@ -50,7 +52,7 @@ export class StoreService {
   }
 
   getUserProductList(storeName: string): Observable<any> {
-    return this.db.list(`${this.usersProductPath}${storeName}/${this.userId}`).valueChanges();
+    return this.db.list(`${this.usersProductPath}${storeName}/${this.userId}/${this.getDate()}`).valueChanges();
   }
 
   getSupplyList(storeName: string, limit: number = null): Observable<any> {
@@ -61,14 +63,14 @@ export class StoreService {
   }
 
   getUserOrderedList(storeName:string): Observable<any> {
-    return this.db.list(`${this.usersOrderedProductPath}${storeName}/${this.userId}`).valueChanges();
+    return this.db.list(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${this.getDate()}`).valueChanges();
   }
 
   updateUsersProductList(product: any, storeName: string): Promise<void> {
     let data = (!product.counter) ? null : product;
   
     return this.db
-      .object(`${this.usersProductPath}${storeName}/${this.userId}/${product._name}${product.Weight}`)
+      .object(`${this.usersProductPath}${storeName}/${this.userId}/${this.getDate()}/${product._name}${product.Weight}`)
       .set(data);
   }
 
@@ -76,8 +78,20 @@ export class StoreService {
     let data = (!product.counter) ? null : product;
 
     return this.db
-      .object(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${product._name}${product.Weight}`)
+      .object(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${this.getDate()}/${product._name}${product.Weight}`)
       .set(data);
+  }
+
+  getDate(): string {
+    return this.appService.getCurrentDate(true).replace(/\./ig, '-');
+  }
+
+  submitCommit(value: string, storeName: string, commentUrl: string): Promise<void> {
+    return this.db.object(`comments/${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).set(value);
+  }
+
+  getComment(storeName: string, commentUrl: string): Observable<any> {
+    return this.db.object(`comments/${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).valueChanges();
   }
 
 }

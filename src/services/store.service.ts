@@ -53,8 +53,11 @@ export class StoreService {
     return this.db.list(`${this.usersProductPath}${storeName}/${this.userId}`).valueChanges();
   }
 
-  getSupplyList(): Observable<any> {
-    return this.db.list(this.supplyListPath).valueChanges();
+  getSupplyList(storeName: string, limit: number = null): Observable<any> {
+    return this.db.list(
+      this.supplyListPath + storeName,
+      ref => (limit) ? ref.limitToLast(limit) : ref
+    ).valueChanges();
   }
 
   getUserOrderedList(storeName:string): Observable<any> {
@@ -76,7 +79,5 @@ export class StoreService {
       .object(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${product._name}${product.Weight}`)
       .set(data);
   }
-
-
 
 }

@@ -1,0 +1,19 @@
+app-supply {
+
+  .product-raw {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    span {
+      font-size: 12px;
+      flex: 1 0 50%;
+    }
+  }
+
+  h4 {
+    text-align: center;
+    padding: 20px;
+  }
+
+}

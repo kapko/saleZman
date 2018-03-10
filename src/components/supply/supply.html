@@ -1,46 +1,20 @@
-<ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
+<ion-item *ngIf="products && products.length">
+  <ion-label>Bill sort</ion-label>
+  <ion-select [(ngModel)]="value" (ionChange)="sortByBill(value)">
+    <ion-option *ngFor="let bill of billArray">{{bill}}</ion-option>
+  </ion-select>
+</ion-item>
+
 <ion-card *ngFor="let product of products">
   <ion-card-content>
-    <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
     <div class="product-raw">
-      <span><b>price: </b> {{product.Price}}</span>
-      <span><b>MRP: </b> {{product.MRP}}</span>
-      <span><b>tax: </b> {{product.TAX}}</span>
+      <span><b>Date: </b> {{product.bill_date}}</span>
+      <span><b>Bill no.: </b> {{product.bill_number}}</span>
+      <span><b>Amount: </b> {{product.abount}}</span>
+      <span><b>Status: </b> {{product.supply_status}}</span>
+      <span><b>Status: </b> {{product.supply_status}}</span>
     </div>
-    <div class="counter">
-      <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>
-      <p>
-        <input type="number" [(ngModel)]="product.counter">
-      </p>
-      <ion-icon name="add-circle" (click)="count(product, true)"></ion-icon>
-    </div>
-    
   </ion-card-content>
 </ion-card>
 
-<!-- <div class="choosed-list" >
-  <hr>
-  <p *ngFor="let product of usersProduct">
-    <ion-card>
-      <ion-card-content>
-        <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
-        <div class="product-raw">
-          <span><b>MRP: </b> {{product.MRP}}</span>
-          <span><b>tax: </b> {{product.TAX}}</span>
-          <div class="counter choosed-list-counter">
-            <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>
-            <p>
-              <input type="number" [(ngModel)]="product.counter">
-            </p>
-            <ion-icon name="add-circle" (click)="count(product, true)"></ion-icon>
-          </div>
-        </div>
-
-        <ion-icon
-          class="remove-product"
-          name="close-circle"
-          (click)="removeProduct(product)"></ion-icon>
-      </ion-card-content>
-    </ion-card>
-  </p>
-</div> -->
+<h4 *ngIf="products && !products.length">Don't have any supply</h4>

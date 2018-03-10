@@ -48,24 +48,15 @@ export class StorePage {
     this.getProducts(this.store.url, company);
   }
 
-  getSupply(): void {
-    this.storeService.getSupplyList()
-      .do(() => this.appService.hideLoading())
-      .take(1)
-      .subscribe(items => this.supplyProduct = items);
-  }
-
   tabSwitch(tabName: string): void {
     this.activeTabName = tabName;
-    this.appService.presentLoading(true);
-
     switch (tabName) {
       case 'list-box':
       case 'basket':
+        this.appService.presentLoading(true);
         this.getProducts(this.store.url);
         break;
       case 'briefcase':
-        this.getSupply();
         break;
       default:
         this.appService.hideLoading();

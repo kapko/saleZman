@@ -1,10 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AppService } from '../../services/app-service';
-import { NavController } from 'ionic-angular';
-import { ProfilePage } from '../../pages/profile/profile';
-import { SearchPage } from '../../pages/search/search';
 import { StoreService } from '../../services/store.service';
-import { Subject } from 'rxjs';
+import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
 
 @Component({
@@ -13,77 +10,54 @@ import 'rxjs';
 })
 
 export class SupplyComponent {
-  @Input() products: any;
-  @Input() activeTab: string;
+  @Input() store: storeName;
 
-  rowProducts: any;
+  billArray: any = ['Last 5 bills', 'Last 10 bills', 'Last 15 bills', 'All'];
 
-  usersProduct: any[] = [];
+  rowProducts: any[] = [];
 
-  subject: Subject<any>;
-
+  products: any[] = [];
 
   constructor(
-    private nav: NavController,
     private appService: AppService,
     private storeService: StoreService,
   ) {
-    this.subject = new Subject();
+    this.appService.presentLoading(true);
   }
 
   ngOnChanges(): void {
-    this.rowProducts = this.products;
+    if (!this.store) return;
+    this.getSupplyList(this.store._name);
   }
 
-  // getProductList(): void {
-  //   this.storeService
-  //     .getUserProductList()
-  //     .takeUntil(this.subject)
-  //     .subscribe(items => this.usersProduct = items);
-  // }
+  getSupplyList(storeName: string, limit: number = null): void {
+    this.storeService
+      .getSupplyList(storeName, limit)
+      .do(() => this.appService.hideLoading())
+      .take(1)
+      .subscribe(supplies => {
+        this.products = supplies;
+        this.rowProducts = supplies;
+      });
+  }
 
-  // getOrderedList(): void {
-  //   this.storeService
-  //     .getUserOrderedList()
-  //     .takeUntil(this.subject)
-  //     .subscribe(items => this.usersProduct = items);
-  // }
-
-  searchItems(ev: any): void {
-    let val = (ev.target.value) ? ev.target.value : '';
-
-    if (val && val.trim() === '') {
-      this.products = this.rowProducts;
-      return;
+  sortByBill(value: string): void {
+    let limit;
+    switch (value) {
+      case 'Last 5 bills':
+        limit = 5;
+        break;
+      case 'Last 10 bills':
+        limit = 10;
+        break;
+      case 'Last 15 bills':
+        limit = 15;
+        break;
+      default:
+        limit = null;
     }
 
-    this.products = this.rowProducts.filter(item => 
-      (item._name.indexOf(val.toLowerCase()) > -1)
-    );
+    this.getSupplyList(this.store._name, limit);
   }
-
-  // count(product: any, count: boolean): void {
-  //   if (!count && +product.counter < 1) return;
-  //   product.counter += (count) ? 1 : -1;
-  //   if (this.showOrdered) {
-  //     this.storeService.updateUsersOrderedProductList(product);
-  //   } else {
-  //     this.storeService.updateUsersProductList(product);
-  //   }
-  // }
-
-  // removeProduct(product: any): void {
-  //   product['counter'] = 0;
-  //   if (this.showOrdered) {
-  //     this.storeService.updateUsersOrderedProductList(product);
-  //   } else {
-  //     this.storeService.updateUsersProductList(product);
-  //   }
-  // }
-
-  // ngOnDestroy(): void {
-  //   this.subject.next();
-  //   this.subject.complete();
-  // }
 
 }

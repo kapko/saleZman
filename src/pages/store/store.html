@@ -7,7 +7,7 @@
       [ngClass]="{'active-tab': activeTabName == tab}"></ion-icon>
   </div>
 
-  <ion-item>
+  <ion-item *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'">
     <ion-label>Company</ion-label>
     <ion-select [(ngModel)]="company" (ionChange)="sortByCompany(company)">
       <ion-option 
@@ -21,8 +21,9 @@
     [store]="store"
     [products]="products"></app-list>
 
-  <app-supply 
+  <app-supply
     *ngIf="activeTabName === 'briefcase'"
-    [products]="supplyProduct"></app-supply>
+    [store]="store">
+  </app-supply>
 
 </ion-content>

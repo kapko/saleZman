@@ -19,7 +19,6 @@ export class AppService {
     this.loading.present();
   }
 
-
   showToast(message: string, duration: number = 3e3): Promise<any> {
     if (this.toast) {
       return;

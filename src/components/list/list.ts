@@ -113,10 +113,7 @@ export class ListComponent {
     this.storeService
       .getComment(this.store._name, commentUrl)
       .take(1)
-      .subscribe(message => {
-        console.log(message);
-        this.comments = message;
-      });
+      .subscribe(message => this.comments = message);
   }
 
   ngOnDestroy(): void {

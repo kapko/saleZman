@@ -14,23 +14,18 @@ export class MyApp {
   rootPage: any;
 
   constructor(
-    platform: Platform, 
+    private platform: Platform, 
     private authService: AuthService,
     private menuController: MenuController,
-    statusBar: StatusBar,
-    splashScreen: SplashScreen
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen
   ) {
-    let uid;
-    this.authService.authUserId().subscribe(item => uid = (item) ? item.uid : null);
-    platform.ready().then(() => {
-      statusBar.styleDefault();
-      splashScreen.hide();
-      if (!uid) {
-        this.rootPage = LoginPage;
-      } else {
-        this.rootPage = SearchPage;
-        // this.rootPage = StorePage;
-      }
+    this.authService.authUserId().subscribe(item => {
+      this.platform.ready().then(() => {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+        this.rootPage = (item && item.uid) ? SearchPage : LoginPage;
+      });
     });
   }
 

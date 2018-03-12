@@ -33,8 +33,6 @@ export class SearchPage {
     private storeService: StoreService,
   ) {
     this.menuController.enable(true);
-    this.appService.presentLoading(true);
-
     this.cities = this.cityService.getCities().take(1);
     this.date = this.appService.getCurrentDate();
     this.getStoreNamesData({limit: this.limit});
@@ -43,8 +41,6 @@ export class SearchPage {
   getStoreNamesData(query: any): void {
     this.cityService.getStoreNames(query)
       .do(() => {
-        this.appService.hideLoading();
-        // lazy load
         if (this.infiniteScroll) {
           this.infiniteScroll.complete();
           this.infiniteScroll = null;

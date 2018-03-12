@@ -25,7 +25,6 @@ export class LoginPage {
       this.appService.showToast('Please re-enter email and password');
       return;
     }
-    localStorage.removeItem('auth');
 
     this.authService.signIn(
       this.data.email, this.data.password)

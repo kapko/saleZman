@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth} from 'angularfire2/auth';
+import { Observable } from 'rxjs';
 @Injectable()
 export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
-  ) {}
+  ) {
+  }
+
+  authUserId(): Observable<any> {
+    return this.afAuth.authState;
+  }
 
   signIn(email: string, password: string): any {
     if (!email || !password) {

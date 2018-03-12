@@ -25,11 +25,11 @@ export class LoginPage {
       this.appService.showToast('Please re-enter email and password');
       return;
     }
+    localStorage.removeItem('auth');
 
     this.authService.signIn(
       this.data.email, this.data.password)
     .then(item => {
-      localStorage.removeItem('auth');
       localStorage.setItem('auth', item.uid);
       this.appService.showToast('Success Logged in');
       this.navCtrl.setRoot(SearchPage);

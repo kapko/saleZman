@@ -20,10 +20,12 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen
   ) {
+    let uid;
+    this.authService.authUserId().subscribe(item => uid = (item) ? item.uid : null);
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
-      if (!localStorage.getItem('auth')) {
+      if (!uid) {
         this.rootPage = LoginPage;
       } else {
         this.rootPage = SearchPage;
@@ -34,7 +36,6 @@ export class MyApp {
 
   logout(): void {
     this.authService.signOut();
-    localStorage.removeItem('auth');
     this.nav.setRoot(LoginPage);
     this.menuController.enable(false);
   }

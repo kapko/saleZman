@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { storeName } from '../interfaces/city.store';
 import { AppService } from './app-service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class StoreService {
-  userId: string = localStorage.auth;
+  userId: string = null;
 
   productPath: string = '/products/'
 
@@ -25,7 +26,14 @@ export class StoreService {
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
-  ) {}
+    private authService: AuthService
+  ) {
+    this.authService
+      .authUserId()
+      .subscribe(item => {
+        this.userId = (item) ? item.uid : null;
+      });
+  }
 
   setUserStoreName(storeData: storeName): Promise<void> {
     return this.db.object(this.userStoreNamePath + this.userId).update(storeData);

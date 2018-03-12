@@ -30,7 +30,6 @@ export class LoginPage {
     this.authService.signIn(
       this.data.email, this.data.password)
     .then(item => {
-      localStorage.setItem('auth', item.uid);
       this.appService.showToast('Success Logged in');
       this.navCtrl.setRoot(SearchPage);
     })

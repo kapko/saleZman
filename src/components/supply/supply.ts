@@ -3,6 +3,7 @@ import { AppService } from '../../services/app-service';
 import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-supply',
@@ -20,6 +21,7 @@ export class SupplyComponent {
 
   constructor(
     private appService: AppService,
+    private authService: AuthService,
     private storeService: StoreService,
   ) {
     this.appService.presentLoading(true);
@@ -35,6 +37,9 @@ export class SupplyComponent {
       .getSupplyList(storeName, limit)
       .do(() => this.appService.hideLoading())
       .take(1)
+      .map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
       .subscribe(supplies => {
         this.products = supplies;
         this.rowProducts = supplies;
@@ -60,4 +65,22 @@ export class SupplyComponent {
     this.getSupplyList(this.store._name, limit);
   }
 
+  supplyItem(product: any): void {
+    this.appService.showAlert('Please confirm to supply', [{
+      text: 'ok',
+      handler: () => this.updateSupplyItem(product)
+    }, 'cancel'], this.store.name);
+  }
+
+  updateSupplyItem(product: any): void {
+    product.supply_date = this.appService.getCurrentDate(true);
+    product.supply_status = 'supplied';
+    // update on firebase
+    this.authService.authUserId()
+      .take(1)
+      .subscribe(user => {
+        product.supplied_by = user.email;
+        this.storeService.updateSupplyItem(this.store._name, product);
+      });
+  }
 }

@@ -1,5 +1,22 @@
 app-supply {
 
+  ion-card.card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  button {
+    padding: 2px 3px;
+    color: #fff;
+    background: #02b9e2;
+    border-radius: 2px;
+    font-size: 11px;
+  }
+
+  button.supplied {
+    background:#026f87;
+  }
+
   .product-raw {
     display: flex;
     flex-wrap: wrap;
@@ -11,13 +28,20 @@ app-supply {
     }
   }
 
+  .supplied{
+    background: #efefef;
+  }
+
+  .footer{
+    padding-top: 10px;
+    p {
+      font-size: 12px;
+    }
+  }
+
   h4 {
     text-align: center;
     padding: 20px;
-  }
-
-  button {
-    
   }
 
 }

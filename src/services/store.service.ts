@@ -67,7 +67,7 @@ export class StoreService {
     return this.db.list(
       this.supplyListPath + storeName,
       ref => (limit) ? ref.limitToLast(limit) : ref
-    ).valueChanges();
+    ).snapshotChanges();
   }
 
   getUserOrderedList(storeName:string): Observable<any> {
@@ -100,6 +100,10 @@ export class StoreService {
 
   getComment(storeName: string, commentUrl: string): Observable<any> {
     return this.db.object(`comments/${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).valueChanges();
+  }
+
+  updateSupplyItem(storeName: string, product: any): Promise<any> {
+    return this.db.object(`supply/${storeName}/${product.key}`).set(product);
   }
 
 }

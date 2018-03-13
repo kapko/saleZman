@@ -29,7 +29,7 @@ export class StorePage {
     this.storeService.getStoreNameOfProduct()
       .take(1)
       .subscribe(store => {
-        if (store) 
+        if (!store) return;
         this.store = store;
         this.getProducts(store.url);
       });

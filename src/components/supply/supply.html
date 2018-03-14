@@ -25,6 +25,7 @@
     </div>
   </ion-card-content>
 </ion-card>
+
 <h4 *ngIf="commits.length">Commits: </h4>
 <ion-list>
   <ion-card *ngFor="let commit of commits">
@@ -39,7 +40,7 @@
 <ion-list>
   <ion-item>
     <ion-label color="primary" floating>Comments ... </ion-label>
-    <ion-textarea [(ngModel)]="comments" (keyup.enter)="submiteCommit($event)"></ion-textarea>
+    <ion-textarea [(ngModel)]="comment" (keyup.enter)="submiteCommit($event)"></ion-textarea>
   </ion-item>
 </ion-list>
 

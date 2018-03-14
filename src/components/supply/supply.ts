@@ -25,6 +25,8 @@ export class SupplyComponent {
 
   subject: Subject<any>;
 
+  comment: string = '';
+
   constructor(
     private appService: AppService,
     private storeService: StoreService,
@@ -102,11 +104,12 @@ export class SupplyComponent {
     data['date'] = this.appService.getCurrentDate(true);
     // update data
     this.storeService.submitSupplyCommit(data, this.store._name);
-    event.target.value = '';
+    this.comment = '';
   }
 
   ngOnDestroy(): void {
     this.subject.next();
     this.subject.complete();
   }
+
 }

@@ -6,11 +6,11 @@ import 'rxjs';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-supply',
-  templateUrl: 'supply.html',
+  selector: 'app-payment',
+  templateUrl: 'payment.html',
 })
 
-export class SupplyComponent {
+export class PaymentComponent {
   @Input() store: storeName;
 
   billArray: any = ['Last 5 bills', 'Last 10 bills', 'Last 15 bills', 'All'];
@@ -38,21 +38,25 @@ export class SupplyComponent {
   ngOnChanges(): void {
     if (!this.store) return;
     this.getComments();
-    this.getSupplyList(this.store._name, 5);
+    this.getPaymentList(this.store._name, 5);
   }
 
-  getSupplyList(storeName: string, limit: number = null): void {
+  getPaymentList(storeName: string, limit: number = null): void {
     this.storeService
-      .getSupplyList(storeName, limit)
+      .getPaymentList(storeName, limit)
       .do(() => this.appService.hideLoading())
       .take(1)
-      .map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
+      .map(changes => changes.map(c => ({ key: c.payload.key, ...c.payload.val() })))
       .subscribe(supplies => {
         this.products = supplies;
         this.rowProducts = supplies;
       });
+  }
+
+  payEvent(product: Object): void {
+    console.log(product);
+    product['payOptions'] = true;
+    
   }
 
   sortByBill(value: string): void {
@@ -71,29 +75,27 @@ export class SupplyComponent {
         limit = null;
     }
 
-    this.getSupplyList(this.store._name, limit);
+    this.getPaymentList(this.store._name, limit);
   }
 
-  supplyItem(product: any): void {
-    this.appService.showAlert('Please confirm to supply', [{
-      text: 'ok',
-      handler: () => this.updateSupplyItem(product)
-    }, 'cancel'], this.store.name);
-  }
+  // supplyItem(product: any): void {
+  //   this.appService.showAlert('Please confirm to supply', [{
+  //     text: 'ok',
+  //     handler: () => this.updateSupplyItem(product)
+  //   }, 'cancel'], this.store.name);
+  // }
 
-  updateSupplyItem(product: any): Promise<any> {
-    product.supply_date = this.appService.getCurrentDate(true);
-    product.supply_status = 'supplied';
-    product.supplied_by = this.storeService.userId;
-    // update data
-    return Promise.all([
-      this.storeService.updateSupplyItem(this.store._name, product), this.storeService.addSupplyToPayment(this.store._name, product)
-    ]);
-  }
+  // updateSupplyItem(product: any): void {
+  //   product.supply_date = this.appService.getCurrentDate(true);
+  //   product.supply_status = 'supplied';
+  //   product.supplied_by = this.storeService.userId;
+  //   // update data
+  //   this.storeService.updateSupplyItem(this.store._name, product);
+  // }
 
   getComments(): void {
     this.storeService
-      .getCommonCommit(this.store._name)
+      .getCommonCommit(this.store._name, true)
       .takeUntil(this.subject)
       .subscribe(messages => this.commits = messages)
   }

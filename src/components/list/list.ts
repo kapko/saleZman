@@ -96,7 +96,7 @@ export class ListComponent {
     }
   }
 
-  submiteCommit(event: any): void {
+  submitCommit(event: any): void {
     let value = event.target.value;
     let commentUrl = (this.activeTab === 'list-box') ? 'product' : 'ordered';
     this.storeService.submitCommit(value, this.store._name, commentUrl)

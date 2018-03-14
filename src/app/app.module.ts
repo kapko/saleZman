@@ -26,6 +26,7 @@ import { StorePage } from '../pages/store/store';
 import { StoreService } from '../services/store.service';
 import { ListComponent } from '../components/list/list';
 import { SupplyComponent } from '../components/supply/supply';
+import { PaymentComponent } from '../components/payment/payment';
 
 
 let fireBaseConfig = {
@@ -50,6 +51,7 @@ let fireBaseConfig = {
     ListComponent,
     SupplyComponent,
     GetEmailPipe,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,7 @@ let fireBaseConfig = {
     FooterComponent,
     ListComponent,
     SupplyComponent,
+    PaymentComponent,
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,72 @@
+app-payment {
+
+  ion-card.card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  button {
+    padding: 2px 3px;
+    color: #fff;
+    background: red;
+    border-radius: 2px;
+    font-size: 11px;
+  }
+
+  button.supplied {
+    background:green;
+  }
+
+  .product-raw {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    span {
+      font-size: 12px;
+      flex: 1 0 50%;
+    }
+  }
+
+  .supplied{
+    background: #efefef;
+  }
+
+  .footer{
+    padding-top: 10px;
+  }
+
+  p {
+    font-size: 12px!important;
+  }
+
+  h4 {
+    text-align: center;
+    padding: 20px;
+  }
+
+  span.cancel {
+    color: #fff;
+    padding: 2px 7px;
+    margin-left: 3px;
+    border-radius: 3px;
+    background: #0d0d0e;
+  }
+
+  span.cash {
+    color: #fff;
+    padding: 2px 7px;
+    margin-left: 3px;
+    border-radius: 3px;
+    background: #444444;
+  }
+
+  span.chq {
+    color: #fff;
+    padding: 2px 7px;
+    margin-left: 3px;
+    border-radius: 3px;
+    background: #909;
+  }
+
+}

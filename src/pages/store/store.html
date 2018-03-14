@@ -26,4 +26,9 @@
     [store]="store">
   </app-supply>
 
+  <app-payment
+    *ngIf="activeTabName === 'card'"
+    [store]="store">
+  </app-payment>
+
 </ion-content>

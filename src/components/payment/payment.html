@@ -5,27 +5,41 @@
   </ion-select>
 </ion-item>
 
-<ion-card *ngFor="let product of products" [ngClass]="{'supplied': product.supplied_by}">
+<ion-card *ngFor="let product of products" [ngClass]="{'paid': product.supplied_by}">
   <ion-card-content>
     <div class="product-raw">
       <span><b>Bill date: </b>{{product.bill_date}}</span>
       <span><b>Bill no.</b>{{product.bill_number}}</span>
-      
-      <span><b>Amount: </b>{{product.amount}}</span>
-      <span><b>Status: </b>
-        <button *ngIf="!product.supplied_by" (click)="supplyItem(product)">{{product.supply_status}}</button>
-        <button class="supplied" *ngIf="product.supplied_by">supplied</button>
-      </span>
     </div>
-    <p><b>Order by: </b>{{ (product.order_by | getEmail | async)?.email }}</p>
-    <p><b>Ordered date: </b>{{product.ordered_date}}</p>
-    <div class="footer" *ngIf="product.supplied_by">
+    <div class="footer">
       <p><b>Supplied by:</b> {{ (product.supplied_by | getEmail | async)?.email }}</p>
       <p><b>Supplied date:</b> {{product.supply_date}}</p>
+      <p>
+        <b>Payment status:</b>
+        <button
+          (click)="payEvent(product)"
+          *ngIf="product.payment_status === 'pending'">{{ product.payment_status }}</button>
+        <!-- <button class="supplied">done</button> -->
+      </p>
+      <p *ngIf="product.payOptions">
+        <span class="cash" (click)="product.cash = true">cash</span>
+        <span class="chq">chq</span>
+        <span (click)="product.payOptions = false" class="cancel">cancel</span>
+      </p>
+
+      <p *ngIf="product.cash">
+        <ion-item>
+          <ion-label color="primary">Inline Label</ion-label>
+          <ion-input placeholder="Text Input"></ion-input>
+        </ion-item>
+      </p>
+
     </div>
   </ion-card-content>
 </ion-card>
 
+<!-- 
+ 
 <h4 *ngIf="commits.length">Commits: </h4>
 <ion-list>
   <ion-card *ngFor="let commit of commits">
@@ -42,6 +56,6 @@
     <ion-label color="primary" floating>Comments ... </ion-label>
     <ion-textarea [(ngModel)]="comment" (keyup.enter)="submitCommit($event)"></ion-textarea>
   </ion-item>
-</ion-list>
+</ion-list> -->
 
 <h4 *ngIf="products && !products.length">Don't have any supply</h4>

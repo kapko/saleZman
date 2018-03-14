@@ -23,6 +23,14 @@ export class StoreService {
 
   supplyListPath: string = '/supply/';
 
+  paymentListPath: string = '/payments/';
+
+  supplyCommentPath: string = '/supply-comments/';
+
+  commentPath: string = '/comments/';
+
+  paymentCommentPath: string = '/payment-comments/';
+
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
@@ -70,6 +78,13 @@ export class StoreService {
     ).snapshotChanges();
   }
 
+  getPaymentList(storeName: string, limit: number = null): Observable<any> {
+    return this.db.list(
+      this.paymentListPath + storeName,
+      ref => (limit) ? ref.limitToLast(limit) : ref
+    ).snapshotChanges();
+  }
+
   getUserOrderedList(storeName:string): Observable<any> {
     return this.db.list(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${this.getDate()}`).valueChanges();
   }
@@ -95,23 +110,32 @@ export class StoreService {
   }
 
   submitCommit(value: string, storeName: string, commentUrl: string): Promise<void> {
-    return this.db.object(`comments/${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).set(value);
+    return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).set(value);
   }
 
-  submitSupplyCommit(value: Object, storeName: string): any {
-    return this.db.list(`supply-comments/${storeName}/`).push(value);
+  submitCommonCommit(value: Object, storeName: string, payment: boolean = false): any {
+    let commitPath = (payment) ? this.paymentCommentPath : this.supplyCommentPath;
+
+    return this.db.list(`${commitPath}${storeName}/`).push(value);
   }
 
-  getSupplyCommit(storeName: string): Observable<any> {
-    return this.db.list(`supply-comments/${storeName}`).valueChanges();
+  getCommonCommit(storeName: string, payment: boolean = false): Observable<any> {
+    let commitPath = (payment) ? this.paymentCommentPath : this.supplyCommentPath;
+
+    return this.db.list(`${commitPath}${storeName}`).valueChanges();
   }
 
   getComment(storeName: string, commentUrl: string): Observable<any> {
-    return this.db.object(`comments/${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).valueChanges();
+    return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).valueChanges();
   }
 
   updateSupplyItem(storeName: string, product: any): Promise<any> {
     return this.db.object(`supply/${storeName}/${product.key}`).set(product);
+  }
+
+  addSupplyToPayment(storeName: string, product: any): Promise<any> {
+    product.payment_status = 'pending';
+    return this.db.object(`payments/${storeName}/${product.key}`).set(product);
   }
 
 }

@@ -75,12 +75,8 @@ export class SupplyComponent {
   updateSupplyItem(product: any): void {
     product.supply_date = this.appService.getCurrentDate(true);
     product.supply_status = 'supplied';
-    // update on firebase
-    this.authService.authUserId()
-      .take(1)
-      .subscribe(user => {
-        product.supplied_by = user.email;
-        this.storeService.updateSupplyItem(this.store._name, product);
-      });
+    product.supplied_by = this.storeService.userId;
+    // update data
+    this.storeService.updateSupplyItem(this.store._name, product);
   }
 }

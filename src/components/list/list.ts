@@ -1,8 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { AppService } from '../../services/app-service';
-import { NavController } from 'ionic-angular';
-import { ProfilePage } from '../../pages/profile/profile';
-import { SearchPage } from '../../pages/search/search';
 import { StoreService } from '../../services/store.service';
 import { Subject } from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -28,8 +24,6 @@ export class ListComponent {
   comments: string = '';
 
   constructor(
-    private nav: NavController,
-    private appService: AppService,
     private storeService: StoreService,
   ) {
     this.subject = new Subject();

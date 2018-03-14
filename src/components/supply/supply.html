@@ -8,16 +8,19 @@
 <ion-card *ngFor="let product of products" [ngClass]="{'supplied': product.supplied_by}">
   <ion-card-content>
     <div class="product-raw">
-      <span><b>Date: </b>{{product.bill_date}}</span>
+      <span><b>Bill date: </b>{{product.bill_date}}</span>
       <span><b>Bill no.</b>{{product.bill_number}}</span>
+      
       <span><b>Amount: </b>{{product.amount}}</span>
       <span><b>Status: </b>
         <button *ngIf="!product.supplied_by" (click)="supplyItem(product)">{{product.supply_status}}</button>
         <button class="supplied" *ngIf="product.supplied_by">supplied</button>
       </span>
     </div>
+    <p><b>Order by: </b>{{ (product.order_by | getEmail | async)?.email }}</p>
+    <p><b>Ordered date: </b>{{product.ordered_date}}</p>
     <div class="footer" *ngIf="product.supplied_by">
-      <p><b>Supplied by:</b> {{product.supplied_by}}</p>
+      <p><b>Supplied by:</b> {{ (product.supplied_by | getEmail | async)?.email }}</p>
       <p><b>Supplied date:</b> {{product.supply_date}}</p>
     </div>
   </ion-card-content>

@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { AuthService } from '../services/auth.service';
 import { AppService } from '../services/app-service';
+// pipes
+import { GetEmailPipe } from '../pipe/get-email';
 // firebase
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -24,6 +26,7 @@ import { StorePage } from '../pages/store/store';
 import { StoreService } from '../services/store.service';
 import { ListComponent } from '../components/list/list';
 import { SupplyComponent } from '../components/supply/supply';
+
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -46,6 +49,7 @@ let fireBaseConfig = {
     FooterComponent,
     ListComponent,
     SupplyComponent,
+    GetEmailPipe,
   ],
   imports: [
     BrowserModule,

@@ -25,11 +25,21 @@
     </div>
   </ion-card-content>
 </ion-card>
+<h4 *ngIf="commits.length">Commits: </h4>
+<ion-list>
+  <ion-card *ngFor="let commit of commits">
+    <ion-card-content>
+      <p><b>From: </b> {{ (commit?.uid | getEmail | async)?.email }}</p>
+      <p><b>Message: </b> {{commit?.message}}</p>
+      <p><b>Date: </b> {{commit?.date}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-list>
 
 <ion-list>
   <ion-item>
     <ion-label color="primary" floating>Comments ... </ion-label>
-    <ion-textarea [(ngModel)]="comments" (keyup)="submiteCommit($event)"></ion-textarea>
+    <ion-textarea [(ngModel)]="comments" (keyup.enter)="submiteCommit($event)"></ion-textarea>
   </ion-item>
 </ion-list>
 

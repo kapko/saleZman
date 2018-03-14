@@ -3,7 +3,7 @@ import { AppService } from '../../services/app-service';
 import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-supply',
@@ -19,15 +19,17 @@ export class SupplyComponent {
 
   products: any[] = [];
 
-  comments: string = '';
+  commits: any[] = [];
 
   billValue: string = 'Last 5 bills';
 
+  subject: Subject<any>;
+
   constructor(
     private appService: AppService,
-    private authService: AuthService,
     private storeService: StoreService,
   ) {
+    this.subject = new Subject();
     this.appService.presentLoading(true);
   }
 
@@ -87,13 +89,24 @@ export class SupplyComponent {
 
   getComments(): void {
     this.storeService
-      .getComment(this.store._name, 'supply')
-      .take(1)
-      .subscribe(message => this.comments = message);
+      .getSupplyCommit(this.store._name)
+      .takeUntil(this.subject)
+      .subscribe(messages => this.commits = messages)
   }
 
   submiteCommit(event: any): void {
     let value = event.target.value;
-    this.storeService.submitCommit(value, this.store._name, 'supply')
+    let data = {};
+    data['uid'] = this.storeService.userId;
+    data['message'] = value;
+    data['date'] = this.appService.getCurrentDate(true);
+    // update data
+    this.storeService.submitSupplyCommit(data, this.store._name);
+    event.target.value = '';
+  }
+
+  ngOnDestroy(): void {
+    this.subject.next();
+    this.subject.complete();
   }
 }

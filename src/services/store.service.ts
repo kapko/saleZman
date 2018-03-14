@@ -98,6 +98,14 @@ export class StoreService {
     return this.db.object(`comments/${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).set(value);
   }
 
+  submitSupplyCommit(value: Object, storeName: string): any {
+    return this.db.list(`supply-comments/${storeName}/`).push(value);
+  }
+
+  getSupplyCommit(storeName: string): Observable<any> {
+    return this.db.list(`supply-comments/${storeName}`).valueChanges();
+  }
+
   getComment(storeName: string, commentUrl: string): Observable<any> {
     return this.db.object(`comments/${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).valueChanges();
   }

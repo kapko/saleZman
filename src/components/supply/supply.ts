@@ -19,6 +19,10 @@ export class SupplyComponent {
 
   products: any[] = [];
 
+  comments: string = '';
+
+  billValue: string = 'Last 5 bills';
+
   constructor(
     private appService: AppService,
     private authService: AuthService,
@@ -29,7 +33,8 @@ export class SupplyComponent {
 
   ngOnChanges(): void {
     if (!this.store) return;
-    this.getSupplyList(this.store._name);
+    this.getComments();
+    this.getSupplyList(this.store._name, 5);
   }
 
   getSupplyList(storeName: string, limit: number = null): void {
@@ -78,5 +83,17 @@ export class SupplyComponent {
     product.supplied_by = this.storeService.userId;
     // update data
     this.storeService.updateSupplyItem(this.store._name, product);
+  }
+
+  getComments(): void {
+    this.storeService
+      .getComment(this.store._name, 'supply')
+      .take(1)
+      .subscribe(message => this.comments = message);
+  }
+
+  submiteCommit(event: any): void {
+    let value = event.target.value;
+    this.storeService.submitCommit(value, this.store._name, 'supply')
   }
 }

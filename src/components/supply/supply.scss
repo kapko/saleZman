@@ -8,13 +8,13 @@ app-supply {
   button {
     padding: 2px 3px;
     color: #fff;
-    background: #02b9e2;
+    background: red;
     border-radius: 2px;
     font-size: 11px;
   }
 
   button.supplied {
-    background:#026f87;
+    background:green;
   }
 
   .product-raw {

@@ -1,6 +1,6 @@
 <ion-item *ngIf="products && products.length">
   <ion-label>Bill sort</ion-label>
-  <ion-select [(ngModel)]="value" (ionChange)="sortByBill(value)">
+  <ion-select [(ngModel)]="billValue" (ionChange)="sortByBill(billValue)">
     <ion-option *ngFor="let bill of billArray">{{bill}}</ion-option>
   </ion-select>
 </ion-item>
@@ -25,5 +25,12 @@
     </div>
   </ion-card-content>
 </ion-card>
+
+<ion-list>
+  <ion-item>
+    <ion-label color="primary" floating>Comments ... </ion-label>
+    <ion-textarea [(ngModel)]="comments" (keyup)="submiteCommit($event)"></ion-textarea>
+  </ion-item>
+</ion-list>
 
 <h4 *ngIf="products && !products.length">Don't have any supply</h4>

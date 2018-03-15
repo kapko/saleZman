@@ -117,13 +117,13 @@
       <span><b>Bill amount: </b>{{payment.amount}}</span>
       <span><b>Paid by: </b>{{(payment.payment_by | getEmail | async)?.email}}</span>
       <span><b>Payment status: </b>PAID</span>
+      <span *ngIf="payment.chq_bank"><b>Bank: </b>{{payment.chq_bank}}</span>
       <span><b>Payment date: </b>{{payment.payment_date}}</span>
-      <span><b>Payment date: </b>{{payment.payment_date}}</span>
-      <span *ngIf="payment.comment"><b>Comment: </b>{{payment.comment}}</span>
       <span><b>Paid option: </b>{{(payment.cash) ? 'cash' : 'cheque'}}</span>
       <span><b>Paid amount: </b>{{(payment.cash) ? payment.cash_amount : payment.chq_amount}}</span>
+      <span *ngIf="payment.comment"><b>Comment: </b>{{payment.comment}}</span>
     </div>
   </ion-card-content>
 </ion-card>
 
-<h4 *ngIf="products && !products.length">Don't have any supply</h4>
+<h4 *ngIf="products && !products.length">Don't have any payments</h4>

@@ -17,29 +17,78 @@
       <p>
         <b>Payment status:</b>
         <button
-          (click)="payEvent(product)"
+          (click)="product.payOptions = true"
           *ngIf="product.payment_status === 'pending'">{{ product.payment_status }}</button>
         <!-- <button class="supplied">done</button> -->
       </p>
       <p *ngIf="product.payOptions">
-        <span class="cash" (click)="product.cash = true">cash</span>
-        <span class="chq">chq</span>
-        <span (click)="product.payOptions = false" class="cancel">cancel</span>
+        <span class="span cash" (click)="payOptionEvent(product, 'cash')">cash</span>
+        <span class="span chq" (click)="payOptionEvent(product, 'chq')">chq</span>
       </p>
 
-      <p *ngIf="product.cash">
+      <p 
+        *ngIf="product.cash" 
+        class="amount-class">
         <ion-item>
-          <ion-label color="primary">Inline Label</ion-label>
-          <ion-input placeholder="Text Input"></ion-input>
+          <ion-label color="primary">Amount</ion-label>
+          <ion-input
+            type="number"
+            text-right
+            [(ngModel)]="cash_amount"
+            placeholder="number"></ion-input>
         </ion-item>
+        <button (click)="submitForm(cash_amount, 'cash')">submit</button>
+        <button 
+          (click)="payOptionEvent(product, 'cancel')"
+          class="cancel">cancel</button>
       </p>
 
+      <form 
+        *ngIf="product.chq"
+        [formGroup]="form"
+        (ngSubmit)="submitForm(form.value)"
+        class="amount-class">
+        <ion-item>
+          <ion-label color="primary">Cheque number </ion-label>
+          <ion-input 
+            text-right
+            type="number"
+            placeholder="number"  
+            formControlName="chq_number"></ion-input>
+        </ion-item>
+        <ion-item class="date">
+          <ion-label>Cheque date</ion-label>
+          <ion-datetime
+            [placeholder]="date"
+            formControlName="chq_date"
+            displayFormat="MM/DD/YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Amount</ion-label>
+          <ion-input 
+            text-right
+            type="number"
+            placeholder="number"
+            formControlName="chq_amount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Bank</ion-label>
+          <ion-input 
+            text-right
+            type="number"
+            placeholder="number"  
+            formControlName="chq_bank"></ion-input>
+        </ion-item>
+        <button type="submit">submit</button>
+        <button 
+          class="cancel" 
+          (click)="payOptionEvent(product, 'cancel')">cancel</button>
+      </form>
     </div>
   </ion-card-content>
 </ion-card>
 
 <!-- 
- 
 <h4 *ngIf="commits.length">Commits: </h4>
 <ion-list>
   <ion-card *ngFor="let commit of commits">

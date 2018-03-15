@@ -4,6 +4,7 @@ import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
 import { Subject } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-payment',
@@ -12,6 +13,8 @@ import { Subject } from 'rxjs';
 
 export class PaymentComponent {
   @Input() store: storeName;
+
+  form: FormGroup;
 
   billArray: any = ['Last 5 bills', 'Last 10 bills', 'Last 15 bills', 'All'];
 
@@ -27,12 +30,23 @@ export class PaymentComponent {
 
   comment: string = '';
 
+  date: string = this.appService.getCurrentDate(true);
+
   constructor(
     private appService: AppService,
     private storeService: StoreService,
   ) {
     this.subject = new Subject();
     this.appService.presentLoading(true);
+  }
+
+  ngOnInit():void {
+    this.form = new FormGroup({
+      chq_number: new FormControl('', Validators.required),
+      chq_date: new FormControl('', Validators.required),
+      chq_amount: new FormControl('', Validators.required),
+      chq_bank: new FormControl('', Validators.required),
+    });
   }
 
   ngOnChanges(): void {
@@ -76,6 +90,29 @@ export class PaymentComponent {
     }
 
     this.getPaymentList(this.store._name, limit);
+  }
+
+  payOptionEvent(product: Object, opt: string): void {
+    product['cash'] = false;
+    product['chq'] = false;
+    if (opt === 'cancel') {
+      product['payOptions'] = false;
+    } else {
+      product[opt] = true;
+    }
+  }
+
+  submitForm(value: any, opt: string): void {
+    let data = {};
+    if (opt === 'cash' && value) {
+      data['cash'] = value;
+      console.log(value);
+      return;
+    } else {
+      console.log(value.value);
+    }
+
+    // and update data by service
   }
 
   // supplyItem(product: any): void {

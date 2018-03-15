@@ -45,28 +45,54 @@ app-payment {
     padding: 20px;
   }
 
-  span.cancel {
+  .span {
     color: #fff;
     padding: 2px 7px;
     margin-left: 3px;
     border-radius: 3px;
-    background: #0d0d0e;
+  }
+
+  .cancel {
+    background: #a3a3a3;
   }
 
   span.cash {
-    color: #fff;
-    padding: 2px 7px;
-    margin-left: 3px;
-    border-radius: 3px;
-    background: #444444;
+    background: #02b9e2;
   }
 
   span.chq {
-    color: #fff;
-    padding: 2px 7px;
-    margin-left: 3px;
-    border-radius: 3px;
-    background: #909;
+    background: #02b9e2;
+  }
+
+
+  .amount-class {
+    ion-item {
+      padding-left: 0;
+    }
+    button {
+      background: #02b9e2;
+      font-size: 13px;
+      padding: 6px 13px;
+      margin-top: 5px;
+    }
+
+    .cancel {
+      background: #a3a3a3;
+    }
+  }
+
+  .date {
+    ion-label {
+      color: #04bae2!important;
+    }
+    button {
+      background: none;
+    }
+  }
+  
+  ion-item.item-block {
+    min-height: auto;
+    font-size: 13px;
   }
 
 }

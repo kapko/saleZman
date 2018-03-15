@@ -18,17 +18,23 @@ export class PaymentComponent {
 
   billArray: any = ['Last 5 bills', 'Last 10 bills', 'Last 15 bills', 'All'];
 
+  keyForRemove: any[string] = ['comment', 'supply_status', 'supply_date', 'supplied_by', 'cash_amount','chq_number','chq_amount','chq_date','order_by','ordered_date','key','payOptions','chq_bank'];
+
   rowProducts: any[] = [];
 
   products: any[] = [];
 
   commits: any[] = [];
 
+  paidList: any[] = [];
+
   billValue: string = 'Last 5 bills';
 
   subject: Subject<any>;
 
   comment: string = '';
+
+  cash_amount: number = null;
 
   date: string = this.appService.getCurrentDate(true);
 
@@ -46,13 +52,14 @@ export class PaymentComponent {
       chq_date: new FormControl('', Validators.required),
       chq_amount: new FormControl('', Validators.required),
       chq_bank: new FormControl('', Validators.required),
+      comment: new FormControl(''),
     });
   }
 
   ngOnChanges(): void {
     if (!this.store) return;
-    this.getComments();
     this.getPaymentList(this.store._name, 5);
+    this.getPaidList();
   }
 
   getPaymentList(storeName: string, limit: number = null): void {
@@ -67,10 +74,10 @@ export class PaymentComponent {
       });
   }
 
-  payEvent(product: Object): void {
-    console.log(product);
-    product['payOptions'] = true;
-    
+  getPaidList(): void {
+    this.storeService.getPaidList()
+      .takeUntil(this.subject)
+      .subscribe(paidItems => this.paidList = paidItems);
   }
 
   sortByBill(value: string): void {
@@ -93,59 +100,42 @@ export class PaymentComponent {
   }
 
   payOptionEvent(product: Object, opt: string): void {
+    if (!opt) {product['payOptions'] = true}
+    // reset values
+    for (let key in this.form.controls) {
+      this.form.controls[key].setValue('');
+    }
+
+    this.cash_amount = null;
+    this.comment = '';
     product['cash'] = false;
     product['chq'] = false;
     if (opt === 'cancel') {
       product['payOptions'] = false;
     } else {
-      product[opt] = true;
+      (opt) ? product[opt] = true : null;
     }
   }
 
-  submitForm(value: any, opt: string): void {
+  submitForm(val: any, product: Object): void {
+    this.keyForRemove.forEach(key => delete product[key]);
+
+    if (!val) return;
     let data = {};
-    if (opt === 'cash' && value) {
-      data['cash'] = value;
-      console.log(value);
-      return;
+    if (typeof val === 'string') {
+      data['comment'] = this.comment;
+      data['cash_amount'] = val;
     } else {
-      console.log(value.value);
+      Object.assign(data, val);
     }
 
-    // and update data by service
-  }
+    product['payment_date'] = this.appService.getCurrentDate(true);
+    product['payment_by'] = this.storeService.userId;
 
-  // supplyItem(product: any): void {
-  //   this.appService.showAlert('Please confirm to supply', [{
-  //     text: 'ok',
-  //     handler: () => this.updateSupplyItem(product)
-  //   }, 'cancel'], this.store.name);
-  // }
+    Object.assign(product, data);
+    this.storeService.addPayment(product);
 
-  // updateSupplyItem(product: any): void {
-  //   product.supply_date = this.appService.getCurrentDate(true);
-  //   product.supply_status = 'supplied';
-  //   product.supplied_by = this.storeService.userId;
-  //   // update data
-  //   this.storeService.updateSupplyItem(this.store._name, product);
-  // }
-
-  getComments(): void {
-    this.storeService
-      .getCommonCommit(this.store._name, true)
-      .takeUntil(this.subject)
-      .subscribe(messages => this.commits = messages)
-  }
-
-  submitCommit(event: any): void {
-    let value = event.target.value;
-    let data = {};
-    data['uid'] = this.storeService.userId;
-    data['message'] = value;
-    data['date'] = this.appService.getCurrentDate(true);
-    // update data
-    this.storeService.submitCommonCommit(data, this.store._name);
-    this.comment = '';
+    this.appService.showToast('Your payment completed.');
   }
 
   ngOnDestroy(): void {

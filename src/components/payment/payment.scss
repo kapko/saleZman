@@ -75,10 +75,10 @@ app-payment {
       padding: 6px 13px;
       margin-top: 5px;
     }
+  }
 
-    .cancel {
-      background: #a3a3a3;
-    }
+  button.cancel, span.cancel {
+    background: #a3a3a3;
   }
 
   .date {
@@ -90,6 +90,10 @@ app-payment {
     }
   }
   
+  ion-card.paid {
+    background: #eee;
+  }
+
   ion-item.item-block {
     min-height: auto;
     font-size: 13px;

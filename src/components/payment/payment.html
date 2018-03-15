@@ -5,29 +5,28 @@
   </ion-select>
 </ion-item>
 
-<ion-card *ngFor="let product of products" [ngClass]="{'paid': product.supplied_by}">
+<ion-card *ngFor="let product of products">
   <ion-card-content>
     <div class="product-raw">
       <span><b>Bill date: </b>{{product.bill_date}}</span>
-      <span><b>Bill no.</b>{{product.bill_number}}</span>
+      <span><b>Bill no. </b>{{product.bill_number}}</span>
+      <span><b>Bill amount: </b>{{product.amount}}</span>
     </div>
     <div class="footer">
       <p><b>Supplied by:</b> {{ (product.supplied_by | getEmail | async)?.email }}</p>
       <p><b>Supplied date:</b> {{product.supply_date}}</p>
       <p>
         <b>Payment status:</b>
-        <button
-          (click)="product.payOptions = true"
-          *ngIf="product.payment_status === 'pending'">{{ product.payment_status }}</button>
-        <!-- <button class="supplied">done</button> -->
+        <button (click)="payOptionEvent(product, null)">{{ product.payment_status }}</button>
       </p>
       <p *ngIf="product.payOptions">
         <span class="span cash" (click)="payOptionEvent(product, 'cash')">cash</span>
         <span class="span chq" (click)="payOptionEvent(product, 'chq')">chq</span>
+        <span class="span chq cancel" (click)="payOptionEvent(product, 'cancel')">cancel</span>
       </p>
 
-      <p 
-        *ngIf="product.cash" 
+      <p
+        *ngIf="product.payOptions && product.cash" 
         class="amount-class">
         <ion-item>
           <ion-label color="primary">Amount</ion-label>
@@ -37,16 +36,26 @@
             [(ngModel)]="cash_amount"
             placeholder="number"></ion-input>
         </ion-item>
-        <button (click)="submitForm(cash_amount, 'cash')">submit</button>
+        <ion-item>
+          <ion-label color="primary">Comment</ion-label>
+          <ion-input
+            type="text"
+            text-right
+            [(ngModel)]="comment"
+            placeholder="text"></ion-input>
+        </ion-item>
+        <button 
+          [disabled]="!cash_amount"
+          (click)="submitForm(cash_amount, product)">submit</button>
         <button 
           (click)="payOptionEvent(product, 'cancel')"
           class="cancel">cancel</button>
       </p>
 
       <form 
-        *ngIf="product.chq"
+        *ngIf="product.payOptions && product.chq"
         [formGroup]="form"
-        (ngSubmit)="submitForm(form.value)"
+        (ngSubmit)="submitForm(form.value, product)"
         class="amount-class">
         <ion-item>
           <ion-label color="primary">Cheque number </ion-label>
@@ -61,7 +70,7 @@
           <ion-datetime
             [placeholder]="date"
             formControlName="chq_date"
-            displayFormat="MM/DD/YYYY"></ion-datetime>
+            displayFormat="DD/MM/YYYY"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label color="primary">Amount</ion-label>
@@ -75,36 +84,46 @@
           <ion-label color="primary">Bank</ion-label>
           <ion-input 
             text-right
-            type="number"
+            type="text"
             placeholder="number"  
             formControlName="chq_bank"></ion-input>
         </ion-item>
-        <button type="submit">submit</button>
+        <ion-item>
+          <ion-label color="primary">Comment</ion-label>
+          <ion-input
+            type="text"
+            text-right
+            formControlName="comment"
+            placeholder="text"></ion-input>
+        </ion-item>
         <button 
-          class="cancel" 
+          [disabled]="form.invalid"
+          type="submit">submit</button>
+        <button 
+          class="cancel"
           (click)="payOptionEvent(product, 'cancel')">cancel</button>
       </form>
     </div>
   </ion-card-content>
 </ion-card>
 
-<!-- 
-<h4 *ngIf="commits.length">Commits: </h4>
-<ion-list>
-  <ion-card *ngFor="let commit of commits">
-    <ion-card-content>
-      <p><b>From: </b> {{ (commit?.uid | getEmail | async)?.email }}</p>
-      <p><b>Message: </b> {{commit?.message}}</p>
-      <p><b>Date: </b> {{commit?.date}}</p>
-    </ion-card-content>
-  </ion-card>
-</ion-list>
+<h2 text-center *ngIf="paidList.length">Paid List </h2>
 
-<ion-list>
-  <ion-item>
-    <ion-label color="primary" floating>Comments ... </ion-label>
-    <ion-textarea [(ngModel)]="comment" (keyup.enter)="submitCommit($event)"></ion-textarea>
-  </ion-item>
-</ion-list> -->
+<ion-card *ngFor="let payment of paidList" class="paid">
+  <ion-card-content>
+    <div class="product-raw">
+      <span><b>Bill date: </b>{{payment.bill_date}}</span>
+      <span><b>Bill no. </b>{{payment.bill_number}}</span>
+      <span><b>Bill amount: </b>{{payment.amount}}</span>
+      <span><b>Paid by: </b>{{(payment.payment_by | getEmail | async)?.email}}</span>
+      <span><b>Payment status: </b>PAID</span>
+      <span><b>Payment date: </b>{{payment.payment_date}}</span>
+      <span><b>Payment date: </b>{{payment.payment_date}}</span>
+      <span *ngIf="payment.comment"><b>Comment: </b>{{payment.comment}}</span>
+      <span><b>Paid option: </b>{{(payment.cash) ? 'cash' : 'cheque'}}</span>
+      <span><b>Paid amount: </b>{{(payment.cash) ? payment.cash_amount : payment.chq_amount}}</span>
+    </div>
+  </ion-card-content>
+</ion-card>
 
 <h4 *ngIf="products && !products.length">Don't have any supply</h4>

@@ -25,6 +25,8 @@ export class StoreService {
 
   paymentListPath: string = '/payments/';
 
+  paymentPaidListPath: string = '/paid-list/';
+
   supplyCommentPath: string = '/supply-comments/';
 
   commentPath: string = '/comments/';
@@ -85,6 +87,13 @@ export class StoreService {
     ).snapshotChanges();
   }
 
+  getPaidList(limit: number = null): Observable<any> {
+    return this.db.list(
+      this.paymentPaidListPath,
+      ref => (limit) ? ref.limitToLast(limit) : ref
+    ).valueChanges();
+  }
+
   getUserOrderedList(storeName:string): Observable<any> {
     return this.db.list(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${this.getDate()}`).valueChanges();
   }
@@ -136,6 +145,10 @@ export class StoreService {
   addSupplyToPayment(storeName: string, product: any): Promise<any> {
     product.payment_status = 'pending';
     return this.db.object(`payments/${storeName}/${product.key}`).set(product);
+  }
+
+  addPayment(product: Object): any {
+    return this.db.list(this.paymentPaidListPath).push(product);
   }
 
 }

@@ -1,18 +1,33 @@
-<h2 text-center *ngIf="paidList.length">Paid List </h2>
+<h2 text-center *ngIf="list.length">Paid List </h2>
 
-<ion-card *ngFor="let payment of paidList" class="paid">
+<ion-card *ngFor="let payment of list" class="paid">
   <ion-card-content>
     <div class="product-raw">
       <span><b>Bill date: </b>{{payment.bill_date}}</span>
       <span><b>Bill no. </b>{{payment.bill_number}}</span>
       <span><b>Bill amount: </b>{{payment.amount}}</span>
-      <span><b>Collected By: </b>{{(payment.collected_by | getEmail | async)?.email}}</span>
       <span><b>Payment status: </b>PAID</span>
-      <span *ngIf="payment.chq_bank"><b>Bank: </b>{{payment.chq_bank}}</span>
       <span><b>Payment date: </b>{{payment.payment_date}}</span>
-      <span><b>Paid option: </b>{{(payment.cash) ? 'cash' : 'cheque'}}</span>
-      <span><b>Paid amount: </b>{{(payment.cash) ? payment.cash_amount : payment.chq_amount}}</span>
-      <span *ngIf="payment.comment"><b>Comment: </b>{{payment.comment}}</span>
+      <p class="user"><b>Collected By: </b>{{(payment.collected_by | getEmail | async)?.email}}</p>
+      <div [ngSwitch]="payment.method">
+        <div *ngSwitchCase="'cash'">
+          <p><b>Paid option: </b>cash</p>
+          <p><b>Cash Amount: </b>{{payment.cash_amount}}</p>
+        </div>
+        <div *ngSwitchCase="'chq'">
+          <p><b>Paid option: </b>cheque</p>
+          <p><b>Cheque Amount: </b>{{payment.chq_amount}}</p>
+          <p><b>Cheque Bank: </b>{{payment.chq_bank}}</p>
+          <p><b>Cheque Date: </b>{{payment.chq_date}}</p>
+          <p><b>Cheque Number: </b>{{payment.chq_number}}</p>
+        </div>
+        <div *ngSwitchCase="'neft'">
+          <p><b>Paid option: </b>neft</p>
+          <p><b>Neft Amount: </b>{{payment.neft_amount}}</p>
+          <p><b>Neft Date: </b>{{payment.neft_date}}</p>
+        </div>
+      </div>
+      <p *ngIf="payment.comment"><b>Comment: </b>{{payment.comment}}</p>
     </div>
   </ion-card-content>
 </ion-card>

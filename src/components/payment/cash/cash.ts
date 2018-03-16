@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { AppService } from '../../../services/app-service';
 import { StoreService } from '../../../services/store.service';
 import { storeName } from '../../../interfaces/city.store';
 import 'rxjs';
@@ -19,7 +18,6 @@ export class CashComponent {
   form: FormGroup;
 
   constructor(
-    private appService: AppService,
     private storeService: StoreService,
     private paymentComponent: PaymentComponent,
   ) { }

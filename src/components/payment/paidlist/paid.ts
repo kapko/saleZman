@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { storeName } from '../../../interfaces/city.store';
 
 @Component({
   selector: 'app-paid',
@@ -8,5 +7,12 @@ import { storeName } from '../../../interfaces/city.store';
 
 export class PaidListComponent {
   @Input() paidList: any[] = [];
-  constructor(){ }
+  list: any[] = [];
+
+  constructor( ){ }
+
+  ngOnChanges(): void {
+    if (!this.paidList) return;
+    this.list = this.paidList;
+  }
 }

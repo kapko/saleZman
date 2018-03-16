@@ -6,16 +6,16 @@ import 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-chq',
-  templateUrl: 'cheque.html',
+  selector: 'app-neft',
+  templateUrl: 'neft.html',
 })
 
-export class ChqComponent {
+export class NeftComponent {
   @Input() store: storeName;
   @Input() product: Object;
   @Input() keys: any[string];
 
-  form: FormGroup;
+  neftForm: FormGroup;
 
   date: string = this.appService.getCurrentDate(true);
 
@@ -25,11 +25,9 @@ export class ChqComponent {
   ) { }
 
   ngOnInit():void {
-    this.form = new FormGroup({
-      chq_number: new FormControl('', Validators.required),
-      chq_date: new FormControl('', Validators.required),
-      chq_amount: new FormControl('', Validators.required),
-      chq_bank: new FormControl('', Validators.required),
+    this.neftForm = new FormGroup({
+      neft_date: new FormControl('', Validators.required),
+      neft_amount: new FormControl('', Validators.required),
       comment: new FormControl(''),
     });
   }
@@ -40,7 +38,7 @@ export class ChqComponent {
       .take(1)
       .subscribe(rest => {
         let billAmount = (typeof rest === 'number' && rest >= 0) ? rest : this.product['amount']
-        let balance = billAmount - val.chq_amount;
+        let balance = billAmount - val.neft_amount;
 
         if (balance >= 0) {
           this.storeService.setBalance(this.product['key'], balance);
@@ -48,7 +46,7 @@ export class ChqComponent {
             // update payment status to 'done'
             this.storeService.updatePaymentStatus(this.store._name, this.product['key']);
           }
-          
+
           this.keys.forEach(key => delete this.product[key]);
 
           this.product['payment_date'] = this.appService.getCurrentDate(true);

@@ -52,42 +52,16 @@
           (click)="submitForm(cash_amount, product)">submit</button>
       </p>
 
-      <form 
-        *ngIf="product.payOptions && product.method === 'neft'"
-        [formGroup]="neftForm"
-        (ngSubmit)="submitForm(neftForm.value, product)"
-        class="amount-class">
-        <ion-item class="date">
-          <ion-label>Cheque date</ion-label>
-          <ion-datetime
-            [placeholder]="date"
-            formControlName="neft_date"
-            displayFormat="DD/MM/YYYY"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary">Amount</ion-label>
-          <ion-input 
-            text-right
-            type="number"
-            placeholder="number"
-            formControlName="neft_amount"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary">Comment</ion-label>
-          <ion-input
-            type="text"
-            text-right
-            formControlName="comment"
-            placeholder="text"></ion-input>
-        </ion-item>
-        <button 
-          [disabled]="neftForm.invalid"
-          type="submit">submit</button>
-      </form>
+      <app-neft 
+        *ngIf="product.payOptions && product.method === 'neft'" 
+        [product]="product"
+        [keys]="keyForRemove"
+        [store]="store"></app-neft>
 
       <app-chq 
         *ngIf="product.payOptions && product.method === 'chq'" 
-        [product]="product" 
+        [product]="product"
+        [keys]="keyForRemove"
         [store]="store"></app-chq>
 
     </div>

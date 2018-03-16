@@ -28,6 +28,7 @@ import { ListComponent } from '../components/list/list';
 import { SupplyComponent } from '../components/supply/supply';
 import { PaymentComponent } from '../components/payment/payment';
 import { ChqComponent } from '../components/payment/cheque/cheque';
+import { NeftComponent } from '../components/payment/neft/neft';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -53,6 +54,7 @@ let fireBaseConfig = {
     GetEmailPipe,
     PaymentComponent,
     ChqComponent,
+    NeftComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +85,7 @@ let fireBaseConfig = {
     SupplyComponent,
     PaymentComponent,
     ChqComponent,
+    NeftComponent,
   ],
   providers: [
     StatusBar,

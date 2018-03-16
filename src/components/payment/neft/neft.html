@@ -1,20 +1,12 @@
 <form 
-  [formGroup]="form"
-  (ngSubmit)="submitForm(form.value)"
+  [formGroup]="neftForm"
+  (ngSubmit)="submitForm(neftForm.value, product)"
   class="amount-class">
-  <ion-item>
-    <ion-label color="primary">Cheque number </ion-label>
-    <ion-input 
-      text-right
-      type="number"
-      placeholder="number"  
-      formControlName="chq_number"></ion-input>
-  </ion-item>
   <ion-item class="date">
     <ion-label>Cheque date</ion-label>
     <ion-datetime
-      formControlName="chq_date"
       [placeholder]="date"
+      formControlName="neft_date"
       displayFormat="DD/MM/YYYY"></ion-datetime>
   </ion-item>
   <ion-item>
@@ -23,15 +15,7 @@
       text-right
       type="number"
       placeholder="number"
-      formControlName="chq_amount"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label color="primary">Bank</ion-label>
-    <ion-input 
-      text-right
-      type="text"
-      placeholder="******"  
-      formControlName="chq_bank"></ion-input>
+      formControlName="neft_amount"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label color="primary">Comment</ion-label>
@@ -42,6 +26,6 @@
       placeholder="text"></ion-input>
   </ion-item>
   <button 
-    [disabled]="form.invalid"
+    [disabled]="neftForm.invalid"
     type="submit">submit</button>
 </form>

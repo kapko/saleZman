@@ -71,6 +71,10 @@ export class SearchPage {
   }
 
   searchItems(ev: any): void {
+    if (!ev.target.value) {
+      this.storeNames = this.rawNames;
+      return;
+    }
     let val = ev.target.value;
 
     if (val && val.trim() === '') {

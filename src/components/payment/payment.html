@@ -28,29 +28,11 @@
         <span class="span chq cancel" (click)="payOptionEvent(product, 'cancel')">cancel</span>
       </p>
 
-      <p
+      <app-cash
         *ngIf="product.payOptions && product.method === 'cash'" 
-        class="amount-class">
-        <ion-item>
-          <ion-label color="primary">Amount</ion-label>
-          <ion-input
-            type="number"
-            text-right
-            [(ngModel)]="cash_amount"
-            placeholder="number"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary">Comment</ion-label>
-          <ion-input
-            type="text"
-            text-right
-            [(ngModel)]="comment"
-            placeholder="text"></ion-input>
-        </ion-item>
-        <button 
-          [disabled]="!cash_amount"
-          (click)="submitForm(cash_amount, product)">submit</button>
-      </p>
+        [product]="product"
+        [keys]="keyForRemove"
+        [store]="store"></app-cash>
 
       <app-neft 
         *ngIf="product.payOptions && product.method === 'neft'" 

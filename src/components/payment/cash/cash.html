@@ -1,0 +1,24 @@
+<form 
+  [formGroup]="form"
+  (ngSubmit)="submitForm(form.value, product)"
+  class="amount-class">
+  <ion-item>
+    <ion-label color="primary">Amount</ion-label>
+    <ion-input 
+      text-right
+      type="number"
+      placeholder="number"
+      formControlName="cash_amount"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Comment</ion-label>
+    <ion-input
+      type="text"
+      text-right
+      formControlName="comment"
+      placeholder="text"></ion-input>
+  </ion-item>
+  <button 
+    [disabled]="form.invalid"
+    type="submit">submit</button>
+</form>

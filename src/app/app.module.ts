@@ -29,6 +29,7 @@ import { SupplyComponent } from '../components/supply/supply';
 import { PaymentComponent } from '../components/payment/payment';
 import { ChqComponent } from '../components/payment/cheque/cheque';
 import { NeftComponent } from '../components/payment/neft/neft';
+import { CashComponent } from '../components/payment/cash/cash';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -55,6 +56,7 @@ let fireBaseConfig = {
     PaymentComponent,
     ChqComponent,
     NeftComponent,
+    CashComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +88,7 @@ let fireBaseConfig = {
     PaymentComponent,
     ChqComponent,
     NeftComponent,
+    CashComponent
   ],
   providers: [
     StatusBar,

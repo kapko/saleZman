@@ -7,18 +7,16 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaymentComponent } from '../payment';
 
 @Component({
-  selector: 'app-neft',
-  templateUrl: 'neft.html',
+  selector: 'app-cash',
+  templateUrl: 'cash.html',
 })
 
-export class NeftComponent {
+export class CashComponent {
   @Input() store: storeName;
   @Input() product: Object;
   @Input() keys: any[string];
 
-  neftForm: FormGroup;
-
-  date: string = this.appService.getCurrentDate(true);
+  form: FormGroup;
 
   constructor(
     private appService: AppService,
@@ -27,9 +25,8 @@ export class NeftComponent {
   ) { }
 
   ngOnInit():void {
-    this.neftForm = new FormGroup({
-      neft_date: new FormControl('', Validators.required),
-      neft_amount: new FormControl('', Validators.required),
+    this.form = new FormGroup({
+      cash_amount: new FormControl('', Validators.required),
       comment: new FormControl(''),
     });
   }
@@ -39,8 +36,7 @@ export class NeftComponent {
       .getBalance(this.product['key'])
       .take(1)
       .subscribe(rest => {
-        this.paymentComponent.submiteForm(rest, this.product, val, 'neft_amount');
+        this.paymentComponent.submiteForm(rest, this.product, val, 'cash_amount');
       });
-    
   }
 }

@@ -112,26 +112,34 @@ export class PaymentComponent {
     }
   }
 
-  submitForm(val: any, product: Object): void {
-    console.log(val);
-    // this.keyForRemove.forEach(key => delete product[key]);
+  /*
+    rest is result of amout api
+    product current product
+    val data from event
+    amountKey string key of amount event
+  */
+  submiteForm(rest: any, product: Object, val: Object, amountKey: string): void {
+    let billAmount = (typeof rest === 'number' && rest >= 0) ? rest : product['amount']
+    let balance = billAmount - val[amountKey];
 
-    // if (!val) return;
-    // let data = {};
-    // if (typeof val === 'string') {
-    //   data['comment'] = this.comment;
-    //   data['cash_amount'] = val;
-    // } else {
-    //   Object.assign(data, val);
-    // }
+    if (balance >= 0) {
+      this.storeService.setBalance(product['key'], balance);
+      if (balance === 0) {
+        // update payment status to 'done'
+        this.storeService.updatePaymentStatus(this.store._name, product['key']);
+      }
 
-    // product['payment_date'] = this.appService.getCurrentDate(true);
-    // product['collected_by'] = this.storeService.userId;
+      this.keyForRemove.forEach(key => delete product[key]);
 
-    // Object.assign(product, data);
-    // this.storeService.addPayment(this.store._name, product);
+      product['payment_date'] = this.appService.getCurrentDate(true);
+      product['collected_by'] = this.storeService.userId;
+      Object.assign(product, val);
 
-    // this.appService.showToast('Your payment completed.');
+      this.storeService.addPayment(this.store._name, product);
+      this.appService.showToast('Your payment completed.');
+    } else {
+      this.appService.showToast('ERROR: Payment amount more then bill amount for ' + balance);
+    }
   }
 
   ngOnDestroy(): void {

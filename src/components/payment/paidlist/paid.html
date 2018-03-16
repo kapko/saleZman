@@ -1,0 +1,18 @@
+<h2 text-center *ngIf="paidList.length">Paid List </h2>
+
+<ion-card *ngFor="let payment of paidList" class="paid">
+  <ion-card-content>
+    <div class="product-raw">
+      <span><b>Bill date: </b>{{payment.bill_date}}</span>
+      <span><b>Bill no. </b>{{payment.bill_number}}</span>
+      <span><b>Bill amount: </b>{{payment.amount}}</span>
+      <span><b>Collected By: </b>{{(payment.collected_by | getEmail | async)?.email}}</span>
+      <span><b>Payment status: </b>PAID</span>
+      <span *ngIf="payment.chq_bank"><b>Bank: </b>{{payment.chq_bank}}</span>
+      <span><b>Payment date: </b>{{payment.payment_date}}</span>
+      <span><b>Paid option: </b>{{(payment.cash) ? 'cash' : 'cheque'}}</span>
+      <span><b>Paid amount: </b>{{(payment.cash) ? payment.cash_amount : payment.chq_amount}}</span>
+      <span *ngIf="payment.comment"><b>Comment: </b>{{payment.comment}}</span>
+    </div>
+  </ion-card-content>
+</ion-card>

@@ -18,6 +18,8 @@ export class PaymentComponent {
 
   billArray: any = ['Last 5 bills', 'Last 10 bills', 'Last 15 bills', 'All'];
 
+  options: any = ['chq', 'cash', 'neft', 'cancel'];
+
   keyForRemove: any[string] = ['comment', 'supply_status', 'supply_date', 'supplied_by', 'cash_amount','chq_number','chq_amount','chq_date','order_by','ordered_date','payOptions','chq_bank', 'neft_amount', 'neft_date'];
 
   rowProducts: any[] = [];

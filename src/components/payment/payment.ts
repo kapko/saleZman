@@ -14,7 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class PaymentComponent {
   @Input() store: storeName;
 
-  form: FormGroup;
+  neftForm: FormGroup;
 
   billArray: any = ['Last 5 bills', 'Last 10 bills', 'Last 15 bills', 'All'];
 
@@ -47,11 +47,9 @@ export class PaymentComponent {
   }
 
   ngOnInit():void {
-    this.form = new FormGroup({
-      chq_number: new FormControl('', Validators.required),
-      chq_date: new FormControl('', Validators.required),
-      chq_amount: new FormControl('', Validators.required),
-      chq_bank: new FormControl('', Validators.required),
+    this.neftForm = new FormGroup({
+      neft_date: new FormControl('', Validators.required),
+      neft_amount: new FormControl('', Validators.required),
       comment: new FormControl(''),
     });
   }
@@ -59,14 +57,14 @@ export class PaymentComponent {
   ngOnChanges(): void {
     if (!this.store) return;
     this.getPaymentList(this.store._name, 5);
-    this.getPaidList();
+    this.getPaidList(this.store._name, 5);
   }
 
   getPaymentList(storeName: string, limit: number = null): void {
     this.storeService
       .getPaymentList(storeName, limit)
       .do(() => this.appService.hideLoading())
-      .take(1)
+      .takeUntil(this.subject)
       .map(changes => changes.map(c => ({ key: c.payload.key, ...c.payload.val() })))
       .subscribe(supplies => {
         this.products = supplies;
@@ -74,9 +72,10 @@ export class PaymentComponent {
       });
   }
 
-  getPaidList(): void {
-    this.storeService.getPaidList()
+  getPaidList(storeName: string, limit: number): void {
+    this.storeService.getPaidList(storeName, limit)
       .takeUntil(this.subject)
+      .map(data => data.reverse())
       .subscribe(paidItems => this.paidList = paidItems);
   }
 
@@ -100,42 +99,39 @@ export class PaymentComponent {
   }
 
   payOptionEvent(product: Object, opt: string): void {
-    if (!opt) {product['payOptions'] = true}
+    if (product['payment_status'] === 'done') return;
     // reset values
-    for (let key in this.form.controls) {
-      this.form.controls[key].setValue('');
-    }
-
     this.cash_amount = null;
     this.comment = '';
-    product['cash'] = false;
-    product['chq'] = false;
+    product['method'] = opt;
+    product['payOptions'] = true;
+
     if (opt === 'cancel') {
       product['payOptions'] = false;
-    } else {
-      (opt) ? product[opt] = true : null;
+      product['method'] = '';
     }
   }
 
   submitForm(val: any, product: Object): void {
-    this.keyForRemove.forEach(key => delete product[key]);
+    console.log(val);
+    // this.keyForRemove.forEach(key => delete product[key]);
 
-    if (!val) return;
-    let data = {};
-    if (typeof val === 'string') {
-      data['comment'] = this.comment;
-      data['cash_amount'] = val;
-    } else {
-      Object.assign(data, val);
-    }
+    // if (!val) return;
+    // let data = {};
+    // if (typeof val === 'string') {
+    //   data['comment'] = this.comment;
+    //   data['cash_amount'] = val;
+    // } else {
+    //   Object.assign(data, val);
+    // }
 
-    product['payment_date'] = this.appService.getCurrentDate(true);
-    product['payment_by'] = this.storeService.userId;
+    // product['payment_date'] = this.appService.getCurrentDate(true);
+    // product['collected_by'] = this.storeService.userId;
 
-    Object.assign(product, data);
-    this.storeService.addPayment(product);
+    // Object.assign(product, data);
+    // this.storeService.addPayment(this.store._name, product);
 
-    this.appService.showToast('Your payment completed.');
+    // this.appService.showToast('Your payment completed.');
   }
 
   ngOnDestroy(): void {

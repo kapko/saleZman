@@ -33,6 +33,8 @@ export class StoreService {
 
   paymentCommentPath: string = '/payment-comments/';
 
+  balanceOfPaymentPath: string = '/balance-of-payment/';
+
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
@@ -87,9 +89,9 @@ export class StoreService {
     ).snapshotChanges();
   }
 
-  getPaidList(limit: number = null): Observable<any> {
+  getPaidList(storeName: string, limit: number = null): Observable<any> {
     return this.db.list(
-      this.paymentPaidListPath,
+      this.paymentPaidListPath + storeName,
       ref => (limit) ? ref.limitToLast(limit) : ref
     ).valueChanges();
   }
@@ -147,8 +149,21 @@ export class StoreService {
     return this.db.object(`payments/${storeName}/${product.key}`).set(product);
   }
 
-  addPayment(product: Object): any {
-    return this.db.list(this.paymentPaidListPath).push(product);
+  addPayment(storeName: string, product: Object): any {
+    return this.db.list(this.paymentPaidListPath + storeName).push(product);
+  }
+
+  // balance
+  setBalance(key: string, balance: number): Promise<any> {
+    return this.db.object(this.balanceOfPaymentPath + key).set(balance);
+  }
+
+  getBalance(key: string): Observable<any> {
+    return this.db.object(this.balanceOfPaymentPath + key).valueChanges();
+  }
+
+  updatePaymentStatus(storeName: string, key: string): Promise<any> {
+    return this.db.object(`payments/${storeName}/${key}/payment_status`).set('done');
   }
 
 }

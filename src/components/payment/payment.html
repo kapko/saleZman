@@ -17,16 +17,19 @@
       <p><b>Supplied date:</b> {{product.supply_date}}</p>
       <p>
         <b>Payment status:</b>
-        <button (click)="payOptionEvent(product, null)">{{ product.payment_status }}</button>
+        <button 
+          [ngClass]="{'done': product.payment_status === 'done'}"
+          (click)="payOptionEvent(product, null)">{{ product.payment_status }}</button>
       </p>
       <p *ngIf="product.payOptions">
         <span class="span cash" (click)="payOptionEvent(product, 'cash')">cash</span>
         <span class="span chq" (click)="payOptionEvent(product, 'chq')">chq</span>
+        <span class="span chq" (click)="payOptionEvent(product, 'neft')">neft</span>
         <span class="span chq cancel" (click)="payOptionEvent(product, 'cancel')">cancel</span>
       </p>
 
       <p
-        *ngIf="product.payOptions && product.cash" 
+        *ngIf="product.payOptions && product.method === 'cash'" 
         class="amount-class">
         <ion-item>
           <ion-label color="primary">Amount</ion-label>
@@ -47,29 +50,18 @@
         <button 
           [disabled]="!cash_amount"
           (click)="submitForm(cash_amount, product)">submit</button>
-        <button 
-          (click)="payOptionEvent(product, 'cancel')"
-          class="cancel">cancel</button>
       </p>
 
       <form 
-        *ngIf="product.payOptions && product.chq"
-        [formGroup]="form"
-        (ngSubmit)="submitForm(form.value, product)"
+        *ngIf="product.payOptions && product.method === 'neft'"
+        [formGroup]="neftForm"
+        (ngSubmit)="submitForm(neftForm.value, product)"
         class="amount-class">
-        <ion-item>
-          <ion-label color="primary">Cheque number </ion-label>
-          <ion-input 
-            text-right
-            type="number"
-            placeholder="number"  
-            formControlName="chq_number"></ion-input>
-        </ion-item>
         <ion-item class="date">
           <ion-label>Cheque date</ion-label>
           <ion-datetime
             [placeholder]="date"
-            formControlName="chq_date"
+            formControlName="neft_date"
             displayFormat="DD/MM/YYYY"></ion-datetime>
         </ion-item>
         <ion-item>
@@ -78,15 +70,7 @@
             text-right
             type="number"
             placeholder="number"
-            formControlName="chq_amount"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary">Bank</ion-label>
-          <ion-input 
-            text-right
-            type="text"
-            placeholder="number"  
-            formControlName="chq_bank"></ion-input>
+            formControlName="neft_amount"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label color="primary">Comment</ion-label>
@@ -97,12 +81,15 @@
             placeholder="text"></ion-input>
         </ion-item>
         <button 
-          [disabled]="form.invalid"
+          [disabled]="neftForm.invalid"
           type="submit">submit</button>
-        <button 
-          class="cancel"
-          (click)="payOptionEvent(product, 'cancel')">cancel</button>
       </form>
+
+      <app-chq 
+        *ngIf="product.payOptions && product.method === 'chq'" 
+        [product]="product" 
+        [store]="store"></app-chq>
+
     </div>
   </ion-card-content>
 </ion-card>
@@ -115,7 +102,7 @@
       <span><b>Bill date: </b>{{payment.bill_date}}</span>
       <span><b>Bill no. </b>{{payment.bill_number}}</span>
       <span><b>Bill amount: </b>{{payment.amount}}</span>
-      <span><b>Paid by: </b>{{(payment.payment_by | getEmail | async)?.email}}</span>
+      <span><b>Collected By: </b>{{(payment.collected_by | getEmail | async)?.email}}</span>
       <span><b>Payment status: </b>PAID</span>
       <span *ngIf="payment.chq_bank"><b>Bank: </b>{{payment.chq_bank}}</span>
       <span><b>Payment date: </b>{{payment.payment_date}}</span>

@@ -36,6 +36,14 @@ export class MyWorkPage {
     // });
   }
 
+  getData(option: any[string]): void {
+    console.log('option', option);
+  }
+
+  sortByDate(date: string): void {
+    console.log('date', date);
+  }
+
   ngOnChanges(): void {
     if (!this.store) return;
     // this.getPaymentList(this.store._name, 5);
@@ -104,7 +112,6 @@ export class MyWorkPage {
   //       // update payment status to 'done'
   //       this.storeService.updatePaymentStatus(this.store._name, product['key']);
   //     }
-
   //     this.keyForRemove.forEach(key => delete product[key]);
 
   //     product['payment_date'] = this.appService.getCurrentDate(true);

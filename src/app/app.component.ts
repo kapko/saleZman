@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, MenuController, NavController } from 'ionic-angular';
+import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
@@ -11,7 +11,6 @@ import { MyWorkPage } from '../pages/my-work/my.work';
 })
 export class MyApp {
   @ViewChild(Nav) nav;
-  @ViewChild('myNav') navCtr: NavController
   rootPage: any;
 
   constructor(
@@ -26,14 +25,21 @@ export class MyApp {
       this.platform.ready().then(() => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
-        this.rootPage = (item && item.uid) ? SearchPage : LoginPage;
+        this.rootPage = MyWorkPage;
+        // this.rootPage = (item && item.uid) ? SearchPage : LoginPage;
       });
     });
   }
 
-  navigate(page: string): void {
-    this.navCtr.push(MyWorkPage);
-    // this.nav.push(MyWorkPage);
+  navigate(page: any): void {
+    let component;
+    switch(page) {
+      case 'MyWorkPage':
+        component = MyWorkPage;
+      break;
+    }
+
+    this.nav.setRoot(component);
     this.menuController.close();
   }
 

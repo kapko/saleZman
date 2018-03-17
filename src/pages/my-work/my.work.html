@@ -1,4 +1,25 @@
 <app-header></app-header>
 <ion-content padding>
-  <h1>my work</h1>
+  <ion-item>
+    <ion-label>My work</ion-label>
+    <ion-select [(ngModel)]="option" multiple="true" (ionChange)="getData(option)">
+      <ion-option>Stock</ion-option>
+      <ion-option>Order</ion-option>
+      <ion-option>Supply</ion-option>
+      <ion-option>Payment</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Date </ion-label>
+    <ion-select [(ngModel)]="date" (ionChange)="sortByDate(date)">
+      <ion-option>Today</ion-option>
+      <ion-option>Yesterday</ion-option>
+      <ion-option>This week</ion-option>
+      <ion-option>This month</ion-option>
+      <ion-option>Any</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <app-my-work-list [data]="['kapko']"></app-my-work-list>
+
 </ion-content>

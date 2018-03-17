@@ -8,4 +8,19 @@ app-my-worked-list {
     background-color: #02b9e2;
     color: #fff;
   }
+
+  div {
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+
+    span {
+      font-size: 12px;
+      flex: 1 0 100%;
+    }
+
+  }
+
 }

@@ -29,7 +29,7 @@ export class NeftComponent {
   ngOnInit():void {
     this.neftForm = new FormGroup({
       neft_date: new FormControl('', Validators.required),
-      neft_amount: new FormControl('', Validators.required),
+      neft_amount: new FormControl('', [Validators.required, Validators.min(1)]),
       comment: new FormControl(''),
     });
   }

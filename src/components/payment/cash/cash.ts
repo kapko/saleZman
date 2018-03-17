@@ -24,7 +24,7 @@ export class CashComponent {
 
   ngOnInit():void {
     this.form = new FormGroup({
-      cash_amount: new FormControl('', Validators.required),
+      cash_amount: new FormControl('', [Validators.required, Validators.min(1)]),
       comment: new FormControl(''),
     });
   }

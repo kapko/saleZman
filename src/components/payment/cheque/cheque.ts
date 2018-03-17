@@ -30,7 +30,7 @@ export class ChqComponent {
     this.form = new FormGroup({
       chq_number: new FormControl('', Validators.required),
       chq_date: new FormControl('', Validators.required),
-      chq_amount: new FormControl('', Validators.required),
+      chq_amount: new FormControl('', [Validators.required, Validators.min(1)]),
       chq_bank: new FormControl('', Validators.required),
       comment: new FormControl(''),
     });

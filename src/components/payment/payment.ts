@@ -4,7 +4,6 @@ import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
 import { Subject } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-payment',
@@ -13,8 +12,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class PaymentComponent {
   @Input() store: storeName;
-
-  neftForm: FormGroup;
 
   billArray: any = ['Last 5 bills', 'Last 10 bills', 'Last 15 bills', 'All'];
 
@@ -30,6 +27,8 @@ export class PaymentComponent {
 
   paidList: any[] = [];
 
+  billIds: any[string] = [];
+
   billValue: string = 'Last 5 bills';
 
   subject: Subject<any>;
@@ -37,6 +36,7 @@ export class PaymentComponent {
   comment: string = '';
 
   cash_amount: number = null;
+
 
   date: string = this.appService.getCurrentDate(true);
 
@@ -48,36 +48,36 @@ export class PaymentComponent {
     this.appService.presentLoading(true);
   }
 
-  ngOnInit():void {
-    this.neftForm = new FormGroup({
-      neft_date: new FormControl('', Validators.required),
-      neft_amount: new FormControl('', Validators.required),
-      comment: new FormControl(''),
-    });
-  }
-
   ngOnChanges(): void {
     if (!this.store) return;
     this.getPaymentList(this.store._name, 5);
-    this.getPaidList(this.store._name, 5);
   }
 
   getPaymentList(storeName: string, limit: number = null): void {
     this.storeService
       .getPaymentList(storeName, limit)
-      .do(() => this.appService.hideLoading())
+      .do((e) => this.appService.hideLoading())
       .takeUntil(this.subject)
-      .map(changes => changes.map(c => ({ key: c.payload.key, ...c.payload.val() })))
+      .map(changes => {
+        this.billIds = [];
+        return changes.map(c => {
+          this.billIds.push(c.payload.key);
+          return ({ key: c.payload.key, ...c.payload.val() });
+        })
+      })
       .subscribe(supplies => {
         this.products = supplies;
         this.rowProducts = supplies;
+        this.getPaidList(this.store._name);
       });
   }
 
-  getPaidList(storeName: string, limit: number): void {
+  getPaidList(storeName: string, limit: number = null): void {
     this.storeService.getPaidList(storeName, limit)
       .takeUntil(this.subject)
-      .map(data => data.reverse())
+      .map(data => {
+        return data.filter(el => this.billIds.includes(el.key) ).reverse();
+      })
       .subscribe(paidItems => this.paidList = paidItems);
   }
 
@@ -124,7 +124,7 @@ export class PaymentComponent {
     let billAmount = (typeof rest === 'number' && rest >= 0) ? rest : product['amount']
     let balance = billAmount - val[amountKey];
 
-    if (+val[amountKey] && balance >= 0) {
+    if (balance >= 0) {
       this.storeService.setBalance(product['key'], balance);
       if (balance === 0) {
         // update payment status to 'done'

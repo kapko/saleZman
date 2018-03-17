@@ -2,7 +2,7 @@
 <ion-content padding>
   <ion-item>
     <ion-label>My work</ion-label>
-    <ion-select [(ngModel)]="option" multiple="true" (ionChange)="getData(option)">
+    <ion-select [(ngModel)]="option" multiple="true">
       <ion-option>Stock</ion-option>
       <ion-option>Order</ion-option>
       <ion-option>Supply</ion-option>
@@ -11,7 +11,7 @@
   </ion-item>
   <ion-item>
     <ion-label>Date </ion-label>
-    <ion-select [(ngModel)]="date" (ionChange)="sortByDate(date)">
+    <ion-select [(ngModel)]="date">
       <ion-option>Today</ion-option>
       <ion-option>Yesterday</ion-option>
       <ion-option>This week</ion-option>
@@ -20,6 +20,6 @@
     </ion-select>
   </ion-item>
 
-  <app-my-work-list [data]="['kapko']"></app-my-work-list>
+  <app-my-worked-list></app-my-worked-list>
 
 </ion-content>

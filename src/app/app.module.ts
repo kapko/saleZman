@@ -32,7 +32,8 @@ import { NeftComponent } from '../components/payment/neft/neft';
 import { CashComponent } from '../components/payment/cash/cash';
 import { PaidListComponent } from '../components/payment/paidlist/paid';
 import { MyWorkPage } from '../pages/my-work/my.work';
-import { MyWorkListComponent } from '../components/my-work-list/my-work-list';
+import { MyService } from '../services/my-service';
+import { MyWorkedListComponent } from '../components/my-worked-list/my-worked-list';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -62,7 +63,7 @@ let fireBaseConfig = {
     CashComponent,
     PaidListComponent,
     MyWorkPage,
-    MyWorkListComponent,
+    MyWorkedListComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,7 +98,7 @@ let fireBaseConfig = {
     CashComponent,
     PaidListComponent,
     MyWorkPage,
-    MyWorkListComponent,
+    MyWorkedListComponent,
   ],
   providers: [
     StatusBar,
@@ -106,6 +107,7 @@ let fireBaseConfig = {
     StoreService,
     CityService,
     AuthService,
+    MyService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

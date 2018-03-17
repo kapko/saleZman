@@ -25,8 +25,8 @@ export class MyApp {
       this.platform.ready().then(() => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
-        this.rootPage = MyWorkPage;
-        // this.rootPage = (item && item.uid) ? SearchPage : LoginPage;
+        // this.rootPage = MyWorkPage;
+        this.rootPage = (item && item.uid) ? SearchPage : LoginPage;
       });
     });
   }

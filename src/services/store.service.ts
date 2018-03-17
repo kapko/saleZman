@@ -42,9 +42,7 @@ export class StoreService {
   ) {
     this.authService
       .authUserId()
-      .subscribe(item => {
-        this.userId = (item) ? item.uid : null;
-      });
+      .subscribe(item => this.userId = (item) ? item.uid : null);
   }
 
   setUserStoreName(storeData: storeName): Promise<void> {

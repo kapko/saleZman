@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { storeName } from '../interfaces/city.store';
 import { AppService } from './app-service';
-import { AuthService } from './auth.service';
 import { StoreService } from './store.service';
 
 @Injectable()
@@ -12,7 +10,11 @@ export class MyService {
 
   mySuppliedDataPath: string = '/my-work-supply/';
 
-  myPaidDataPath: string = '/my-work-supply/';
+  myPaidDataPath: string = '/my-work-paid/';
+
+  myOrderedDataPath: string = '/my-work-ordered/';
+
+  myPaymentDataPath: string = '/my-work-payment/';
 
   constructor(
     private db: AngularFireDatabase,
@@ -20,16 +22,20 @@ export class MyService {
     private storeService: StoreService,
   ) { }
 
-  // setUserStoreName(storeData: storeName): Promise<void> {
-  //   return this.db.object(this.userStoreNamePath + this.userId).update(storeData);
-  // }
-
   getMySuppliedData(): Observable<any> {
     return this.db.list(this.mySuppliedDataPath + this.userId).valueChanges();
   }
 
   getMyPaidData(): Observable<any> {
     return this.db.list(this.myPaidDataPath + this.userId).valueChanges();
+  }
+
+  getMyOrderedData(): Observable<any> {
+    return this.db.list(this.myOrderedDataPath + this.userId).valueChanges();
+  }
+
+  getMyPaymentData(): Observable<any> {
+    return this.db.list(this.myPaymentDataPath + this.userId).valueChanges();
   }
 
 }

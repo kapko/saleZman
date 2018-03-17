@@ -2,14 +2,18 @@
 <ion-content padding>
   <ion-item>
     <ion-label>My work</ion-label>
-    <ion-select [(ngModel)]="option" multiple="true">
-      <ion-option>Stock</ion-option>
-      <ion-option>Order</ion-option>
-      <ion-option>Supply</ion-option>
-      <ion-option>Payment</ion-option>
+    <ion-select 
+      [(ngModel)]="options" 
+      multiple="true"
+      (ionChange)="optionsUpdate(options)">
+      <ion-option>stock</ion-option>
+      <ion-option>order</ion-option>
+      <ion-option>supply</ion-option>
+      <ion-option>payment</ion-option>
     </ion-select>
   </ion-item>
-  <ion-item>
+
+  <ion-item class="date">
     <ion-label>Date </ion-label>
     <ion-select [(ngModel)]="date">
       <ion-option>Today</ion-option>
@@ -20,6 +24,6 @@
     </ion-select>
   </ion-item>
 
-  <app-my-worked-list></app-my-worked-list>
+  <app-my-worked-list [date]="date" [options]="options"></app-my-worked-list>
 
 </ion-content>

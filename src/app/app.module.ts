@@ -31,7 +31,7 @@ import { ChqComponent } from '../components/payment/cheque/cheque';
 import { NeftComponent } from '../components/payment/neft/neft';
 import { CashComponent } from '../components/payment/cash/cash';
 import { PaidListComponent } from '../components/payment/paidlist/paid';
-import { MyWorkPage } from '../pages/my-work/my.work';
+import { MyWorkPage } from '../pages/my-work/my-work';
 import { MyService } from '../services/my-service';
 import { MyWorkedListComponent } from '../components/my-worked-list/my-worked-list';
 

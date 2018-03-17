@@ -124,7 +124,7 @@ export class PaymentComponent {
     let billAmount = (typeof rest === 'number' && rest >= 0) ? rest : product['amount']
     let balance = billAmount - val[amountKey];
 
-    if (balance >= 0) {
+    if (+val[amountKey] && balance >= 0) {
       this.storeService.setBalance(product['key'], balance);
       if (balance === 0) {
         // update payment status to 'done'

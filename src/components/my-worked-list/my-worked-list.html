@@ -1,20 +1,24 @@
-<ion-item-group *ngIf="(options.includes('stock'))">
-  <ion-item-divider color="light">Stock diary</ion-item-divider>
+<ion-item-group *ngIf="options.includes('stock') && supplyList.length">
+  <ion-item-divider color="light">Stock diary <span>Total: {{supplyList.length}}</span></ion-item-divider>
+
   <ion-card *ngFor="let product of supplyList">
     <ion-card-content>
       <div>
-        <span><b>Name: </b>{{product.name}} {{product.Weight}}</span>
+        <i><b>Name: </b>{{product.name}} {{product.Weight}}</i>
         <span><b>Bill date: </b>{{product.date}}</span>
         <span><b>Bill no. </b>{{product.bill_number}}</span>
         <span><b>Count: </b>{{product.bill_number}}</span>
         <span><b>Price: </b>{{product.Price}}</span>
+        <span><b>TAX: </b>{{product.TAX}}</span>
+        <span><b>MRP: </b>{{product.MRP}}</span>
+        <span><b>Life: </b>{{product.Life}}</span>
       </div>
     </ion-card-content>
   </ion-card>
 </ion-item-group>
 
-<ion-item-group *ngIf="(options.includes('order'))">
-  <ion-item-divider color="light">Supply diary</ion-item-divider>
+<ion-item-group *ngIf="options.includes('order') && orderedList.length">
+  <ion-item-divider color="light">Supply diary <span>Total: {{orderedList.length}}</span></ion-item-divider>
   <ion-card *ngFor="let product of orderedList">
     <ion-card-content>
       <div>
@@ -23,13 +27,16 @@
         <span><b>Bill no. </b>{{product.bill_number}}</span>
         <span><b>Count: </b>{{product.bill_number}}</span>
         <span><b>Price: </b>{{product.Price}}</span>
+        <span><b>TAX: </b>{{product.TAX}}</span>
+        <span><b>MRP: </b>{{product.MRP}}</span>
+        <span><b>Life: </b>{{product.Life}}</span>
       </div>
     </ion-card-content>
   </ion-card>
 </ion-item-group>
 
-<ion-item-group *ngIf="(options.includes('supply'))">
-  <ion-item-divider color="light">Order diary</ion-item-divider>
+<ion-item-group *ngIf="options.includes('supply') && paymentList.length">
+  <ion-item-divider color="light">Order diary <span>Total: {{paymentList.length}}</span></ion-item-divider>
   <ion-card *ngFor="let product of paymentList">
     <ion-card-content>
       <div>
@@ -38,13 +45,14 @@
         <span><b>Bill no. </b>{{product.bill_number}}</span>
         <span><b>Count: </b>{{product.bill_number}}</span>
         <span><b>Price: </b>{{product.Price}}</span>
+        <i><b>Ordered by: </b>{{(product.order_by | getEmail | async)?.email}}</i>
       </div>
     </ion-card-content>
   </ion-card>
 </ion-item-group>
 
-<ion-item-group *ngIf="(options.includes('payment'))">
-  <ion-item-divider color="light">Payment diary</ion-item-divider>
+<ion-item-group *ngIf="options.includes('payment') && paidList.length">
+  <ion-item-divider color="light">Payment diary <span>Total: {{paidList.length}}</span></ion-item-divider>
   <ion-card *ngFor="let product of paidList">
     <ion-card-content>
       <div>
@@ -56,5 +64,6 @@
       </div>
     </ion-card-content>
   </ion-card>
-</ion-item-group> 
-  
+</ion-item-group>
+
+<h4 text-center *ngIf="!paidList.length && !supplyList.length && !orderedList.length && !paymentList.length">You don't have any works</h4>

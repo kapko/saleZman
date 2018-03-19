@@ -71,6 +71,52 @@ export class AppService {
 
     let date = `${dd}.${mm}.${day.getFullYear()}`;
 
-    return (withoutDate) ? date : `${date} ${days[day.getDay()]}`;
+    return (withoutDate) ? date : `${date} ${days[day.getDay() - 1]}`;
   }
+
+  getDate(date): string {
+    let dd = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+    let m = date.getMonth()+1;
+    let mm = (m < 10) ? '0' + m : date.getMonth()+1;
+    return `${dd}-${mm}-${date.getFullYear()}`;
+  }
+
+  getMonday(d): Date {
+    d = new Date(d);
+    var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1);
+    return new Date(d.setDate(diff));
+  }
+
+  getSunday(date: Date): Date {
+    return new Date(date.setDate(date.getDate() - date.getDay()));
+  }
+
+  getYesterday(date: Date): Date {
+    return new Date(date.setDate(date.getDate() - 1));
+  }
+
+  getFirstDayOfMonth(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  }
+
+  getLastDayOfMonth(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  }
+
+  getDates(startDate: Date, endDate: Date) {
+    var dates = [],
+        currentDate = startDate,
+        addDays = function(days) {
+          var date = new Date(this.valueOf());
+          date.setDate(date.getDate() + days);
+          return date;
+        };
+    while (currentDate <= endDate) {
+      dates.push(this.getDate(currentDate));
+      currentDate = addDays.call(currentDate, 1);
+    }
+    return dates;
+  };
+
 }

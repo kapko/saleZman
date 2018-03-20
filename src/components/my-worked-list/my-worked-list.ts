@@ -14,7 +14,7 @@ export class MyWorkedListComponent {
   stockList: any[] = [];
   orderedList: any[] = [];
   paymentList: any[] = [];
-  paidList: any[] = [];
+  supplyList: any[] = [];
   choosenDates: any[string] = [];
 
   constructor(
@@ -75,14 +75,14 @@ export class MyWorkedListComponent {
       .take(1)
       .map(changes => this.getKeys(changes))
       .subscribe(list => {
-        this.paymentList = list;
+        this.supplyList = list;
       });
 
     this.myService.getPaymentData()
       .take(1)
       .map(changes => this.getKeys(changes))
       .subscribe(list => {
-        this.paidList = list;
+        this.paymentList = list;
       });
   }
 

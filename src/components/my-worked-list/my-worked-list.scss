@@ -7,7 +7,10 @@ app-my-worked-list {
   ion-item-divider.item-divider {
     background-color: #02b9e2;
     color: #fff;
-    margin-bottom: -7px;
+
+    div.item-inner {
+      padding-top: 10px;
+    }
 
     span {
       display: block;
@@ -22,8 +25,13 @@ app-my-worked-list {
 
   }
 
+  h4 {
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+  }
+
   div {
-    padding-top: 10px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -39,6 +47,10 @@ app-my-worked-list {
       padding-bottom: 3px;
     }
 
+  }
+
+  .product-parent {
+    padding-top: 10px;
   }
 
 }

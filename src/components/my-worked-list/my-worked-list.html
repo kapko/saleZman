@@ -1,69 +1,93 @@
-<ion-item-group *ngIf="options.includes('stock') && supplyList.length">
-  <ion-item-divider color="light">Stock diary <span>Total: {{supplyList.length}}</span></ion-item-divider>
+<ion-item-group>
+  <ion-item-divider>Stock diary <span>Total: {{stockList.length}}</span></ion-item-divider>
 
-  <ion-card *ngFor="let product of supplyList">
-    <ion-card-content>
-      <div>
-        <i><b>Name: </b>{{product.name}} {{product.Weight}}</i>
-        <span><b>Bill date: </b>{{product.date}}</span>
-        <span><b>Bill no. </b>{{product.bill_number}}</span>
-        <span><b>Count: </b>{{product.bill_number}}</span>
-        <span><b>Price: </b>{{product.Price}}</span>
-        <span><b>TAX: </b>{{product.TAX}}</span>
-        <span><b>MRP: </b>{{product.MRP}}</span>
-        <span><b>Life: </b>{{product.Life}}</span>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <div class="product-parent" *ngFor="let product of stockList">
+    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'date'; let i = index;">
+      <h4 *ngIf="i === 0">{{ product.key }}</h4>
+      <ion-card>
+        <ion-card-content>
+          <div>
+            <i><b>Name: </b>{{prod.name}} {{prod.Weight}}</i>
+            <span><b>Bill date: </b>{{prod.date}}</span>
+            <span><b>Bill no. </b>{{prod.bill_number}}</span>
+            <span><b>Count: </b>{{prod.bill_number}}</span>
+            <span><b>Price: </b>{{prod.Price}}</span>
+            <span><b>TAX: </b>{{prod.TAX}}</span>
+            <span><b>MRP: </b>{{prod.MRP}}</span>
+            <span><b>Life: </b>{{prod.Life}}</span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-item-group>
 
-<ion-item-group *ngIf="options.includes('order') && orderedList.length">
-  <ion-item-divider color="light">Supply diary <span>Total: {{orderedList.length}}</span></ion-item-divider>
-  <ion-card *ngFor="let product of orderedList">
-    <ion-card-content>
-      <div>
-        <span><b>Name: </b>{{product.name}} {{product.Weight}}</span>
-        <span><b>Bill date: </b>{{product.date}}</span>
-        <span><b>Bill no. </b>{{product.bill_number}}</span>
-        <span><b>Count: </b>{{product.bill_number}}</span>
-        <span><b>Price: </b>{{product.Price}}</span>
-        <span><b>TAX: </b>{{product.TAX}}</span>
-        <span><b>MRP: </b>{{product.MRP}}</span>
-        <span><b>Life: </b>{{product.Life}}</span>
-      </div>
-    </ion-card-content>
-  </ion-card>
+<ion-item-group>
+  <ion-item-divider>Supply diary <span>Total: {{orderedList.length}}</span></ion-item-divider>
+  <div class="product-parent" *ngFor="let product of orderedList">
+
+    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'date'; let i = index;">
+      <h4 *ngIf="i === 0">{{ product.key }}</h4>
+      <ion-card>
+        <ion-card-content>
+          <div>
+            <span><b>Name: </b>{{prod.name}} {{prod.Weight}}</span>
+            <span><b>Bill date: </b>{{prod.date}}</span>
+            <span><b>Bill no. </b>{{prod.bill_number}}</span>
+            <span><b>Count: </b>{{prod.bill_number}}</span>
+            <span><b>Price: </b>{{prod.Price}}</span>
+            <span><b>TAX: </b>{{prod.TAX}}</span>
+            <span><b>MRP: </b>{{prod.MRP}}</span>
+            <span><b>Life: </b>{{prod.Life}}</span>
+          </div>
+        </ion-card-content>
+      </ion-card> 
+    </div>
+
+  </div>
 </ion-item-group>
 
-<ion-item-group *ngIf="options.includes('supply') && paymentList.length">
+<ion-item-group>
   <ion-item-divider color="light">Order diary <span>Total: {{paymentList.length}}</span></ion-item-divider>
-  <ion-card *ngFor="let product of paymentList">
-    <ion-card-content>
-      <div>
-        <span><b>Name: </b>{{product.name}} {{product.Weight}}</span>
-        <span><b>Bill date: </b>{{product.date}}</span>
-        <span><b>Bill no. </b>{{product.bill_number}}</span>
-        <span><b>Count: </b>{{product.bill_number}}</span>
-        <span><b>Price: </b>{{product.Price}}</span>
-        <i><b>Ordered by: </b>{{(product.order_by | getEmail | async)?.email}}</i>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <div class="product-parent" *ngFor="let product of paymentList">
+
+    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'payment_date'">
+      <h4 *ngIf="i === 0">Store: {{product.key}}</h4>
+      <ion-card>
+        <ion-card-content>
+          <div>
+            <span><b>Name: </b>{{prod.name}} {{prod.Weight}}</span>
+            <span><b>Bill date: </b>{{prod.date}}</span>
+            <span><b>Bill no. </b>{{prod.bill_number}}</span>
+            <span><b>Count: </b>{{prod.bill_number}}</span>
+            <span><b>Price: </b>{{prod.Price}}</span>
+            <i><b>Ordered by: </b>{{(prod.order_by | getEmail | async)?.email}}</i>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+  </div>
 </ion-item-group>
 
-<ion-item-group *ngIf="options.includes('payment') && paidList.length">
+<ion-item-group>
   <ion-item-divider color="light">Payment diary <span>Total: {{paidList.length}}</span></ion-item-divider>
-  <ion-card *ngFor="let product of paidList">
-    <ion-card-content>
-      <div>
-        <span><b>Name: </b>{{product.name}} {{product.Weight}}</span>
-        <span><b>Bill date: </b>{{product.date}}</span>
-        <span><b>Bill no. </b>{{product.bill_number}}</span>
-        <span><b>Count: </b>{{product.bill_number}}</span>
-        <span><b>Price: </b>{{product.Price}}</span>
-      </div>
-    </ion-card-content>
-  </ion-card>
-</ion-item-group>
+  <div class="product-parent" *ngFor="let product of paidList">
 
-<h4 text-center *ngIf="!paidList.length && !supplyList.length && !orderedList.length && !paymentList.length">You don't have any works</h4>
+    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'supply_date'">
+      <h4 *ngIf="index === 0">Store: {{product.key}}</h4>
+      <ion-card>
+        <ion-card-content>
+          <div>
+            <span><b>Name: </b>{{prod.name}} {{prod.Weight}}</span>
+            <span><b>Bill date: </b>{{prod.date}}</span>
+            <span><b>Bill no. </b>{{prod.bill_number}}</span>
+            <span><b>Count: </b>{{prod.bill_number}}</span>
+            <span><b>Price: </b>{{prod.Price}}</span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+  </div>
+</ion-item-group>

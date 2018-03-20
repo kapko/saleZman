@@ -11,7 +11,7 @@ export class MyWorkedListComponent {
   @Input() options: any[string];
   @Input() date: string;
 
-  supplyList: any[] = [];
+  stockList: any[] = [];
   orderedList: any[] = [];
   paymentList: any[] = [];
   paidList: any[] = [];
@@ -51,45 +51,43 @@ export class MyWorkedListComponent {
           );
           break;
         default: 
-          this.choosenDates = null;
+          this.choosenDates = [];
       }
       this.getAllData(this.choosenDates);
     }
   }
 
   getAllData(date: any[string] = null): void {
-    this.myService.getMySuppliedData()
+    this.myService.getStockData()
       .take(1)
       .do(() => this.appService.hideLoading())
-      .map(data => this.filterByDate(data, date))
-      .subscribe(list => {
-        this.supplyList = list;
-      });
+      .map(changes => this.getKeys(changes) )
+      .subscribe(list => this.stockList = list);
     
-    this.myService.getMyOrderedData()
+    this.myService.getOrderedData()
       .take(1)
-      .map(data => this.filterByDate(data, date))
+      .map(changes => this.getKeys(changes))
       .subscribe(list => {
         this.orderedList = list;
       });
     
-    this.myService.getMyPaymentData()
+    this.myService.getSupplyData()
       .take(1)
-      .map(data => this.filterByDate(data, date))
+      .map(changes => this.getKeys(changes))
       .subscribe(list => {
         this.paymentList = list;
       });
 
-    this.myService.getMyPaidData()
+    this.myService.getPaymentData()
       .take(1)
-      .map(data => this.filterByDate(data, date))
+      .map(changes => this.getKeys(changes))
       .subscribe(list => {
         this.paidList = list;
       });
   }
 
-  filterByDate(data, date): any[] {
-    return (date) ? data.filter(el => (this.choosenDates.includes(el.date))) : data;
+  getKeys(data): any {
+    return data.map(c => ({ key: c.payload.key, ...c.payload.val() }));
   }
 
 }

@@ -34,6 +34,8 @@ import { PaidListComponent } from '../components/payment/paidlist/paid';
 import { MyWorkPage } from '../pages/my-work/my-work';
 import { MyService } from '../services/my-service';
 import { MyWorkedListComponent } from '../components/my-worked-list/my-worked-list';
+import { KeysPipe } from '../pipe/keys';
+import { DatePipe } from '../pipe/dateFilter';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -64,6 +66,8 @@ let fireBaseConfig = {
     PaidListComponent,
     MyWorkPage,
     MyWorkedListComponent,
+    KeysPipe,
+    DatePipe,
   ],
   imports: [
     BrowserModule,

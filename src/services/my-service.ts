@@ -8,13 +8,13 @@ import { StoreService } from './store.service';
 export class MyService {
   userId: string = this.storeService.userId;
 
-  mySuppliedDataPath: string = '/my-work-supply/';
+  myStockPath: string = '/my-work-stock/';
 
-  myPaidDataPath: string = '/my-work-paid/';
+  myPaymentPath: string = '/my-work-payment/';
 
-  myOrderedDataPath: string = '/my-work-ordered/';
+  myOrderedPath: string = '/my-work-ordered/';
 
-  myPaymentDataPath: string = '/my-work-payment/';
+  mySupplyPath: string = '/my-work-supply/';
 
   constructor(
     private db: AngularFireDatabase,
@@ -22,20 +22,24 @@ export class MyService {
     private storeService: StoreService,
   ) { }
 
-  getMySuppliedData(): Observable<any> {
-    return this.db.list(this.mySuppliedDataPath + this.userId).valueChanges();
+  getStockData(): Observable<any> {
+    return this.db.list(this.myStockPath + this.userId).snapshotChanges();
   }
 
-  getMyPaidData(): Observable<any> {
-    return this.db.list(this.myPaidDataPath + this.userId).valueChanges();
+  // .map(changes => 
+  //   changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+  // )
+
+  getPaymentData(): Observable<any> {
+    return this.db.list(this.myPaymentPath + this.userId).snapshotChanges();
   }
 
-  getMyOrderedData(): Observable<any> {
-    return this.db.list(this.myOrderedDataPath + this.userId).valueChanges();
+  getOrderedData(): Observable<any> {
+    return this.db.list(this.myOrderedPath + this.userId).snapshotChanges();
   }
 
-  getMyPaymentData(): Observable<any> {
-    return this.db.list(this.myPaymentDataPath + this.userId).valueChanges();
+  getSupplyData(): Observable<any> {
+    return this.db.list(this.mySupplyPath + this.userId).snapshotChanges();
   }
 
 }

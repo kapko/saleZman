@@ -35,7 +35,7 @@ import { MyWorkPage } from '../pages/my-work/my-work';
 import { MyService } from '../services/my-service';
 import { MyWorkedListComponent } from '../components/my-worked-list/my-worked-list';
 import { KeysPipe } from '../pipe/keys';
-import { DatePipe } from '../pipe/dateFilter';
+import { DatePipe } from '../pipe/datePipe';
 import { GetShopNumberPipe } from '../pipe/getTotalShops';
 
 let fireBaseConfig = {

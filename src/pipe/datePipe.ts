@@ -8,7 +8,13 @@ import { Injectable, Pipe } from '@angular/core';
 export class DatePipe {
   transform(products: any, dates: any[string], key: string): any {
     if (dates.length) {
-      return products.filter(el => (dates.includes(el[key])))
+      
+      return products.filter(el => 
+        (el[key].match('.'))
+          ? dates.includes(el[key].replace(/\./g, '-'))
+          : dates.includes(el[key])
+      )
+
     } else {
       return products;
     }

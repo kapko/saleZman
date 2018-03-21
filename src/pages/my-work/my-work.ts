@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 
 export class MyWorkPage {
   options: any[string] = ['stock', 'order', 'supply', 'payment'];
-
   constructor() { }
 
   optionsUpdate(options: any[string]): void {

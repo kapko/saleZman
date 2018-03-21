@@ -25,6 +25,10 @@ export class MyWorkedListComponent {
     this.getAllData();
   }
 
+  ngOnInit():void {
+    this.choosenDates.push(this.appService.getDate(new Date()).replace(/\./g, '-'));
+  }
+
   ngOnChanges(): void {
     if (this.date) {
       this.appService.presentLoading(true);

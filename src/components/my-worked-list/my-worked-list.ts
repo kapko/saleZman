@@ -65,33 +65,25 @@ export class MyWorkedListComponent {
     this.myService.getStockData()
       .take(1)
       .do(() => this.appService.hideLoading())
-      .map(changes => this.getKeys(changes) )
       .subscribe(list => this.stockList = list);
     
     this.myService.getOrderedData()
       .take(1)
-      .map(changes => this.getKeys(changes))
       .subscribe(list => {
         this.orderedList = list;
       });
     
     this.myService.getSupplyData()
       .take(1)
-      .map(changes => this.getKeys(changes))
       .subscribe(list => {
         this.supplyList = list;
       });
 
     this.myService.getPaymentData()
       .take(1)
-      .map(changes => this.getKeys(changes))
       .subscribe(list => {
         this.paymentList = list;
       });
-  }
-
-  getKeys(data): any {
-    return data.map(c => ({ key: c.payload.key, ...c.payload.val() }));
   }
 
 }

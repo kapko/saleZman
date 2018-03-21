@@ -6,7 +6,7 @@ import { StoreService } from './store.service';
 
 @Injectable()
 export class MyService {
-  userId: string = this.storeService.userId;
+  userId: string;
 
   myStockPath: string = '/my-work-stock/';
 
@@ -22,24 +22,32 @@ export class MyService {
     private storeService: StoreService,
   ) { }
 
-  getStockData(): Observable<any> {
-    return this.db.list(this.myStockPath + this.userId).snapshotChanges();
+  getStockData(userId: string = this.storeService.userId): Observable<any> {
+    return this.db.list(this.myStockPath + userId)
+      .snapshotChanges()
+      .map(changes => this.getKeys(changes));
   }
 
-  // .map(changes => 
-  //   changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-  // )
-
-  getPaymentData(): Observable<any> {
-    return this.db.list(this.myPaymentPath + this.userId).snapshotChanges();
+  getPaymentData(userId: string = this.storeService.userId): Observable<any> {
+    return this.db.list(this.myPaymentPath + userId)
+      .snapshotChanges()
+      .map(changes => this.getKeys(changes));
   }
 
-  getOrderedData(): Observable<any> {
-    return this.db.list(this.myOrderedPath + this.userId).snapshotChanges();
+  getOrderedData(userId: string = this.storeService.userId): Observable<any> {
+    return this.db.list(this.myOrderedPath + userId)
+      .snapshotChanges()
+      .map(changes => this.getKeys(changes));
   }
 
-  getSupplyData(): Observable<any> {
-    return this.db.list(this.mySupplyPath + this.userId).snapshotChanges();
+  getSupplyData(userId: string = this.storeService.userId): Observable<any> {
+    return this.db.list(this.mySupplyPath + userId)
+      .snapshotChanges()
+      .map(changes => this.getKeys(changes));
+  }
+
+  getKeys(data): any {
+    return data.map(c => ({ key: c.payload.key, ...c.payload.val() }));
   }
 
 }

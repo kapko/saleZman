@@ -1,5 +1,5 @@
 <ion-item-group *ngIf="options.includes('stock')">
-  <ion-item-divider>Stock diary <span>Total: {{stockList.length}}</span></ion-item-divider>
+  <ion-item-divider>Stock diary <span>Total: {{stockList | getShopNumber}}</span></ion-item-divider>
 
   <div class="product-parent" *ngFor="let product of stockList">
     <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'date'; let i = index;">
@@ -19,7 +19,7 @@
 </ion-item-group>
 
 <ion-item-group *ngIf="options.includes('order')">
-  <ion-item-divider>Ordered diary <span>Total: {{orderedList.length}}</span></ion-item-divider>
+  <ion-item-divider>Ordered diary <span>Total: {{orderedList | getShopNumber}}</span></ion-item-divider>
 
   <div class="product-parent" *ngFor="let product of orderedList">
     <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'date'; let i = index;">
@@ -44,7 +44,7 @@
 </ion-item-group>
 
 <ion-item-group  *ngIf="options.includes('supply')">
-  <ion-item-divider color="light">Supply diary <span>Total: {{supplyList.length}}</span></ion-item-divider>
+  <ion-item-divider color="light">Supply diary <span>Total: {{supplyList | getShopNumber}}</span></ion-item-divider>
 
   <div class="product-parent" *ngFor="let product of supplyList">
     <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'supply_date'; let i = index;">
@@ -68,7 +68,7 @@
 </ion-item-group>
 
 <ion-item-group  *ngIf="options.includes('payment')">
-  <ion-item-divider color="light">Payment diary <span>Total: {{paymentList.length}}</span></ion-item-divider>
+  <ion-item-divider color="light">Payment diary <span>Total: {{paymentList | getShopNumber}}</span></ion-item-divider>
 
   <div class="product-parent" *ngFor="let product of paymentList">
     <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'payment_date'; let i = index;">

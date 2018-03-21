@@ -36,6 +36,7 @@ import { MyService } from '../services/my-service';
 import { MyWorkedListComponent } from '../components/my-worked-list/my-worked-list';
 import { KeysPipe } from '../pipe/keys';
 import { DatePipe } from '../pipe/dateFilter';
+import { GetShopNumberPipe } from '../pipe/getTotalShops';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -68,6 +69,7 @@ let fireBaseConfig = {
     MyWorkedListComponent,
     KeysPipe,
     DatePipe,
+    GetShopNumberPipe,
   ],
   imports: [
     BrowserModule,

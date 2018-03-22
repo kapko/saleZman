@@ -88,18 +88,20 @@ export class MyWorkedListComponent {
     this.myService.getPaymentData()
       .take(1)
       .map(data => {
-        this.priceValue['payment'] = this.getBillAmount(this.filterByDate(data, 'payment_date'));
-        return this.grupeByStoreName(this.filterByDate(data, 'payment_date'));
+        let filtered = this.filterByDate(data, 'payment_date');
+        this.priceValue['payment'] = this.getBillAmount(filtered);
+        return this.grupeByStoreName(filtered);
       })
       .subscribe(list => {
         this.paymentList = list;
       });
-    
+
     this.myService.getSupplyData()
       .take(1)
       .map(data => {
-        this.priceValue['supply'] = this.getBillAmount(this.filterByDate(data, 'payment_date'));
-        return this.grupeByStoreName(this.filterByDate(data, 'supply_date'));
+        let filtered = this.filterByDate(data, 'supply_date');
+        this.priceValue['supply'] = this.getBillAmount(filtered);
+        return this.grupeByStoreName(filtered);
       })
       .subscribe(list => {
         this.supplyList = list;

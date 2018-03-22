@@ -12,10 +12,12 @@ export class MyWorkedListComponent {
   @Input() date: string;
 
   stockList: any[] = [];
+  objectKeys = Object.keys;
   orderedList: any[] = [];
   paymentList: any[] = [];
   supplyList: any[] = [];
   choosenDates: any[string] = [];
+  priceValue: Object = {};
 
   constructor(
     private myService: MyService,
@@ -65,25 +67,81 @@ export class MyWorkedListComponent {
     this.myService.getStockData()
       .take(1)
       .do(() => this.appService.hideLoading())
-      .subscribe(list => this.stockList = list);
+      .map(data => {
+        this.priceValue['stock'] = this.getPrice(this.filterByDate(data));
+        return this.grupeByStoreName(this.filterByDate(data));
+      })
+      .subscribe(list => {
+        this.stockList = list;
+      });
     
     this.myService.getOrderedData()
       .take(1)
+      .map(data => {
+        this.priceValue['ordered'] = this.getPrice(this.filterByDate(data));
+        return this.grupeByStoreName(this.filterByDate(data));
+      })
       .subscribe(list => {
         this.orderedList = list;
       });
     
-    this.myService.getSupplyData()
-      .take(1)
-      .subscribe(list => {
-        this.supplyList = list;
-      });
-
     this.myService.getPaymentData()
       .take(1)
+      .map(data => {
+        this.priceValue['payment'] = this.getBillAmount(this.filterByDate(data, 'payment_date'));
+        return this.grupeByStoreName(this.filterByDate(data, 'payment_date'));
+      })
       .subscribe(list => {
         this.paymentList = list;
       });
+    
+    this.myService.getSupplyData()
+      .take(1)
+      .map(data => {
+        this.priceValue['supply'] = this.getBillAmount(this.filterByDate(data, 'payment_date'));
+        return this.grupeByStoreName(this.filterByDate(data, 'supply_date'));
+      })
+      .subscribe(list => {
+        this.supplyList = list;
+      });
+    
+  }
+
+  filterByDate(data:any, key: string = 'date'): any {
+    return data.filter(el => 
+      (el[key].match('.'))
+        ? this.choosenDates.includes(el[key].replace(/\./g, '-'))
+        : this.choosenDates.includes(el[key])
+    );
+  }
+
+  grupeByStoreName(list): any {
+    let data = [];
+    var group_to_values = list.reduce(function (obj, item) {
+        obj[item.store_name] = obj[item.store_name] || [];
+        obj[item.store_name].push(item);
+        return obj;
+    }, []);
+    for (let i in group_to_values) {
+      let ob = {};
+      ob['name'] = i;
+      ob['data'] = group_to_values[i];
+      data.push(ob);
+    }
+
+    return data;
+  }
+
+  getPrice(data): number {
+    let totalValue = 0;
+    data.forEach(prod => totalValue += prod.Price * prod.counter);
+    return totalValue;
+  }
+
+  getBillAmount(data): number {
+    let amount = 0;
+    data.forEach(el => amount += +el.amount);
+    return amount;
   }
 
 }

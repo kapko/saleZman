@@ -23,31 +23,19 @@ export class MyService {
   ) { }
 
   getStockData(userId: string = this.storeService.userId): Observable<any> {
-    return this.db.list(this.myStockPath + userId)
-      .snapshotChanges()
-      .map(changes => this.getKeys(changes));
+    return this.db.list(this.myStockPath + userId).valueChanges();
   }
 
   getPaymentData(userId: string = this.storeService.userId): Observable<any> {
-    return this.db.list(this.myPaymentPath + userId)
-      .snapshotChanges()
-      .map(changes => this.getKeys(changes));
+    return this.db.list(this.myPaymentPath + userId).valueChanges();
   }
 
   getOrderedData(userId: string = this.storeService.userId): Observable<any> {
-    return this.db.list(this.myOrderedPath + userId)
-      .snapshotChanges()
-      .map(changes => this.getKeys(changes));
+    return this.db.list(this.myOrderedPath + userId).valueChanges();
   }
 
   getSupplyData(userId: string = this.storeService.userId): Observable<any> {
-    return this.db.list(this.mySupplyPath + userId)
-      .snapshotChanges()
-      .map(changes => this.getKeys(changes));
-  }
-
-  getKeys(data): any {
-    return data.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    return this.db.list(this.mySupplyPath + userId).valueChanges();
   }
 
 }

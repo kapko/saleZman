@@ -1,9 +1,10 @@
 <ion-item-group *ngIf="options.includes('stock')">
-  <ion-item-divider>Stock diary <span>Total: {{stockList | getShopNumber}}</span></ion-item-divider>
-
+  <ion-item-divider>Stock diary <span>Total: {{stockList.length}} Value: {{priceValue.stock}}</span></ion-item-divider>
+  <h4 *ngIf="!stockList.length"><i>don't have any prudcts</i></h4>
+  
   <div class="product-parent" *ngFor="let product of stockList">
-    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'date'; let i = index;">
-      <h4 *ngIf="i === 0">{{ product.key }}</h4>
+    <h4>{{product.name}}</h4>
+    <div *ngFor="let prod of product.data">
       <ion-card>
         <ion-card-content>
           <div>
@@ -12,18 +13,19 @@
             <span><b>Price: </b>{{prod.Price}}</span>
           </div>
         </ion-card-content>
-      </ion-card>
+      </ion-card> 
     </div>
   </div>
 
 </ion-item-group>
 
 <ion-item-group *ngIf="options.includes('order')">
-  <ion-item-divider>Ordered diary <span>Total: {{orderedList | getShopNumber}}</span></ion-item-divider>
+  <ion-item-divider>Ordered diary <span>Total: {{orderedList.length}} Value: {{priceValue.ordered}}</span></ion-item-divider>
+  <h4 *ngIf="!orderedList.length"><i>don't have any prudcts</i></h4>
 
   <div class="product-parent" *ngFor="let product of orderedList">
-    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'date'; let i = index;">
-      <h4 *ngIf="i === 0">{{ product.key }}</h4>
+    <h4>{{product.name}}</h4>
+    <div *ngFor="let prod of product.data">
       <ion-card>
         <ion-card-content>
           <div>
@@ -39,11 +41,12 @@
 </ion-item-group>
 
 <ion-item-group  *ngIf="options.includes('supply')">
-  <ion-item-divider color="light">Supply diary <span>Total: {{supplyList | getShopNumber}}</span></ion-item-divider>
+  <ion-item-divider color="light">Supply diary <span>Total: {{supplyList.length}} Price: {{priceValue.supply}}</span></ion-item-divider>
+  <h4 *ngIf="!supplyList.length"><i>don't have any prudcts</i></h4>
 
   <div class="product-parent" *ngFor="let product of supplyList">
-    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'supply_date'; let i = index;">
-      <h4 *ngIf="i === 0">Store: {{product.key}}</h4>
+    <h4>Store: {{product.name}}</h4>
+    <div *ngFor="let prod of product.data">
       <ion-card>
         <ion-card-content>
           <div>
@@ -61,21 +64,21 @@
 </ion-item-group>
 
 <ion-item-group  *ngIf="options.includes('payment')">
-  <ion-item-divider color="light">Payment diary <span>Total: {{paymentList | getShopNumber}}</span></ion-item-divider>
+  <ion-item-divider color="light">Payment diary <span>Total: {{paymentList.length}} Price: {{priceValue.payment}}</span></ion-item-divider>
+  <h4 *ngIf="!paymentList.length"><i>don't have any prudcts</i></h4>
 
   <div class="product-parent" *ngFor="let product of paymentList">
-    <div *ngFor="let prod of product | keys | datePipe : choosenDates : 'payment_date'; let i = index;">
-      <h4 *ngIf="i === 0">Store: {{product.key}}</h4>
+    <h4>Store: {{product.name}}</h4>
+    <div *ngFor="let prod of product.data">
       <ion-card>
-          <ion-card-content>
-            <div>
-              <span><b>Bill amount: </b>{{prod.amount}}</span>
-              <span><b>Ordered date: </b>{{prod.ordered_date}}</span>
-              <span><b>Payment date: </b>{{prod.payment_date}}</span>
-              <p><b>Payment by: </b>{{(prod.collected_by | getEmail | async)?.email}}</p>
-              <p *ngIf="prod.comment"><b>Ordered date: </b>{{prod.comment}}</p>
-            </div>
-          </ion-card-content>
+        <ion-card-content>
+          <div>
+            <span><b>Bill amount: </b>{{prod.amount}}</span>
+            <span><b>Payment date: </b>{{prod.payment_date}}</span>
+            <p><b>Payment by: </b>{{(prod.collected_by | getEmail | async)?.email}}</p>
+            <p *ngIf="prod.comment"><b>Ordered date: </b>{{prod.comment}}</p>
+          </div>
+        </ion-card-content>
       </ion-card>
     </div>
   </div>

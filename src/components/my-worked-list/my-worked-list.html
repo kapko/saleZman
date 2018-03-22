@@ -75,8 +75,10 @@
           <div>
             <span><b>Bill amount: </b>{{prod.amount}}</span>
             <span><b>Payment date: </b>{{prod.payment_date}}</span>
+            <span><b>Payment amount: </b>{{prod.payment_amount}}</span>
+            <span><b>Payment method: </b>{{prod.method}}</span>
             <p><b>Payment by: </b>{{(prod.collected_by | getEmail | async)?.email}}</p>
-            <p *ngIf="prod.comment"><b>Ordered date: </b>{{prod.comment}}</p>
+            <p *ngIf="prod.comment"><b>Comment: </b>{{prod.comment}}</p>
           </div>
         </ion-card-content>
       </ion-card>

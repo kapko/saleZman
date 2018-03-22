@@ -30,7 +30,7 @@ export class ChqComponent {
     this.form = new FormGroup({
       chq_number: new FormControl('', Validators.required),
       chq_date: new FormControl('', Validators.required),
-      chq_amount: new FormControl('', [Validators.required, Validators.min(1)]),
+      payment_amount: new FormControl('', [Validators.required, Validators.min(1)]),
       chq_bank: new FormControl('', Validators.required),
       comment: new FormControl(''),
     });
@@ -41,7 +41,7 @@ export class ChqComponent {
       .getBalance(this.product['key'])
       .take(1)
       .subscribe(rest => {
-        this.paymentComponent.submiteForm(rest, this.product, val, 'chq_amount');
+        this.paymentComponent.submiteForm(rest, this.product, val, 'payment_amount');
       });
     
   }

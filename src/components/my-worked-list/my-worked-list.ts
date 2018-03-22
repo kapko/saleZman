@@ -64,6 +64,7 @@ export class MyWorkedListComponent {
   }
 
   getAllData(date: any[string] = null): void {
+    // stock list
     this.myService.getStockData()
       .take(1)
       .do(() => this.appService.hideLoading())
@@ -74,7 +75,7 @@ export class MyWorkedListComponent {
       .subscribe(list => {
         this.stockList = list;
       });
-    
+    // ordered list
     this.myService.getOrderedData()
       .take(1)
       .map(data => {
@@ -84,18 +85,18 @@ export class MyWorkedListComponent {
       .subscribe(list => {
         this.orderedList = list;
       });
-    
+    // payment list
     this.myService.getPaymentData()
       .take(1)
       .map(data => {
         let filtered = this.filterByDate(data, 'payment_date');
-        this.priceValue['payment'] = this.getBillAmount(filtered);
+        this.priceValue['payment'] = this.getBillAmount(filtered, 'payment_amount');
         return this.grupeByStoreName(filtered);
       })
       .subscribe(list => {
         this.paymentList = list;
       });
-
+    // supply list
     this.myService.getSupplyData()
       .take(1)
       .map(data => {
@@ -106,10 +107,11 @@ export class MyWorkedListComponent {
       .subscribe(list => {
         this.supplyList = list;
       });
-    
+
   }
 
   filterByDate(data:any, key: string = 'date'): any {
+    if (!this.choosenDates.length) return data;
     return data.filter(el => 
       (el[key].match('.'))
         ? this.choosenDates.includes(el[key].replace(/\./g, '-'))
@@ -140,9 +142,9 @@ export class MyWorkedListComponent {
     return totalValue;
   }
 
-  getBillAmount(data): number {
+  getBillAmount(data: any, key: string = 'amount'): number {
     let amount = 0;
-    data.forEach(el => amount += +el.amount);
+    data.forEach(el => amount += +el[key]);
     return amount;
   }
 

@@ -29,7 +29,7 @@ export class NeftComponent {
   ngOnInit():void {
     this.neftForm = new FormGroup({
       neft_date: new FormControl('', Validators.required),
-      neft_amount: new FormControl('', [Validators.required, Validators.min(1)]),
+      payment_amount: new FormControl('', [Validators.required, Validators.min(1)]),
       comment: new FormControl(''),
     });
   }
@@ -39,7 +39,7 @@ export class NeftComponent {
       .getBalance(this.product['key'])
       .take(1)
       .subscribe(rest => {
-        this.paymentComponent.submiteForm(rest, this.product, val, 'neft_amount');
+        this.paymentComponent.submiteForm(rest, this.product, val, 'payment_amount');
       });
     
   }

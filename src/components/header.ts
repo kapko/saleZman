@@ -47,15 +47,15 @@ export class HeaderComponent {
   }
 
   getEmail(): void {
-    this.authService.authUserId()
-      .take(1)
-      .subscribe(item => {
-        this.authService.getProfile(item.uid)
-          .take(1)
-          .subscribe(user => {
-            this.userEmail = user.email;
-          });
-      });
+    // this.authService.authUserId()
+    //   .take(1)
+    //   .subscribe(item => {
+    //     this.authService.getProfile(item.uid)
+    //       .take(1)
+    //       .subscribe(user => {
+    //         this.userEmail = user.email;
+    //       });
+    //   });
   }
 
   moveToProfile(): void {

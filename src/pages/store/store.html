@@ -9,9 +9,9 @@
 
   <ion-item *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'">
     <ion-label>Company</ion-label>
-    <ion-select [(ngModel)]="company" (ionChange)="sortByCompany(company)">
+    <ion-select [(ngModel)]="defaultCompany" (ionChange)="sortByCompany(defaultCompany)">
       <ion-option 
-        *ngFor="let company of companies | async">{{company.name}}</ion-option>
+        *ngFor="let company of companies" [value]="company.name">{{company.name}}</ion-option>
     </ion-select>
   </ion-item>
 

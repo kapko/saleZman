@@ -18,8 +18,9 @@ export class StorePage {
   supplyProduct: any[] = [];
 
   activeTabName: string = 'list-box';
+  defaultCompany: string = 'All Company';
   tabs: any = ['list-box', 'basket', 'briefcase', 'card'];
-  companies: Observable<any>;
+  companies: any[] = [];
 
   constructor(
     private storeService: StoreService,
@@ -34,10 +35,16 @@ export class StorePage {
         this.getProducts(store.url);
       });
 
-    this.companies = this.storeService.getCompanies().take(1);
+    this.storeService.getCompanies()
+      .take(1)
+      .subscribe(items => {
+        this.companies = items;
+      });
   }
 
   getProducts(storeNamePath: string, company: string = null): void {
+    if (company === 'All Company') company = null;
+
     this.storeService
       .getProducts(storeNamePath, company)
       .do(() => this.appService.hideLoading())

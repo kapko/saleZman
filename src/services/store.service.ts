@@ -56,7 +56,7 @@ export class StoreService {
   }
 
   getCompanies(): Observable<any> {
-    return this.db.object(this.companyPath).valueChanges();
+    return this.db.list(this.companyPath).valueChanges();
   }
 
   getStoreData(url: string): Observable<any> {

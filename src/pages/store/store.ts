@@ -49,7 +49,9 @@ export class StorePage {
       .getProducts(storeNamePath, company)
       .do(() => this.appService.hideLoading())
       .take(1)
-      .subscribe(products => this.products = products);
+      .subscribe(products => {
+        this.products = products;
+      });
   }
 
   sortByCompany(company: string): void {

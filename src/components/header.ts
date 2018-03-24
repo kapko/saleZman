@@ -3,6 +3,9 @@ import { AppService } from '../services/app-service';
 import { NavController } from 'ionic-angular';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
+import { AuthService } from '../services/auth.service';
+import { StoreService } from '../services/store.service';
+import { Observable } from '@firebase/util';
 
 @Component({
   selector: 'app-header',
@@ -10,28 +13,49 @@ import { SearchPage } from '../pages/search/search';
   <ion-header>
     <ion-navbar>
       <ion-icon menuToggle class="white icon" name="menu" float-left></ion-icon>
-      <ion-icon class="white icon" name="contact" float-right></ion-icon>
       <ion-icon 
         (click)="moveToHome()"
         class="white icon" name="home" float-right></ion-icon>
+      <ion-icon class="white icon" name="contact" float-right></ion-icon>
+      <span class="white email" float-right>{{userEmail}}</span>
       <span class="white" float-right>{{date}}</span>
     </ion-navbar>
   </ion-header>`,
-  styles: [`.white {color: white; padding: 0 10px; font-size: 18px} .icon {font-size: 21px} .bar-buttons-md {-webkit-order: 0; order: 0;}`]
+  styles: [`
+  .white {color: white; padding: 0 10px; font-size: 18px} 
+  .icon {font-size: 29px; padding-top: 3px;} 
+  .bar-buttons-md {-webkit-order: 0; order: 0;} 
+  .email {font-size: 14px; text-decoration: underline;}`]
 })
 
 export class HeaderComponent {
   date: string;
+  userEmail: string;
 
   constructor(
     private nav: NavController,
     private appService: AppService,
+    private authService: AuthService,
+    private storeService: StoreService,
   ) {
     this.date = this.appService.getCurrentDate();
+    this.getEmail();
   }
 
   moveToHome(): void {
     this.nav.setRoot(SearchPage);
+  }
+
+  getEmail(): void {
+    this.authService.authUserId()
+      .take(1)
+      .subscribe(item => {
+        this.authService.getProfile(item.uid)
+          .take(1)
+          .subscribe(user => {
+            this.userEmail = user.email;
+          });
+      });
   }
 
   moveToProfile(): void {

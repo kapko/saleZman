@@ -4,8 +4,7 @@ import { NavController } from 'ionic-angular';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
-import { StoreService } from '../services/store.service';
-import { Observable } from '@firebase/util';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -31,12 +30,12 @@ import { Observable } from '@firebase/util';
 export class HeaderComponent {
   date: string;
   userEmail: string;
+  userId: Observable<any>;
 
   constructor(
     private nav: NavController,
     private appService: AppService,
     private authService: AuthService,
-    private storeService: StoreService,
   ) {
     this.date = this.appService.getCurrentDate();
     this.getEmail();
@@ -46,7 +45,8 @@ export class HeaderComponent {
     this.nav.setRoot(SearchPage);
   }
 
-  getEmail(): void {
+  getEmail(): any {
+    // this.authService.cachedUid();
     this.authService.authUserId()
       .take(1)
       .subscribe(item => {

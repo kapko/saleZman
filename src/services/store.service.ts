@@ -133,7 +133,7 @@ export class StoreService {
   getCommonCommit(storeName: string, payment: boolean = false): Observable<any> {
     let commitPath = (payment) ? this.paymentCommentPath : this.supplyCommentPath;
 
-    return this.db.list(`${commitPath}${storeName}`).valueChanges();
+    return this.db.list(`${commitPath}${storeName}`, ref => ref.limitToLast(5)).valueChanges();
   }
 
   getComment(storeName: string, commentUrl: string): Observable<any> {

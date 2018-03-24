@@ -46,7 +46,6 @@ export class HeaderComponent {
   }
 
   getEmail(): any {
-    // this.authService.cachedUid();
     this.authService.authUserId()
       .take(1)
       .subscribe(item => {

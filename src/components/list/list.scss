@@ -139,4 +139,16 @@ app-list {
     height: 3px;
   }
 
+  .all-products-label {
+    padding-left: 0;
+
+    ion-checkbox.checkbox-md {
+      margin-right: 10px!important;
+    }
+
+    div.item-inner {
+      border-bottom: none!important;
+    }
+  }
+
 }

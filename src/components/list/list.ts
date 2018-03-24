@@ -21,6 +21,8 @@ export class ListComponent {
 
   showOrdered: boolean = false;
 
+  allProducts: boolean = false;  
+
   comments: string = '';
 
   constructor(
@@ -31,7 +33,6 @@ export class ListComponent {
 
   ngOnChanges(): void {
     this.usersProduct = [];
-    this.rowProducts = this.products;
     this.comments = '';
 
     if (!this.store) return;
@@ -64,15 +65,17 @@ export class ListComponent {
       .subscribe(items => this.usersProduct = items);
   }
 
-  searchItems(ev: any): void {
-    let val = (ev.target.value) ? ev.target.value : '';
+  selectAllProduct(event: boolean): void {
+    this.rowProducts = (event) ? this.products : [];
+  }
 
-    if (val && val.trim() === '') {
-      this.products = this.rowProducts;
+  searchItems(val: string): void {
+    if (!val) {
+      this.rowProducts = (this.allProducts) ? this.products : [];
       return;
     }
 
-    this.products = this.rowProducts.filter(item => 
+    this.rowProducts = this.products.filter(item => 
       (item._name.indexOf(val.toLowerCase()) > -1)
     );
   }

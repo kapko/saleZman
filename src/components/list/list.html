@@ -1,5 +1,11 @@
-<ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
-<ion-card *ngFor="let product of products">
+<ion-item class="all-products-label">
+  <ion-label>All Products</ion-label>
+  <ion-checkbox [(ngModel)]="allProducts" (ionChange)="selectAllProduct(allProducts)"></ion-checkbox>
+</ion-item>
+
+<ion-searchbar (ionInput)="searchItems($event.target.value)"></ion-searchbar>
+
+<ion-card *ngFor="let product of rowProducts">
   <ion-card-content>
     <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
     <div class="product-raw">

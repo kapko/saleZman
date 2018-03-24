@@ -1,6 +1,6 @@
 <ion-item-group *ngIf="options.includes('stock')">
   <ion-item-divider>Stock diary <span>Total: {{stockList.length}} Value: {{priceValue.stock}}</span></ion-item-divider>
-  <h4 *ngIf="!stockList.length"><i>don't have any prudcts</i></h4>
+  <h4 *ngIf="!stockList.length"><i>don't have any products</i></h4>
   
   <div class="product-parent" *ngFor="let product of stockList">
     <h4>{{product.name}}</h4>
@@ -21,7 +21,7 @@
 
 <ion-item-group *ngIf="options.includes('order')">
   <ion-item-divider>Ordered diary <span>Total: {{orderedList.length}} Value: {{priceValue.ordered}}</span></ion-item-divider>
-  <h4 *ngIf="!orderedList.length"><i>don't have any prudcts</i></h4>
+  <h4 *ngIf="!orderedList.length"><i>don't have any products</i></h4>
 
   <div class="product-parent" *ngFor="let product of orderedList">
     <h4>{{product.name}}</h4>
@@ -42,7 +42,7 @@
 
 <ion-item-group  *ngIf="options.includes('supply')">
   <ion-item-divider color="light">Supply diary <span>Total: {{supplyList.length}} Price: {{priceValue.supply}}</span></ion-item-divider>
-  <h4 *ngIf="!supplyList.length"><i>don't have any prudcts</i></h4>
+  <h4 *ngIf="!supplyList.length"><i>don't have any products</i></h4>
 
   <div class="product-parent" *ngFor="let product of supplyList">
     <h4>Store: {{product.name}}</h4>
@@ -65,7 +65,7 @@
 
 <ion-item-group  *ngIf="options.includes('payment')">
   <ion-item-divider color="light">Payment diary <span>Total: {{paymentList.length}} Price: {{priceValue.payment}}</span></ion-item-divider>
-  <h4 *ngIf="!paymentList.length"><i>don't have any prudcts</i></h4>
+  <h4 *ngIf="!paymentList.length"><i>don't have any products</i></h4>
 
   <div class="product-parent" *ngFor="let product of paymentList">
     <h4>Store: {{product.name}}</h4>

@@ -10,7 +10,14 @@ store-page {
     justify-content: space-between;
     ion-icon {
       font-size: 30px;
+      display: block;
+      text-align: center;
     }
+    
+    p {
+      margin: 0 0 5px 0;
+    }
+
   }
 
   ion-searchbar.searchbar {
@@ -18,7 +25,10 @@ store-page {
   }
 
   .active-tab {
-    color: #02b9e2;
+    ion-icon, span {
+      color: #02b9e2;
+    }
+    
   }
 
 }

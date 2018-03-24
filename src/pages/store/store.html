@@ -2,9 +2,12 @@
 <ion-content padding>
   <h5>{{ store?.name }}</h5>
   <div class="tabs">
-      <ion-icon *ngFor="let tab of tabs" name="{{tab}}" 
-      (click)="tabSwitch(tab)"
-      [ngClass]="{'active-tab': activeTabName == tab}"></ion-icon>
+    <p *ngFor="let tab of tabs"
+    (click)="tabSwitch(tab.icon)"
+    [ngClass]="{'active-tab': activeTabName == tab.icon}">
+      <ion-icon name="{{tab.icon}}"></ion-icon>
+      <span>{{tab.name}}</span>
+    </p>
   </div>
 
   <ion-item *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'">

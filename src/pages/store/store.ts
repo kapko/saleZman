@@ -19,7 +19,8 @@ export class StorePage {
 
   activeTabName: string = 'list-box';
   defaultCompany: string = 'All Company';
-  tabs: any = ['list-box', 'basket', 'briefcase', 'card'];
+  // tabs: any = ['list-box', 'basket', 'briefcase', 'card'];
+  tabs: any = [{icon: 'list-box', name: 'Stock'},{icon: 'basket', name: 'Order'},{icon: 'briefcase', name: 'Supply'},{icon: 'card', name: 'Payment'}];
   companies: any[] = [];
 
   constructor(

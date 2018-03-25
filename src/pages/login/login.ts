@@ -13,39 +13,47 @@ export class LoginPage {
   data: any = {};
   toast: any;
   showReset: boolean = false;
+  signup: boolean = false;
 
   constructor(
     private navCtrl: NavController,
     private appService: AppService,
     private authService: AuthService
-  ) {}
-
- login(): void {
+  ) { }
+  
+  login(): void {
     if (!Object.keys(this.data).length) {
       this.appService.showToast('Please re-enter email and password');
       return;
     }
 
-    this.authService.signIn(
-      this.data.email, this.data.password)
-    .then(item => {
-      this.appService.showToast('Success Logged in');
-      this.navCtrl.setRoot(SearchPage);
-    })
-    .catch(err => this.appService.showToast(err.message));
+    this.authService.signIn(this.data.email, this.data.password)
+      .then(user => {
+        if (user.emailVerified) {
+          this.appService.showToast('Success Logged in');
+          this.navCtrl.setRoot(SearchPage);
+        } else {
+          this.appService.showToast('Please verify your email');
+        }
+      })
+      .catch(err => this.appService.showToast(err.message));
  }
 
- resetPassword(): void {
-  if (!this.data.email) {
-    this.appService.showToast('Please re-enter email');
-    return;
+  resetPassword(): void {
+    if (!this.data.email) {
+      this.appService.showToast('Please re-enter email');
+      return;
+    }
+    this.authService.resetPassword(this.data.email)
+      .then(res => {
+        this.appService.showToast('We have sent you an email with instructions on how to reset your password.');
+        this.showReset = false;
+      })
+      .catch(err => this.appService.showToast(err.message));
   }
-  this.authService.resetPassword(this.data.email)
-    .then(res => {
-      this.appService.showToast('We have sent you an email with instructions on how to reset your password.');
-      this.showReset = false;
-    })
-    .catch(err => this.appService.showToast(err.message));
- }
+
+  changeState(event: boolean): void {
+    this.signup = event;
+  }
 
 }

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "681442854297",
+    "firebase_url": "https://salezman-9e9ea.firebaseio.com",
+    "project_id": "salezman-9e9ea",
+    "storage_bucket": "salezman-9e9ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681442854297:android:5da9e6d677bc0bf8",
+        "android_client_info": {
+          "package_name": "salezman.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681442854297-atb3rjggbt15fvu6ag6di58g19tr9fe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR6LUFvH6oh4lm7gMEZQzBrSJx3k1skRA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

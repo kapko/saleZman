@@ -1,0 +1,26 @@
+<h5 text-center>Sign Up</h5>
+<form 
+  [formGroup]="form"
+  (ngSubmit)="submitForm(form.value)"
+  class="amount-class">
+  <ion-item>
+    <ion-label color="primary">email</ion-label>
+    <ion-input 
+      text-right
+      type="email"
+      placeholder="email@gmail.com"
+      formControlName="email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">password</ion-label>
+    <ion-input
+      type="text"
+      text-right
+      formControlName="password"
+      placeholder="*****"></ion-input>
+  </ion-item>
+  <button 
+    ion-button
+    [disabled]="form.invalid"
+    type="submit">Submit</button>
+</form>

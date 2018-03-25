@@ -19,6 +19,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { SearchPage } from '../pages/search/search';
 import { CityService } from '../services/city.service';
 import { ProfilePage } from '../pages/profile/profile';
+import { SignupPage } from '../pages/signup/signup';
+
 // components
 import { HeaderComponent } from '../components/header';
 import { FooterComponent } from '../components/footer';
@@ -68,6 +70,7 @@ let fireBaseConfig = {
     MyWorkedListComponent,
     KeysPipe,
     GetShopNumberPipe,
+    SignupPage,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +106,7 @@ let fireBaseConfig = {
     PaidListComponent,
     MyWorkPage,
     MyWorkedListComponent,
+    SignupPage,
   ],
   providers: [
     StatusBar,

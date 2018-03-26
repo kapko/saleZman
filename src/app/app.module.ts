@@ -20,6 +20,7 @@ import { SearchPage } from '../pages/search/search';
 import { CityService } from '../services/city.service';
 import { ProfilePage } from '../pages/profile/profile';
 import { SignupPage } from '../pages/signup/signup';
+import { MyUsersPage } from '../pages/my-users/my-users';
 
 // components
 import { HeaderComponent } from '../components/header';
@@ -71,6 +72,7 @@ let fireBaseConfig = {
     KeysPipe,
     GetShopNumberPipe,
     SignupPage,
+    MyUsersPage,
   ],
   imports: [
     BrowserModule,
@@ -107,6 +109,7 @@ let fireBaseConfig = {
     MyWorkPage,
     MyWorkedListComponent,
     SignupPage,
+    MyUsersPage,
   ],
   providers: [
     StatusBar,

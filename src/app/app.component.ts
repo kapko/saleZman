@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/login/login';
 import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
 import { MyWorkPage } from '../pages/my-work/my-work';
+import { MyUsersPage } from '../pages/my-users/my-users';
 @Component({
   selector: 'app-component',
   templateUrl: 'app.html'
@@ -13,7 +14,7 @@ import { MyWorkPage } from '../pages/my-work/my-work';
 export class MyApp {
   @ViewChild(Nav) nav;
   rootPage: any;
-  showDistributorMenu: boolean = false;
+  showAdmin: boolean = false;
 
   constructor(
     private platform: Platform, 
@@ -27,16 +28,12 @@ export class MyApp {
     this.authService.authUserId()
       .take(1)
       .subscribe(item => {
-        this.authService.getProfile(item.uid)
-          .subscribe(user => {
-            this.showDistributorMenu = (user.status === 'distributor') ? true : false;
-          });
-
       this.platform.ready().then(() => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
         // this.rootPage = MyWorkPage;
         this.rootPage = (item && item.uid) ? SearchPage : LoginPage;
+        // this.rootPage = (item && item.uid) ? MyUsersPage : LoginPage;
       });
     });
   }
@@ -47,8 +44,10 @@ export class MyApp {
       case 'MyWorkPage':
         component = MyWorkPage;
       break;
+      case 'myUsers':
+        component = MyUsersPage;
+      break;
     }
-
     this.nav.setRoot(component);
     this.menuController.close();
   }

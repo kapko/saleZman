@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Create new user</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">Email: </ion-label>
+      <ion-input type="email" placeholder="user@gmail.com"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Password: </ion-label>
+      <ion-input type="text" placeholder="******"></ion-input>
+    </ion-item>
+    <button ion-button (click)="createNewUser()">submit</button>
+    <button ion-button (click)="cancel()" color="light">cancel</button>
+  </ion-list>
+</ion-content>

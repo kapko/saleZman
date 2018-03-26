@@ -7,11 +7,13 @@ import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
 import { MyWorkPage } from '../pages/my-work/my-work';
 @Component({
+  selector: 'app-component',
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav;
   rootPage: any;
+  showDistributorMenu: boolean = false;
 
   constructor(
     private platform: Platform, 
@@ -21,7 +23,15 @@ export class MyApp {
     // private navController: NavController,
     private splashScreen: SplashScreen
   ) {
-    this.authService.authUserId().subscribe(item => {
+
+    this.authService.authUserId()
+      .take(1)
+      .subscribe(item => {
+        this.authService.getProfile(item.uid)
+          .subscribe(user => {
+            this.showDistributorMenu = (user.status === 'distributor') ? true : false;
+          });
+
       this.platform.ready().then(() => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();

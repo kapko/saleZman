@@ -10,6 +10,7 @@
       <button ion-item>My search</button>
       <button ion-item>My plan</button>
       <button ion-item>My profile</button>
+      <button class="distributer" ion-item *ngIf="showDistributorMenu">My users</button>
       <button (click)="logout()" ion-item>Logout</button>
     </ion-list>
   </ion-content>

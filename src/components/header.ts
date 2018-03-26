@@ -54,10 +54,6 @@ export class HeaderComponent {
     this.authService.authUserId()
       .take(1)
       .subscribe(item => {
-        if (!item.emailVerified) {
-          this.nav.setRoot(LoginPage);
-          return;
-        }
         this.authService.getProfile(item.uid)
           .take(1)
           .subscribe(user => {

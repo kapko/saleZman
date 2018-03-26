@@ -8,9 +8,9 @@
 
 <ion-content padding>
   <img src="../../assets/imgs/logo.jpg">
-  <h5 *ngIf="!signup && !showReset" text-center>Login</h5>
-  <h5 *ngIf="!signup && showReset" text-center>Forget Password</h5>
-  <ion-list *ngIf="!signup">
+  <h5 *ngIf="!showReset" text-center>Login</h5>
+  <h5 *ngIf="showReset" text-center>Forget Password</h5>
+  <ion-list>
     <ion-item class="no-padding">
       <ion-label color="primary" floating>Email</ion-label>
       <ion-input [(ngModel)]="data.email" type="email" required></ion-input>
@@ -22,16 +22,16 @@
     </ion-item>
     
     <button *ngIf="!showReset" text-center ion-button (click)="login()">Submit</button>
-    <button *ngIf="!signup && showReset" text-center ion-button (click)="resetPassword()">Reset</button>
-  </ion-list>
+    <button *ngIf="showReset" text-center ion-button (click)="resetPassword()">Reset</button>
+    <button *ngIf="showReset" text-center ion-button (click)="showReset = false">cancel</button></ion-list>
 
-  <app-signup *ngIf="signup" (state)="changeState($event)"></app-signup>
+  <!-- <app-signup *ngIf="signup" (state)="changeState($event)"></app-signup> -->
 
   <button *ngIf="!showReset" ion-button ion-text float-left outline clear small (click)="signup = false">Login</button>
   
   <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="showReset = true">Forgot Password</button>
 
-  <button ion-button ion-text float-right outline clear small (click)="signup = true; showReset = false">Signup</button>
+  <!-- <button ion-button ion-text float-right outline clear small (click)="signup = true; showReset = false">Signup</button> -->
 
 </ion-content>
 

@@ -40,21 +40,26 @@ export class AuthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  sendEmailVerify(): void {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        let opt = [];
+  // sendEmailVerify(): void {
+  //   this.afAuth.authState.subscribe(user => {
+  //     if (user) {
+  //       let opt = [];
         
-        this.appService.showToast('We have sent on your email verification pleas check and login');
-        opt.push(
-          this.db.object(this.usersPath + user.uid).set({ email: user.email, status: 'user' }),
-          user.sendEmailVerification()
-        );
+  //       this.appService.showToast('We have sent on your email verification pleas check and login');
+  //       opt.push(
+  //         this.db.object(this.usersPath + user.uid).set({ email: user.email, status: 'user' }),
+  //         user.sendEmailVerification()
+  //       );
 
-        // create new user and send email verification
-        return Promise.all(opt);
-      }
-    });
+  //       // create new user and send email verification
+  //       return Promise.all(opt);
+  //     }
+  //   });
+  // }
+
+  createNewUser(user): Promise<any> {
+    this.appService.showToast('Please login with your email and password.');
+    return this.db.object(this.usersPath + user.uid).set({ email: user.email, status: 'user' });
   }
 
   resetPassword(email: string): any {

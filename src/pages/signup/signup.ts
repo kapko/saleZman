@@ -31,10 +31,11 @@ export class SignupPage {
   submitForm(val: any): void {
     // signup and verify user by email
     this.authService.signUp(val.email, val.password)
-      .then(res => {
-        this.authService.sendEmailVerify();
+      .then(user => {
+        this.authService.createNewUser(user);
         this.state.emit(false);
       })
       .catch(err => this.appService.showToast(err.message));
   }
+
 }

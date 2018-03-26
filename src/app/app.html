@@ -10,6 +10,7 @@
       <button ion-item>My search</button>
       <button ion-item>My plan</button>
       <button ion-item>My profile</button>
+      <button (click)="logout()" ion-item>Logout</button>
       <button ion-item (click)="showAdmin = true">Admin</button>
     </ion-list>
   </ion-content>
@@ -21,7 +22,7 @@
       <button ion-item>My User Works</button>
       <button ion-item>Store pending Payments</button>
       <button ion-item>My Settings - In App Purchase </button>
-      <button ion-item>Logout </button>
+      <button (click)="logout()" ion-item>Logout</button>
       <button ion-item (click)="showAdmin = false">User</button>
     </ion-list>
   </ion-content>

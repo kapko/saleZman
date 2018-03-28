@@ -119,4 +119,8 @@ export class AppService {
     return dates;
   };
 
+  getKeys(data): any[] {
+    return data.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+  }
+
 }

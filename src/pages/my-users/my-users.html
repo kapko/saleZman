@@ -5,20 +5,14 @@
   <ion-card *ngFor="let user of users">
     <ion-card-content>
       <span>Email: {{user.email}}</span>
-      <span>Password: {{user.pass}}</span>
       <div>
         <span>
           Admin: 
-          <i *ngIf="user.admin">enable</i>
-          <i *ngIf="!user.admin">disable</i>
-        </span>
-        <span>
-          Status: 
-          <i *ngIf="user.activate">activate</i>
-          <i *ngIf="!user.activate">deactivate</i>
+          <i *ngIf="user.admin" (click)="activateUser(user)">enable</i>
+          <i *ngIf="!user.admin" (click)="activateUser(user, true)">disable</i>
         </span>
       </div>
-      <span>
+      <span (click)="deleteUser(user)">
         Action: <ion-icon name="trash"></ion-icon> 
       </span>
     </ion-card-content>

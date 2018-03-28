@@ -90,7 +90,7 @@ export class AuthService {
   createUserByDistributor(user: any): Promise<any> {
     return this.db
       .object(`${this.distributorsUserPath}${this.currentUserId}/${user.uid}`)
-      .set({email: user.email, status: 'active', admin: false});
+      .set({email: user.email, admin: false});
   }
 
   resetPassword(email: string): any {
@@ -99,6 +99,18 @@ export class AuthService {
 
   signOut(): any {
     this.afAuth.auth.signOut();
+  }
+
+  updateDistributorsUser(uid: string, status: boolean): Promise<any> {
+    return this.db
+      .object(`${this.distributorsUserPath}${this.currentUserId}/${uid}/admin`)
+      .set(status);
+  }
+
+  updateUserForAdmin(uid: string, status: string | null): Promise<any> {
+    return this.db
+      .object(`${this.usersPath}${uid}/admin`)
+      .set(status);
   }
 
 }

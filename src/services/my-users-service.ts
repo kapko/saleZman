@@ -20,7 +20,7 @@ export class MyUserService {
   ) { }
 
   getMyUsers(): Observable<any> {
-    return this.db.list(this.distributerPath + this.userId).valueChanges();
+    return this.db.list(this.distributerPath + this.userId).snapshotChanges();
   }
 
 }

@@ -8,30 +8,31 @@
 
 <ion-content padding>
   <img src="../../assets/imgs/logo.jpg">
-  <h5 *ngIf="!showReset" text-center>Login</h5>
-  <h5 *ngIf="showReset" text-center>Forget Password</h5>
+  <h5 *ngIf="!showReset && !signup" text-center>Login</h5>
+  <h5 *ngIf="showReset && !signup" text-center>Forget Password</h5>
+  <h5 *ngIf="!showReset && signup" text-center>Signup</h5>
   <ion-list>
-    <ion-item class="no-padding">
-      <ion-label color="primary" floating>Email</ion-label>
-      <ion-input [(ngModel)]="data.email" type="email" required></ion-input>
+    <ion-item class="no-padding" *ngIf="!signup">
+      <ion-label color="primary">Email</ion-label>
+      <ion-input [(ngModel)]="data.email" text-right type="email" required></ion-input>
     </ion-item>
   
-    <ion-item *ngIf="!showReset" class="no-padding">
-      <ion-label color="primary" floating>Password</ion-label>
-      <ion-input [(ngModel)]="data.password" type="password"></ion-input>
+    <ion-item *ngIf="!showReset && !signup" class="no-padding">
+      <ion-label color="primary">Password</ion-label>
+      <ion-input [(ngModel)]="data.password" text-right type="password"></ion-input>
     </ion-item>
     
-    <button *ngIf="!showReset" text-center ion-button (click)="login()">Submit</button>
+    <button *ngIf="!showReset && !signup" text-center ion-button (click)="login()">Submit</button>
     <button *ngIf="showReset" text-center ion-button (click)="resetPassword()">Reset</button>
     <button *ngIf="showReset" text-center ion-button (click)="showReset = false">cancel</button></ion-list>
 
-  <!-- <app-signup *ngIf="signup" (state)="changeState($event)"></app-signup> -->
+  <app-signup *ngIf="signup && !showReset" (state)="changeState($event)"></app-signup>
 
   <button *ngIf="!showReset" ion-button ion-text float-left outline clear small (click)="signup = false">Login</button>
   
   <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="showReset = true">Forgot Password</button>
 
-  <!-- <button ion-button ion-text float-right outline clear small (click)="signup = true; showReset = false">Signup</button> -->
+  <button ion-button ion-text float-right outline clear small (click)="signup = true; showReset = false">Signup</button>
 
 </ion-content>
 

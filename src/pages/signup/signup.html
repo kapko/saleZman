@@ -1,10 +1,9 @@
-<h5 text-center>Sign Up</h5>
 <form 
   [formGroup]="form"
   (ngSubmit)="submitForm(form.value)"
   class="amount-class">
   <ion-item>
-    <ion-label color="primary">email</ion-label>
+    <ion-label color="primary">Email</ion-label>
     <ion-input 
       text-right
       type="email"
@@ -12,7 +11,7 @@
       formControlName="email"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label color="primary">password</ion-label>
+    <ion-label color="primary">Password</ion-label>
     <ion-input
       type="text"
       text-right

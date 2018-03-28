@@ -26,7 +26,7 @@ export class MyUsersPage {
 
     this.myUserService.getMyUsers()
       .takeUntil(this.subject)
-      .map(data => this.appService.getKeys(data))
+      .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })))
       .subscribe(users => {
         this.users = users;
       });
@@ -38,11 +38,31 @@ export class MyUsersPage {
   }
 
   createNewUser(): void {
+    this.authService
+      .getProfile(this.authService.currentUserId)
+      .take(1)
+      .subscribe(profile => {
+        // if status just user can't create more then 1 salezman
+        if (profile.status === 'user') {
+          if (this.users.length > 1) {
+            this.appService.showToast("You don't have permissions create more then 1 salezman");
+          } else {
+            this.getModal();
+          }
+        } else {
+          this.getModal();
+        }
+
+      });
+  }
+
+  getModal(): void {
     let contactModal = this.modalController.create(CreateUserComponent);
     contactModal.present();
   }
 
   deleteUser(user: Object): void {
+    this.appService.showToast('will be remove user from DB');
     console.log('user', user);
   }
 

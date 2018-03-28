@@ -120,7 +120,7 @@ export class AppService {
   };
 
   getKeys(data): any[] {
-    return data.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    return data.foreach(c => ({ key: c.payload.key, ...c.payload.val() }));
   }
 
 }

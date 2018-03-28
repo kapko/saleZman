@@ -31,6 +31,7 @@ export class LoginPage {
       .then(user => {
         this.appService.showToast('Success Logged in');
         this.navCtrl.setRoot(SearchPage);
+        this.authService.getCurrentUser();
       })
       .catch(err => this.appService.showToast(err.message));
  }

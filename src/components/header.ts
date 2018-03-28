@@ -51,19 +51,7 @@ export class HeaderComponent {
   }
 
   getEmail(): any {
-    this.authService.authUserId()
-      .take(1)
-      .subscribe(item => {
-        this.authService.getProfile(item.uid)
-          .take(1)
-          .subscribe(user => {
-            if (!user) {
-              this.nav.setRoot(LoginPage);
-              return;
-            }
-            this.userEmail = user.email;
-          });
-      });
+    this.userEmail = this.authService.currentUserEmail;
   }
 
   moveToProfile(): void {

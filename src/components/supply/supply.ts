@@ -4,6 +4,7 @@ import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
 import { Subject } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-supply',
@@ -30,6 +31,7 @@ export class SupplyComponent {
   constructor(
     private appService: AppService,
     private storeService: StoreService,
+    private authService: AuthService,
   ) {
     this.subject = new Subject();
     this.appService.presentLoading(true);
@@ -81,10 +83,10 @@ export class SupplyComponent {
     }, 'cancel'], this.store.name);
   }
 
-  updateSupplyItem(product: any): Promise<any> {
+  updateSupplyItem(product: any, uid: string = this.authService.currentUserId): Promise<any> {
     product.supply_date = this.appService.getCurrentDate(true);
     product.supply_status = 'supplied';
-    product.supplied_by = this.storeService.userId;
+    product.supplied_by = uid;
     // update data
     return Promise.all([
       this.storeService.updateSupplyItem(this.store._name, product), this.storeService.addSupplyToPayment(this.store._name, product)
@@ -98,10 +100,10 @@ export class SupplyComponent {
       .subscribe(messages => this.commits = messages)
   }
 
-  submitCommit(event: any): void {
+  submitCommit(event: any, uid: string = this.authService.currentUserId): void {
     let value = event.target.value;
     let data = {};
-    data['uid'] = this.storeService.userId;
+    data['uid'] = uid;
     data['message'] = value;
     data['date'] = this.appService.getCurrentDate(true);
     // update data

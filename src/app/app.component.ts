@@ -15,27 +15,28 @@ export class MyApp {
   @ViewChild(Nav) nav;
   rootPage: any;
   showAdmin: boolean = false;
+  userProfile: Object;
 
   constructor(
     private platform: Platform, 
     private authService: AuthService,
     private menuController: MenuController,
     private statusBar: StatusBar,
-    // private navController: NavController,
     private splashScreen: SplashScreen
   ) {
-
-    this.authService.authUserId()
-      .take(1)
-      .subscribe(item => {
-      this.platform.ready().then(() => {
-        this.statusBar.styleDefault();
-        this.splashScreen.hide();
-        // this.rootPage = MyWorkPage;
-        this.rootPage = (item && item.uid) ? SearchPage : LoginPage;
-        // this.rootPage = (item && item.uid) ? MyUsersPage : LoginPage;
-      });
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+      this.rootPage = (this.authService.currentUserId) ? SearchPage : LoginPage;
+      // this.rootPage = (item && item.uid) ? MyUsersPage : LoginPage;
     });
+  }
+
+  menuOpened(): void {
+    this.authService
+      .getProfile(this.authService.currentUserId)
+      .take(1)
+      .subscribe(profile => this.userProfile = profile);
   }
 
   navigate(page: any): void {
@@ -53,9 +54,12 @@ export class MyApp {
   }
 
   logout(): void {
+    localStorage.removeItem('email');
+    localStorage.removeItem('uid');
     this.authService.signOut();
     this.nav.setRoot(LoginPage);
     this.menuController.enable(false);
   }
+
 }
 

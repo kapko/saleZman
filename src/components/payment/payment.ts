@@ -4,6 +4,7 @@ import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
 import { Subject } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-payment',
@@ -43,6 +44,7 @@ export class PaymentComponent {
   constructor(
     private appService: AppService,
     private storeService: StoreService,
+    private authService: AuthService,
   ) {
     this.subject = new Subject();
     this.appService.presentLoading(true);
@@ -134,7 +136,7 @@ export class PaymentComponent {
       this.keyForRemove.forEach(key => delete product[key]);
 
       product['payment_date'] = this.appService.getCurrentDate(true);
-      product['collected_by'] = this.storeService.userId;
+      product['collected_by'] = this.authService.currentUserId;
       Object.assign(product, val);
 
       this.storeService.addPayment(this.store._name, product);

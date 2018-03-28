@@ -7,8 +7,6 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class StoreService {
-  userId: string = null;
-
   productPath: string = '/products/'
 
   userStoreNamePath: string = '/user-store-name/';
@@ -39,20 +37,14 @@ export class StoreService {
     private db: AngularFireDatabase,
     private appService: AppService,
     private authService: AuthService
-  ) {
-    this.authService
-      .authUserId()
-      .subscribe(item => {
-        this.userId = (item) ? item.uid : null;
-      });
+  ) {}
+
+  setUserStoreName(storeData: storeName, uid: string = this.authService.currentUserId): Promise<void> {
+    return this.db.object(this.userStoreNamePath + uid).update(storeData);
   }
 
-  setUserStoreName(storeData: storeName): Promise<void> {
-    return this.db.object(this.userStoreNamePath + this.userId).update(storeData);
-  }
-
-  getStoreNameOfProduct(): Observable<any> {
-    return this.db.object(this.userStoreNamePath + this.userId).valueChanges();
+  getStoreNameOfProduct(uid: string = this.authService.currentUserId): Observable<any> {
+    return this.db.object(this.userStoreNamePath + uid).valueChanges();
   }
 
   getCompanies(): Observable<any> {
@@ -71,8 +63,8 @@ export class StoreService {
     ).valueChanges();
   }
 
-  getUserProductList(storeName: string): Observable<any> {
-    return this.db.list(`${this.usersProductPath}${storeName}/${this.userId}/${this.getDate()}`).valueChanges();
+  getUserProductList(storeName: string, uid: string = this.authService.currentUserId): Observable<any> {
+    return this.db.list(`${this.usersProductPath}${storeName}/${uid}/${this.getDate()}`).valueChanges();
   }
 
   getSupplyList(storeName: string, limit: number = null): Observable<any> {
@@ -96,23 +88,23 @@ export class StoreService {
     ).valueChanges();
   }
 
-  getUserOrderedList(storeName:string): Observable<any> {
-    return this.db.list(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${this.getDate()}`).valueChanges();
+  getUserOrderedList(storeName:string, uid: string = this.authService.currentUserId): Observable<any> {
+    return this.db.list(`${this.usersOrderedProductPath}${storeName}/${uid}/${this.getDate()}`).valueChanges();
   }
 
-  updateUsersProductList(product: any, storeName: string): Promise<void> {
+  updateUsersProductList(product: any, storeName: string, uid: string = this.authService.currentUserId): Promise<void> {
     let data = (!product.counter) ? null : product;
   
     return this.db
-      .object(`${this.usersProductPath}${storeName}/${this.userId}/${this.getDate()}/${product._name}${product.Weight}`)
+      .object(`${this.usersProductPath}${storeName}/${uid}/${this.getDate()}/${product._name}${product.Weight}`)
       .set(data);
   }
 
-  updateUsersOrderedProductList(product: any, storeName: string): Promise<void> {
+  updateUsersOrderedProductList(product: any, storeName: string, uid: string = this.authService.currentUserId): Promise<void> {
     let data = (!product.counter) ? null : product;
 
     return this.db
-      .object(`${this.usersOrderedProductPath}${storeName}/${this.userId}/${this.getDate()}/${product._name}${product.Weight}`)
+      .object(`${this.usersOrderedProductPath}${storeName}/${uid}/${this.getDate()}/${product._name}${product.Weight}`)
       .set(data);
   }
 
@@ -120,8 +112,8 @@ export class StoreService {
     return this.appService.getCurrentDate(true).replace(/\./ig, '-');
   }
 
-  submitCommit(value: string, storeName: string, commentUrl: string): Promise<void> {
-    return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).set(value);
+  submitCommit(value: string, storeName: string, commentUrl: string, uid: string = this.authService.currentUserId): Promise<void> {
+    return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${uid}-${this.getDate()}`).set(value);
   }
 
   submitCommonCommit(value: Object, storeName: string, payment: boolean = false): any {
@@ -136,8 +128,8 @@ export class StoreService {
     return this.db.list(`${commitPath}${storeName}`, ref => ref.limitToLast(5)).valueChanges();
   }
 
-  getComment(storeName: string, commentUrl: string): Observable<any> {
-    return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${this.userId}-${this.getDate()}`).valueChanges();
+  getComment(storeName: string, commentUrl: string, uid: string = this.authService.currentUserId): Observable<any> {
+    return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${uid}-${this.getDate()}`).valueChanges();
   }
 
   updateSupplyItem(storeName: string, product: any): Promise<any> {

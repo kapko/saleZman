@@ -3,6 +3,7 @@ import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { AppService } from './app-service';
 import { StoreService } from './store.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class MyService {
@@ -19,22 +20,22 @@ export class MyService {
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
-    private storeService: StoreService,
+    private authService: AuthService,
   ) { }
 
-  getStockData(userId: string = this.storeService.userId): Observable<any> {
+  getStockData(userId: string = this.authService.currentUserId): Observable<any> {
     return this.db.list(this.myStockPath + userId).valueChanges();
   }
 
-  getPaymentData(userId: string = this.storeService.userId): Observable<any> {
+  getPaymentData(userId: string = this.authService.currentUserId): Observable<any> {
     return this.db.list(this.myPaymentPath + userId).valueChanges();
   }
 
-  getOrderedData(userId: string = this.storeService.userId): Observable<any> {
+  getOrderedData(userId: string = this.authService.currentUserId): Observable<any> {
     return this.db.list(this.myOrderedPath + userId).valueChanges();
   }
 
-  getSupplyData(userId: string = this.storeService.userId): Observable<any> {
+  getSupplyData(userId: string = this.authService.currentUserId): Observable<any> {
     return this.db.list(this.mySupplyPath + userId).valueChanges();
   }
 

@@ -7,13 +7,37 @@ import { AppService } from './app-service';
 @Injectable()
 export class AuthService {
 
+  currentUserId: string;
+
+  currentUserEmail: string;
+
   usersPath: string = '/users/';
+
+  distributorsUserPath: string = '/distributors-users/';
 
   constructor(
     private afAuth: AngularFireAuth,
     private appService: AppService,
     private db: AngularFireDatabase,
   ) {
+    this.getCurrentUser();
+  }
+
+  getCurrentUser(): void {
+    if (localStorage.getItem('uid')) {
+      this.currentUserId = localStorage.getItem('uid');
+      this.currentUserEmail = localStorage.getItem('email');
+      return;
+    };
+    this.authUserId()
+      .take(1)
+      .subscribe(user => {
+        if (!user) return;
+        localStorage.setItem('uid', user['uid']);
+        localStorage.setItem('email', user['email']);
+        this.currentUserId = user.uid;
+        this.currentUserEmail = user.email;
+      });
   }
 
   authUserId(): Observable<any> {
@@ -57,9 +81,16 @@ export class AuthService {
   //   });
   // }
 
-  createNewUser(user): Promise<any> {
-    this.appService.showToast('Please login with your email and password.');
-    return this.db.object(this.usersPath + user.uid).set({ email: user.email, status: 'user' });
+  createNewUser(user: any, status: string | null = 'user'): Promise<any> {
+    return this.db
+      .object(this.usersPath + user.uid)
+      .set({ email: user.email, status: status });
+  }
+
+  createUserByDistributor(user: any): Promise<any> {
+    return this.db
+      .object(`${this.distributorsUserPath}${this.currentUserId}/${user.uid}`)
+      .set({email: user.email, status: 'active', admin: false});
   }
 
   resetPassword(email: string): any {

@@ -32,6 +32,7 @@ export class SignupPage {
     // signup and verify user by email
     this.authService.signUp(val.email, val.password)
       .then(user => {
+        this.appService.showToast('Please login with your email and password.');
         this.authService.createNewUser(user);
         this.state.emit(false);
       })

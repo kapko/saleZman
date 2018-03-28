@@ -1,4 +1,4 @@
-<ion-menu type="overlay" [content]="content">
+<ion-menu type="overlay" [content]="content" (ionOpen)="menuOpened()">
   <ion-header menuToggle>
     <ion-toolbar>
       <ion-title text-center>Menu</ion-title>
@@ -11,7 +11,10 @@
       <button ion-item>My plan</button>
       <button ion-item>My profile</button>
       <button (click)="logout()" ion-item>Logout</button>
-      <button ion-item (click)="showAdmin = true">Admin</button>
+      <button 
+        *ngIf="userProfile?.status"
+        ion-item 
+        (click)="showAdmin = true">Admin</button>
     </ion-list>
   </ion-content>
 

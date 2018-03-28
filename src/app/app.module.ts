@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { AuthService } from '../services/auth.service';
 import { AppService } from '../services/app-service';
+import { MyUserService } from '../services/my-users-service';
 // pipes
 import { GetEmailPipe } from '../pipe/get-email';
 // firebase
@@ -122,6 +123,7 @@ let fireBaseConfig = {
     CityService,
     AuthService,
     MyService,
+    MyUserService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

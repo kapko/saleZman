@@ -38,7 +38,10 @@ export class MyUserService {
   createUserForDistributor(uid: string): Promise<any> {
     return this.db
       .object(this.distributerPath+`${this.authService.currentUserId}/${uid}`)
-      .set(true);
+      .update({
+        activated: false,
+        status: false,
+      });
   }
 
 }

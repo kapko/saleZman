@@ -4,17 +4,11 @@
   <h5 text-center>My users Page</h5>
   <ion-card *ngFor="let user of users">
     <ion-card-content>
-      <span>Email: {{user.email}}</span>
+      <span>Email: {{ (user.key | getEmail | async)?.email }}</span>
+      <span>Activation: <i class="activation">{{ (user.activated) ? 'active' : 'none'}}</i></span>
       <div>
-        <span>
-          Admin: 
-          <i *ngIf="user.admin" (click)="activateUser(user)">enable</i>
-          <i *ngIf="!user.admin" (click)="activateUser(user, true)">disable</i>
-        </span>
+        <span>Status : <i (click)="activateUser(user)">{{(user.status) ? 'disable' : 'enaible'}}</i></span>
       </div>
-      <span (click)="deleteUser(user)">
-        Action: <ion-icon name="trash"></ion-icon> 
-      </span>
     </ion-card-content>
   </ion-card>
 

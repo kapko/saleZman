@@ -107,7 +107,7 @@ export class AuthService {
 
   updateDistributorsUser(uid: string, status: boolean): Promise<any> {
     return this.db
-      .object(`${this.distributorsUserPath}${this.currentUserId}/${uid}/admin`)
+      .object(`${this.distributorsUserPath}${this.currentUserId}/${uid}/status`)
       .set(status);
   }
 

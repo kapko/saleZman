@@ -32,9 +32,13 @@ export class MyUsersPage {
       });
   }
 
-  activateUser(user: Object, status: boolean = false): void {
-    this.authService.updateDistributorsUser(user['key'], status);
-    this.authService.updateUserForAdmin(user['key'], (status) ? 'user' : null);
+  activateUser(user: Object): void {
+    if (!user['activated']) {
+      this.appService.showToast("User not activated yet!");
+      return;
+    }
+
+    this.authService.updateDistributorsUser(user['key'], (user['status']) ? false : true);
   }
 
   createNewUser(): void {

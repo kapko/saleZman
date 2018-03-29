@@ -58,6 +58,7 @@ export class CreateUserComponent {
         }
         this.myUserService.createUserForDistributor(uid);
         this.notificationService.sendNotification(uid);
+        this.cancel();
         this.appService.showToast('This user will get notification for review');
       });
   }

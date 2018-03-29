@@ -30,7 +30,7 @@
 
   <button *ngIf="!showReset" ion-button ion-text float-left outline clear small (click)="signup = false">Login</button>
   
-  <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="showReset = true">Forgot Password</button>
+  <button *ngIf="!showReset" ion-button ion-text float-right outline clear small (click)="showReset = true; signup = false;">Forgot Password</button>
 
   <button ion-button ion-text float-right outline clear small (click)="signup = true; showReset = false">Signup</button>
 

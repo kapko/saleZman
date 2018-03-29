@@ -16,7 +16,7 @@ import { LoginPage } from '../pages/login/login';
       <ion-icon 
         (click)="moveToHome()"
         class="white icon" name="home" float-right></ion-icon>
-      <ion-icon class="white icon" name="contact" float-right></ion-icon>
+      <ion-icon class="white icon" name="notifications" float-right></ion-icon>
       <div class="date-email">
         <span class="white email" float-right>{{userEmail}}</span>
         <span class="white" float-right>{{date}}</span>
@@ -25,7 +25,7 @@ import { LoginPage } from '../pages/login/login';
   </ion-header>`,
   styles: [`
   .white {color: white; padding: 0 10px; font-size: 18px} 
-  .icon {font-size: 29px; padding-top: 3px;} 
+  .icon {font-size: 24px; padding: 3px 3px 0 3px;} 
   .bar-buttons-md {-webkit-order: 0; order: 0;} 
   .email {font-size: 14px; text-decoration: underline;}
   .date-email {width: 60%; float: right;}

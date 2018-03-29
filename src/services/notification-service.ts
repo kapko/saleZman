@@ -4,16 +4,20 @@ import { Observable } from 'rxjs/Observable';
 import { AppService } from './app-service';
 import { AuthService } from './auth.service';
 import { NotificationType, RequestType } from '../interfaces/notification-interface';
+import { MyUserService } from './my-users-service';
 
 @Injectable()
 
 export class NotificationService {
   notificationPath: string = '/notifications/';
 
+  distPath: string = this.myUserService.distributerPath;
+
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
     private authService: AuthService,
+    private myUserService: MyUserService,
   ) { }
 
   sendNotification(uid: string): void {
@@ -22,6 +26,31 @@ export class NotificationService {
       create: this.appService.getCurrentDate(true),
       distId: this.authService.currentUserId
     });
+  }
+
+  getNotifications(): Observable<any> {
+    return this.db
+      .list(this.notificationPath + this.authService.currentUserId)
+      .snapshotChanges();
+  }
+
+  acceptDistributorRequest(distId: string): Promise<any> {
+    console.log(`${this.distPath}${distId}/${this.authService.currentUserId}/activated`);
+    return this.db
+      .object(`${this.distPath}${distId}/${this.authService.currentUserId}/activated`)
+      .set(true);
+  }
+
+  removeNotification(not: Object): Promise<any> {
+    return this.db
+      .object(this.notificationPath+`${this.authService.currentUserId}/${not['key']}`)
+      .set(null);
+  }
+
+  readTrue(not: Object): void {
+    this.db
+      .object(this.notificationPath+`${this.authService.currentUserId}/${not['key']}/read`)
+      .set(true);
   }
 
 }

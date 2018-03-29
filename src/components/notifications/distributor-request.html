@@ -1,0 +1,3 @@
+<p>{{(notification?.distId | getEmail | async)?.email}} send for you to be his saleZman</p>
+<span *ngIf="!notification.read" (click)="accept()">Accept</span>
+<span (click)="remove()">Remove</span>

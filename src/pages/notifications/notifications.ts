@@ -15,6 +15,8 @@ export class NotificationPage {
 
   notifications: NotificationInterface [] = [];
 
+  showLoader: boolean = true;
+
   constructor(
     public navCtrl: NavController,
     private notificationService: NotificationService,
@@ -24,6 +26,7 @@ export class NotificationPage {
     this.notificationService.getNotifications()
       .takeUntil(this.subject)
       .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })))
+      .do(() => this.showLoader = false)
       .subscribe(notifications => {
         this.notifications = notifications;
       });

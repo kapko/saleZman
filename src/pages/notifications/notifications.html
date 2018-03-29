@@ -1,9 +1,12 @@
 <app-header></app-header>
 
-<ion-content>
-  <ion-card *ngFor="let notification of notifications" [ngSwitch]="notification.type">
-    <div *ngSwitchCase="'distributorRequest'">
+<ion-spinner *ngIf="showLoader" name="bubbles"></ion-spinner>
+
+<ion-content *ngIf="!showLoader">
+  <div *ngFor="let notification of notifications" [ngSwitch]="notification.type">
+    <ion-card *ngSwitchCase="'distributorRequest'">
       <app-distributor-request [notification]="notification"></app-distributor-request>
-    </div>
-  </ion-card>
+    </ion-card>
+  </div>
+  <h5 text-center *ngIf="!showLoader && !notifications.length">Don't have any notifications</h5>
 </ion-content>

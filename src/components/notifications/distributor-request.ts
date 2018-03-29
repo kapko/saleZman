@@ -29,7 +29,13 @@ export class DistributorRequestComponent {
   }
 
   remove(): void {
-    this.notificationService.removeNotification(this.notification);
+    this.appService.showAlert('Do you want to remove this notification', [{
+      text: 'yes',
+      handler: e => {
+        this.notificationService.removeNotification(this.notification);
+      }
+    }, 'no']);
+    
   }
   
 }

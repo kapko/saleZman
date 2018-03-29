@@ -1,0 +1,21 @@
+app-notifications {
+  ion-content {
+    margin-top: 10px;
+  }
+
+  ion-spinner {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-left: -14px;
+  }
+
+  ion-card {
+    padding: 10px;
+  }
+
+  p {
+    padding-bottom: 10px;
+  }
+
+}

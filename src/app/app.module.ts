@@ -41,6 +41,7 @@ import { MyWorkedListComponent } from '../components/my-worked-list/my-worked-li
 import { KeysPipe } from '../pipe/keys';
 import { GetShopNumberPipe } from '../pipe/getTotalShops';
 import { CreateUserComponent } from '../components/create-user/create-user';
+import { NotificationPage } from '../pages/notifications/notifications';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -76,6 +77,7 @@ let fireBaseConfig = {
     SignupPage,
     MyUsersPage,
     CreateUserComponent,
+    NotificationPage,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +116,7 @@ let fireBaseConfig = {
     SignupPage,
     MyUsersPage,
     CreateUserComponent,
+    NotificationPage,
   ],
   providers: [
     StatusBar,

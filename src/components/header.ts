@@ -5,7 +5,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
-import { LoginPage } from '../pages/login/login';
+import { NotificationPage } from '../pages/notifications/notifications';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,11 @@ import { LoginPage } from '../pages/login/login';
       <ion-icon 
         (click)="moveToHome()"
         class="white icon" name="home" float-right></ion-icon>
-      <ion-icon class="white icon" name="notifications" float-right></ion-icon>
+      <ion-icon 
+        (click)="moveToNotifications()" 
+        class="white icon" 
+        name="notifications" 
+        float-right></ion-icon>
       <div class="date-email">
         <span class="white email" float-right>{{userEmail}}</span>
         <span class="white" float-right>{{date}}</span>
@@ -52,6 +56,12 @@ export class HeaderComponent {
 
   getEmail(): any {
     this.userEmail = this.authService.currentUserEmail;
+  }
+
+  moveToNotifications(): void {
+    if (this.nav.getActive().name === 'NotificationPage') return;
+    // NotificationPage
+    this.nav.push(NotificationPage);
   }
 
   moveToProfile(): void {

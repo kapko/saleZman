@@ -29,9 +29,13 @@ export class LoginPage {
 
     this.authService.signIn(this.data.email, this.data.password)
       .then(user => {
-        this.appService.showToast('Success Logged in');
-        this.navCtrl.setRoot(SearchPage);
-        this.authService.getCurrentUser();
+        if (user.emailVerified) {
+          this.authService.getCurrentUser();
+          this.appService.showToast('Success Logged in');
+          this.navCtrl.setRoot(SearchPage);
+        } else {
+          this.appService.showToast('Please verify your email');
+        }
       })
       .catch(err => this.appService.showToast(err.message));
  }

@@ -11,6 +11,8 @@ export class AuthService {
 
   currentUserEmail: string;
 
+  emailVerified: boolean;
+
   usersPath: string = '/users/';
 
   distributorsUserPath: string = '/distributors-users/';
@@ -27,6 +29,7 @@ export class AuthService {
     if (localStorage.getItem('uid')) {
       this.currentUserId = localStorage.getItem('uid');
       this.currentUserEmail = localStorage.getItem('email');
+      this.emailVerified = (localStorage.getItem('emailVerified') === 'true') ? true : false;
       return;
     };
     this.authUserId()
@@ -35,6 +38,7 @@ export class AuthService {
         if (!user) return;
         localStorage.setItem('uid', user['uid']);
         localStorage.setItem('email', user['email']);
+        localStorage.setItem('emailVerified', user['emailVerified'])
         this.currentUserId = user.uid;
         this.currentUserEmail = user.email;
       });
@@ -64,22 +68,22 @@ export class AuthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  // sendEmailVerify(): void {
-  //   this.afAuth.authState.subscribe(user => {
-  //     if (user) {
-  //       let opt = [];
-        
-  //       this.appService.showToast('We have sent on your email verification pleas check and login');
-  //       opt.push(
-  //         this.db.object(this.usersPath + user.uid).set({ email: user.email, status: 'user' }),
-  //         user.sendEmailVerification()
-  //       );
+  sendEmailVerify(): void {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        let opt = [];
 
-  //       // create new user and send email verification
-  //       return Promise.all(opt);
-  //     }
-  //   });
-  // }
+        this.appService.showToast('We have sent on your email verification pleas check and login');
+        opt.push(
+          this.db.object(this.usersPath + user.uid).set({ email: user.email, status: 'user' }),
+          user.sendEmailVerification()
+        );
+
+        // create new user and send email verification
+        return Promise.all(opt);
+      }
+    });
+  }
 
   createNewUser(user: any, status: string | null = 'user'): Promise<any> {
     return this.db
@@ -109,7 +113,7 @@ export class AuthService {
 
   updateUserForAdmin(uid: string, status: string | null): Promise<any> {
     return this.db
-      .object(`${this.usersPath}${uid}/admin`)
+      .object(`${this.usersPath}${uid}/status`)
       .set(status);
   }
 

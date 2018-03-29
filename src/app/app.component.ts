@@ -28,7 +28,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.rootPage = (this.authService.currentUserId) ? SearchPage : LoginPage;
+      this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
       // this.rootPage = (item && item.uid) ? MyUsersPage : LoginPage;
     });
   }
@@ -67,6 +67,7 @@ export class MyApp {
   logout(): void {
     localStorage.removeItem('email');
     localStorage.removeItem('uid');
+    localStorage.removeItem('emailVerified');
     this.authService.signOut();
     this.nav.setRoot(LoginPage);
     this.menuController.enable(false);

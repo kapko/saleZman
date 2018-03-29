@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { AppService } from '../../services/app-service';
+import { MyUserService } from '../../services/my-users-service';
+import { NotificationService } from '../../services/notification-service';
 
 @Component({
   selector: 'app-create-user',
@@ -14,22 +16,50 @@ export class CreateUserComponent {
     public viewCtrl: ViewController,
     private authService: AuthService,
     private appService: AppService,
+    private myUserService: MyUserService,
+    private notificationService: NotificationService,
   ) { }
 
-  createNewUser(email): any {
+  createNewUser(email: string): any {
+    if (email === this.authService.currentUserEmail) {
+      this.appService.showToast("You can't link self account!");
+      return;
+    }
 
-    this.authService.signUp(email, '123456789')
-      .then(async user => {
-        // create new user for distributor
-        await this.authService.createUserByDistributor(user);
-        // create new user for login
-        await this.authService.createNewUser(user, null);
-        // show notification
-        this.appService.showToast('You have created new user.');
-        this.cancel();
-      })
-      .catch(err => this.appService.showToast(err.message));
+    // check for email in db
+    this.myUserService.getUserByEmail(email)
+      .take(1)
+      .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })))
+      .subscribe(user => {
+        if (!user.length) {
+          this.appService.showToast("Can't find this user in system.");
+          return;
+        }
+        // check user for available
+        switch(user[0].status) {
+          case 'user':
+            this.linkEmail(user[0].key);
+            break;
+          case 'distributor':
+            this.appService.showToast('This user is distributor');
+            break;
+        }
 
+      });
+  }
+
+  linkEmail(uid): void {
+    this.myUserService.getDistributorUserByEmail(uid)
+      .take(1)
+      .subscribe(user => {
+        if (user) {
+          this.appService.showToast('This user already in you list');
+          return;
+        }
+        this.myUserService.createUserForDistributor(uid);
+        this.notificationService.sendNotification(uid);
+        this.appService.showToast('This user will get notification for review');
+      });
   }
 
   cancel(): void {

@@ -9,6 +9,8 @@ export class AuthService {
 
   currentUserId: string;
 
+  currentUserStatus: string | null;
+
   currentUserEmail: string;
 
   emailVerified: boolean;

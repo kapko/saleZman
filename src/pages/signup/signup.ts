@@ -39,7 +39,7 @@ export class SignupPage {
     this.authService.signUp(val.email, val.password)
       .then(user => {
         this.appService.hideLoading();
-        this.authService.sendEmailVerify()
+        this.authService.sendEmailVerify();
       })
       .catch(err => {
         this.appService.hideLoading();

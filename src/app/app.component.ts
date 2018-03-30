@@ -47,6 +47,12 @@ export class MyApp {
         } else {
           this.showAdminButton = false;
         }
+
+        if (profile && profile.status) {
+          this.authService.currentUserStatus = profile.status;
+        } else {
+          this.authService.currentUserStatus = null;
+        }
       });
   }
 

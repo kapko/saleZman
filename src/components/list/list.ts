@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { Subject } from 'rxjs';
 import 'rxjs/add/operator/map';
+import { AuthService } from '../../services/auth.service';
+import { AppService } from '../../services/app-service';
 
 @Component({
   selector: 'app-list',
@@ -27,6 +29,8 @@ export class ListComponent {
 
   constructor(
     private storeService: StoreService,
+    private authService: AuthService,
+    private appService: AppService,
   ) {
     this.subject = new Subject();
   }
@@ -81,6 +85,11 @@ export class ListComponent {
   }
 
   count(product: any, count: boolean): void {
+    if (this.showOrdered && this.authService.currentUserStatus) {
+      this.appService.showToast("You haven't linked yet by Distributor!");
+      return;
+    }
+
     if (!count && +product.counter < 1) return;
     product.counter += (count) ? 1 : -1;
     if (this.showOrdered) {

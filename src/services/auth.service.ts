@@ -70,13 +70,11 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         let opt = [];
-
         this.appService.showToast('We have sent on your email verification pleas check and login');
         opt.push(
           this.db.object(this.usersPath + user.uid).set({ email: user.email, status: 'user' }),
           user.sendEmailVerification()
         );
-
         // create new user and send email verification
         return Promise.all(opt);
       }

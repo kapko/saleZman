@@ -34,12 +34,17 @@ export class SignupPage {
       this.appService.showToast('Confirmation password is wrong');
       return;
     }
+    this.appService.presentLoading(true);
     // signup and verify user by email
     this.authService.signUp(val.email, val.password)
       .then(user => {
-        this.authService.sendEmailVerify();
+        this.appService.hideLoading();
+        this.authService.sendEmailVerify()
       })
-      .catch(err => this.appService.showToast(err.message));
+      .catch(err => {
+        this.appService.hideLoading();
+        this.appService.showToast(err.message);
+      });
   }
 
 }

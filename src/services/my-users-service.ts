@@ -7,15 +7,11 @@ import { AuthService } from './auth.service';
 @Injectable()
 
 export class MyUserService {
-  userId: string = this.authService.currentUserId;
-
   distributerPath: string = '/distributors-users/';
 
   userPath: string = '/users/';
 
   distributorsUserPath: string = '/distributors-users/';
-
-  currentUserId: string = this.authService.currentUserId;
 
   constructor(
     private db: AngularFireDatabase,
@@ -24,7 +20,7 @@ export class MyUserService {
   ) { }
 
   getMyUsers(): Observable<any> {
-    return this.db.list(this.distributerPath + this.userId).snapshotChanges();
+    return this.db.list(this.distributerPath + this.authService.currentUserId).snapshotChanges();
   }
 
   getUserByEmail(email: string): Observable<any> {
@@ -50,7 +46,7 @@ export class MyUserService {
 
   updateDistributorsUser(uid: string, status: boolean): Promise<any> {
     return this.db
-      .object(`${this.distributorsUserPath}${this.currentUserId}/${uid}/status`)
+      .object(`${this.distributorsUserPath}${this.authService.currentUserId}/${uid}/status`)
       .set(status);
   }
 
@@ -68,7 +64,7 @@ export class MyUserService {
 
   createUserByDistributor(user: any): Promise<any> {
     return this.db
-      .object(`${this.distributorsUserPath}${this.currentUserId}/${user.uid}`)
+      .object(`${this.distributorsUserPath}${this.authService.currentUserId}/${user.uid}`)
       .set({email: user.email, admin: false});
   }
 

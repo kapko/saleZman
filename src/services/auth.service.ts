@@ -15,8 +15,6 @@ export class AuthService {
 
   usersPath: string = '/users/';
 
-  distributorsUserPath: string = '/distributors-users/';
-
   constructor(
     private afAuth: AngularFireAuth,
     private appService: AppService,
@@ -85,36 +83,12 @@ export class AuthService {
     });
   }
 
-  createNewUser(user: any, status: string | null = 'user'): Promise<any> {
-    return this.db
-      .object(this.usersPath + user.uid)
-      .set({ email: user.email, status: status });
-  }
-
-  createUserByDistributor(user: any): Promise<any> {
-    return this.db
-      .object(`${this.distributorsUserPath}${this.currentUserId}/${user.uid}`)
-      .set({email: user.email, admin: false});
-  }
-
   resetPassword(email: string): any {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
   signOut(): any {
     this.afAuth.auth.signOut();
-  }
-
-  updateDistributorsUser(uid: string, status: boolean): Promise<any> {
-    return this.db
-      .object(`${this.distributorsUserPath}${this.currentUserId}/${uid}/status`)
-      .set(status);
-  }
-
-  updateUserForAdmin(uid: string, status: string | null): Promise<any> {
-    return this.db
-      .object(`${this.usersPath}${uid}/status`)
-      .set(status);
   }
 
 }

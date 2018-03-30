@@ -13,6 +13,10 @@ export class MyUserService {
 
   userPath: string = '/users/';
 
+  distributorsUserPath: string = '/distributors-users/';
+
+  currentUserId: string = this.authService.currentUserId;
+
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
@@ -42,6 +46,30 @@ export class MyUserService {
         activated: false,
         status: false,
       });
+  }
+
+  updateDistributorsUser(uid: string, status: boolean): Promise<any> {
+    return this.db
+      .object(`${this.distributorsUserPath}${this.currentUserId}/${uid}/status`)
+      .set(status);
+  }
+
+  updateUserForAdmin(uid: string, status: string | null): Promise<any> {
+    return this.db
+      .object(`${this.userPath}${uid}/status`)
+      .set(status);
+  }
+
+  createNewUser(user: any, status: string | null = 'user'): Promise<any> {
+    return this.db
+      .object(this.userPath + user.uid)
+      .set({ email: user.email, status: status });
+  }
+
+  createUserByDistributor(user: any): Promise<any> {
+    return this.db
+      .object(`${this.distributorsUserPath}${this.currentUserId}/${user.uid}`)
+      .set({email: user.email, admin: false});
   }
 
 }

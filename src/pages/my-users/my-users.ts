@@ -38,7 +38,7 @@ export class MyUsersPage {
       return;
     }
 
-    this.authService.updateDistributorsUser(user['key'], (user['status']) ? false : true);
+    this.myUserService.updateDistributorsUser(user['key'], (user['status']) ? false : true);
   }
 
   createNewUser(): void {
@@ -68,6 +68,10 @@ export class MyUsersPage {
     this.appService.showToast('will be remove user from DB');
     console.log('user', user);
   }
+
+  // updateUser(user): void {
+  //   this.db.
+  // }
 
   ngOnDestroy(): void {
     this.subject.next();

@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { NotificationService } from '../../services/notification-service';
 import { AppService } from '../../services/app-service';
+import { MyUserService } from '../../services/my-users-service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-distributor-request',
@@ -13,6 +15,8 @@ export class DistributorRequestComponent {
   constructor(
     private notificationService: NotificationService,
     private appService: AppService,
+    private userService: MyUserService,
+    private authService: AuthService,
   ) {}
 
   accept(): void {
@@ -21,7 +25,9 @@ export class DistributorRequestComponent {
         this.appService.showToast('You have accepted request');
         this.readNotificaion();
       })
-      .catch(err => this.appService.showToast(err.message))
+      .catch(err => this.appService.showToast(err.message));
+
+    this.userService.updateUserForAdmin(this.authService.currentUserId, null);
   }
 
   readNotificaion(): void {

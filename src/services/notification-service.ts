@@ -45,7 +45,6 @@ export class NotificationService {
   }
 
   acceptDistributorRequest(distId: string): Promise<any> {
-    console.log(`${this.distPath}${distId}/${this.authService.currentUserId}/activated`);
     return this.db
       .object(`${this.distPath}${distId}/${this.authService.currentUserId}/activated`)
       .set(true);

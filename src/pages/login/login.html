@@ -14,12 +14,12 @@
   <ion-list>
     <ion-item class="no-padding" *ngIf="!signup">
       <ion-label color="primary">Email</ion-label>
-      <ion-input [(ngModel)]="data.email" text-right type="email" required></ion-input>
+      <ion-input autocomplete="off" [(ngModel)]="data.email" text-right type="email" required></ion-input>
     </ion-item>
   
     <ion-item *ngIf="!showReset && !signup" class="no-padding">
       <ion-label color="primary">Password</ion-label>
-      <ion-input [(ngModel)]="data.password" text-right type="password"></ion-input>
+      <ion-input autocomplete="off" [(ngModel)]="data.password" text-right type="password"></ion-input>
     </ion-item>
     
     <button *ngIf="!showReset && !signup" text-center ion-button (click)="login()">Submit</button>

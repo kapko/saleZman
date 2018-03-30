@@ -25,10 +25,15 @@ export class SignupPage {
     this.form = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', [Validators.required, Validators.min(5)]),
+      confirm_pass: new FormControl('', [Validators.required, Validators.min(5)]),
     });
   }
 
   submitForm(val: any): void {
+    if (val.password !== val.confirm_pass) {
+      this.appService.showToast('Confirmation password is wrong');
+      return;
+    }
     // signup and verify user by email
     this.authService.signUp(val.email, val.password)
       .then(user => {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AppService } from '../../services/app-service';
 import { AuthService } from '../../services/auth.service';
@@ -18,7 +18,7 @@ export class LoginPage {
   constructor(
     private navCtrl: NavController,
     private appService: AppService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
   
   login(): void {

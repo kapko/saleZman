@@ -17,6 +17,7 @@ export class MyApp {
   @ViewChild(Nav) nav;
   rootPage: any;
   subject: Subject<any>;
+  showAdminButton: boolean = false;
   showAdmin: boolean = false;
 
   constructor(
@@ -36,21 +37,27 @@ export class MyApp {
     });
   }
 
-  menuEvent(): void {
-    this.showAdmin = false;
-  }
-
-  switchToAdmin(): void {
+  getUsersStatus(uid: string): void {
     this.authService
-      .getProfile(this.authService.currentUserId)
+      .getProfile(uid)
       .takeUntil(this.subject)
       .subscribe(profile => {
-        console.log('profile', profile);
-        // if (profile.status) {
-        //   this.showAdmin = true;
-        // } else {
-        //   this.appService.showToast("You don't have permissions for admin menu");
-        // }
+        if (profile && profile.email === this.authService.currentUserEmail && profile.status) {
+          this.showAdminButton = true;
+        } else {
+          this.showAdminButton = false;
+        }
+      });
+  }
+
+  ngOnInit(): void {
+    this.authService
+      .authUserId()
+      .takeUntil(this.subject)
+      .subscribe(user => {
+        if (user) {
+          this.getUsersStatus(user.uid);
+        }
       });
   }
 
@@ -75,10 +82,12 @@ export class MyApp {
     this.authService.signOut();
     this.nav.setRoot(LoginPage);
     this.menuController.enable(false);
+    this.showAdmin = false;
   }
 
   ngOnDestroy(): void {
-
+    this.subject.next();
+    this.subject.complete();
   }
 
 }

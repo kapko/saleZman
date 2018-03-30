@@ -11,7 +11,7 @@
       <button ion-item>My plan</button>
       <button ion-item>My profile</button>
       <button (click)="logout()" ion-item>Logout</button>
-      <button (click)="switchToAdmin()" ion-item>Admin</button>
+      <button (click)="showAdmin = true" *ngIf="showAdminButton" ion-item>Admin</button>
     </ion-list>
   </ion-content>
 
@@ -30,6 +30,3 @@
 </ion-menu>
 
 <ion-nav #myNav #content [root]="rootPage"></ion-nav>
-
-
-

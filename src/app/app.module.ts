@@ -22,6 +22,7 @@ import { CityService } from '../services/city.service';
 import { ProfilePage } from '../pages/profile/profile';
 import { SignupPage } from '../pages/signup/signup';
 import { MyUsersPage } from '../pages/my-users/my-users';
+import { StoreBillingPage } from '../pages/store-billing/store-billing';
 
 // components
 import { HeaderComponent } from '../components/header';
@@ -81,6 +82,7 @@ let fireBaseConfig = {
     CreateUserComponent,
     NotificationPage,
     DistributorRequestComponent,
+    StoreBillingPage,
   ],
   imports: [
     BrowserModule,
@@ -121,6 +123,7 @@ let fireBaseConfig = {
     CreateUserComponent,
     NotificationPage,
     DistributorRequestComponent,
+    StoreBillingPage,
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,7 @@
 <app-header></app-header>
 <ion-content padding>
-  <h5>{{ store?.name }}</h5>
+  <h5 text-center>Store Billing Page</h5>
+  <!-- <h5>{{ store?.name }}</h5>
   <div class="tabs">
     <p *ngFor="let tab of tabs"
     (click)="tabSwitch(tab.icon)"
@@ -16,22 +17,6 @@
       <ion-option 
         *ngFor="let company of companies" [value]="company.name">{{company.name}}</ion-option>
     </ion-select>
-  </ion-item>
-
-  <app-list
-    *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'"
-    [activeTab]="activeTabName"
-    [store]="store"
-    [products]="products"></app-list>
-
-  <app-supply
-    *ngIf="activeTabName === 'briefcase'"
-    [store]="store">
-  </app-supply>
-
-  <app-payment
-    *ngIf="activeTabName === 'card'"
-    [store]="store">
-  </app-payment>
+  </ion-item> -->
 
 </ion-content>

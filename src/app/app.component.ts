@@ -9,6 +9,7 @@ import { MyWorkPage } from '../pages/my-work/my-work';
 import { MyUsersPage } from '../pages/my-users/my-users';
 import { AppService } from '../services/app-service';
 import { Subject } from 'rxjs';
+import { StoreBillingPage } from '../pages/store-billing/store-billing';
 @Component({
   selector: 'app-component',
   templateUrl: 'app.html'
@@ -32,8 +33,8 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
-      // this.rootPage = (item && item.uid) ? MyUsersPage : LoginPage;
+      this.rootPage = (this.authService.emailVerified) ? StoreBillingPage : LoginPage;
+      // this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
     });
   }
 
@@ -47,7 +48,7 @@ export class MyApp {
         } else {
           this.showAdminButton = false;
         }
-
+        // set permission for current user to order
         if (profile && profile.status) {
           this.authService.currentUserStatus = profile.status;
         } else {
@@ -75,6 +76,9 @@ export class MyApp {
       break;
       case 'myUsers':
         component = MyUsersPage;
+      break;
+      case 'storeBilling':
+        component = StoreBillingPage;
       break;
     }
     this.nav.setRoot(component);

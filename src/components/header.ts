@@ -4,8 +4,9 @@ import { NavController } from 'ionic-angular';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { NotificationPage } from '../pages/notifications/notifications';
+import { NotificationService } from '../services/notification-service';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ import { NotificationPage } from '../pages/notifications/notifications';
         class="white icon" name="home" float-right></ion-icon>
       <ion-icon 
         (click)="moveToNotifications()" 
+        [ngClass]="{'active-count': this.notificationCounter}"
         class="white icon" 
         name="notifications" 
         float-right></ion-icon>
@@ -31,6 +33,7 @@ import { NotificationPage } from '../pages/notifications/notifications';
   .white {color: white; padding: 0 10px; font-size: 18px} 
   .icon {font-size: 24px; padding: 3px 3px 0 3px;} 
   .bar-buttons-md {-webkit-order: 0; order: 0;} 
+  .active-count {color: #fff38d;}
   .email {font-size: 14px; text-decoration: underline;}
   .date-email {width: 60%; float: right;}
   `]
@@ -39,15 +42,24 @@ import { NotificationPage } from '../pages/notifications/notifications';
 export class HeaderComponent {
   date: string;
   userEmail: string;
+  notificationCounter: number | null;
   userId: Observable<any>;
+  subject: Subject<any>;
 
   constructor(
     private nav: NavController,
     private appService: AppService,
     private authService: AuthService,
+    private notificationService: NotificationService,
   ) {
+    this.subject = new Subject();
     this.date = this.appService.getCurrentDate();
     this.getEmail();
+
+    this.notificationService
+      .getNotificationCounteById()
+      .takeUntil(this.subject)
+      .subscribe(count => this.notificationCounter = count);
   }
 
   moveToHome(): void {
@@ -62,6 +74,7 @@ export class HeaderComponent {
     if (this.nav.getActive().name === 'NotificationPage') return;
     // NotificationPage
     this.nav.push(NotificationPage);
+    this.notificationService.refreshNotification();
   }
 
   moveToProfile(): void {
@@ -70,4 +83,10 @@ export class HeaderComponent {
 
     this.nav.push(ProfilePage);
   }
+
+  ngOnDestroy(): void {
+    this.subject.next();
+    this.subject.complete();
+  }
+
 }

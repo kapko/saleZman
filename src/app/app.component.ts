@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { MyWorkPage } from '../pages/my-work/my-work';
 import { MyUsersPage } from '../pages/my-users/my-users';
 import { AppService } from '../services/app-service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-component',
   templateUrl: 'app.html'
@@ -15,6 +16,7 @@ import { AppService } from '../services/app-service';
 export class MyApp {
   @ViewChild(Nav) nav;
   rootPage: any;
+  subject: Subject<any>;
   showAdmin: boolean = false;
 
   constructor(
@@ -25,6 +27,7 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private appService: AppService,
   ) {
+    this.subject = new Subject();
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -40,13 +43,14 @@ export class MyApp {
   switchToAdmin(): void {
     this.authService
       .getProfile(this.authService.currentUserId)
-      .take(1)
+      .takeUntil(this.subject)
       .subscribe(profile => {
-        if (profile.status) {
-          this.showAdmin = true;
-        } else {
-          this.appService.showToast("You don't have permissions for admin menu");
-        }
+        console.log('profile', profile);
+        // if (profile.status) {
+        //   this.showAdmin = true;
+        // } else {
+        //   this.appService.showToast("You don't have permissions for admin menu");
+        // }
       });
   }
 
@@ -71,6 +75,10 @@ export class MyApp {
     this.authService.signOut();
     this.nav.setRoot(LoginPage);
     this.menuController.enable(false);
+  }
+
+  ngOnDestroy(): void {
+
   }
 
 }

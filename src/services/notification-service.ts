@@ -13,6 +13,8 @@ export class NotificationService {
 
   distPath: string = this.myUserService.distributerPath;
 
+  noteCountPath: string = '/notification-count/';
+
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
@@ -26,6 +28,14 @@ export class NotificationService {
       create: this.appService.getCurrentDate(true),
       distId: this.authService.currentUserId
     });
+  }
+
+  getNotificationCounteById(uid: string = this.authService.currentUserId): Observable<any> {
+    return this.db.object(this.noteCountPath + uid).valueChanges();
+  }
+
+  refreshNotification(uid: string = this.authService.currentUserId): Promise<any> {
+    return this.db.object(this.noteCountPath + uid).set(null);
   }
 
   getNotifications(): Observable<any> {

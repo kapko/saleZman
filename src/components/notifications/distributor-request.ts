@@ -35,7 +35,7 @@ export class DistributorRequestComponent {
     // link this user for dist.
     this.myService.linkUser(this.notification.distId)
       .then(res => {
-        this.appService.showToast('You account linked for this distributor');
+        this.appService.showToast('You account linked to this distributor');
       })
       .catch(err => this.appService.showToast(err.message));
   }

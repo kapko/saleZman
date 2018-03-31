@@ -76,4 +76,10 @@ export class MyUserService {
       .set(true);
   }
 
+  updateLinkOfUser(uid: string, status: boolean | null): Promise<any> {
+    return this.db
+      .object(this.linkUserdPath+`/${uid}/${this.authService.currentUserId}`)
+      .set(status);
+  }
+
 }

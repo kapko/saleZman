@@ -38,7 +38,9 @@ export class MyUsersPage {
       return;
     }
 
+    // update status of user 
     this.myUserService.updateDistributorsUser(user['key'], (user['status']) ? false : true);
+    this.myUserService.updateLinkOfUser(user['key'], (user['status']) ? null : true);
   }
 
   createNewUser(): void {

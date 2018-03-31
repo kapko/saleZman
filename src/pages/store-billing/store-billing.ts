@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
-import { CreateUserComponent } from '../../components/create-user/create-user';
 import { MyUserService } from '../../services/my-users-service';
 import { AppService } from '../../services/app-service';
-import { AuthService } from '../../services/auth.service';
 import { Subject } from 'rxjs';
+import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'app-store-billing',
-  templateUrl: 'store-billing.html'
+  templateUrl: 'store-billing.html',
 })
 
 export class StoreBillingPage {
@@ -18,17 +16,18 @@ export class StoreBillingPage {
 
   date: string = 'Today';
 
-  salezman: string;
+  salezman: string = 'All';
 
   storeDate: string = this.appService.getCurrentDate(true);
 
   users: any [] = [];
 
+  bills: any [] = [];
+
   constructor(
-    private modalController: ModalController,
     private myUserService: MyUserService,
     private appService: AppService,
-    private authService: AuthService,
+    private storeService: StoreService,
   ) {
     this.getUsers();
     this.subject = new Subject();
@@ -36,6 +35,7 @@ export class StoreBillingPage {
 
   ngOnInit():void {
     this.choosenDates.push(this.appService.getCurrentDate(true));
+    this.dateEvent('Today');
   }
 
   dateEvent(date: string): void {
@@ -64,15 +64,13 @@ export class StoreBillingPage {
           );
           break;
       }
-      console.log('choosenDates', this.choosenDates);
       this.getBills();
     }
   }
 
   getBills(): void {
-    console.log(this.salezman);
     this.myUserService
-      .getStoreBill(this.salezman)
+      .getStoreBill((this.salezman === 'All') ? null : this.salezman)
       .takeUntil(this.subject)
       .map(data => this.grupeByStoreName(this.filterByDate(data)))
       .subscribe(bills => {
@@ -94,6 +92,9 @@ export class StoreBillingPage {
     for (let i in group_to_values) {
       let ob = {};
       ob['name'] = i;
+      ob['bill_number'];
+      ob['amount'];
+      ob['bill_date'] = '',
       ob['data'] = group_to_values[i];
       data.push(ob);
     }
@@ -101,7 +102,6 @@ export class StoreBillingPage {
   }
 
   orderByUser(salezman: string): void {
-    console.log('salezman', salezman);
     this.salezman = salezman;
     this.getBills();
   }
@@ -113,10 +113,33 @@ export class StoreBillingPage {
       .subscribe(users => {
         if (!users && !users.length) return;
         // set salezman
-        this.salezman = users[0].key;
         this.users = users;
-        this.dateEvent('Today');
       });
+  }
+
+  submitValue(bill: any): void {
+    if (!bill.bill_number || !bill.amount) {
+      this.appService.showToast('Please re-enter fields');
+      return;
+    }
+
+    let supplyObject = {
+      bill_date: '',
+      bill_number: +bill.bill_number,
+      amount: +bill.amount,
+      store_name: bill.name,
+      ordered_by: this.salezman,
+      order_id: Date.now(),
+      supply_status: 'pending',
+    }
+
+    let key = `${supplyObject.order_id}-${bill.amount}-${this.salezman}`;
+
+    this.storeService.addTestSupply(supplyObject, key)
+      .then(res => {
+        this.appService.showToast('Please approve you request!');
+      })
+      .catch(err => this.appService.showToast(err.message));
   }
 
   ngOnDestroy(): void {

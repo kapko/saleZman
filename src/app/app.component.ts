@@ -43,7 +43,6 @@ export class MyApp {
       .getProfile(uid)
       .takeUntil(this.subject)
       .subscribe(profile => {
-        console.log('profile', profile);
         if (profile && profile.email === this.authService.currentUserEmail) {
           if (profile.status) {
             this.showAdminButton = true;

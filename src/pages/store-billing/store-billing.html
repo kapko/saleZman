@@ -16,30 +16,44 @@
     <ion-select 
       [(ngModel)]="salezman" 
       (ionChange)="orderByUser(salezman)">
+      <ion-option>All</ion-option>
       <ion-option 
         *ngFor="let user of users; let i = index" 
         [value]="user.key">{{(user.key | getEmail | async)?.email}}</ion-option>
     </ion-select>
   </ion-item>
 
-  <div class="card-parent" *ngFor="let bill of bills">
+  <!-- text supplies -->
+  <app-test-supply></app-test-supply>
+
+  <div class="card-parent" *ngFor="let bill of bills; let i = index;">
       <ion-card class="store">
         <ion-card-content>
           <p>Store Name: <span text-right>{{bill.name}}</span></p>
           <ion-item>
             <ion-label color="primary">Bill number: </ion-label>
-            <ion-input type="number" text-right placeholder="0"></ion-input>
+            <ion-input 
+              type="phone"
+              [(ngModel)]="bill.bill_number"
+              text-right 
+              placeholder="0"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label color="primary">Bill value: </ion-label>
-            <ion-input type="number" text-right placeholder="0"></ion-input>
+            <ion-input 
+              type="phone"
+              [(ngModel)]="bill.amount"
+              text-right 
+              placeholder="0"></ion-input>
           </ion-item>
           <ion-item class="date">
             <ion-label>Date</ion-label>
             <ion-datetime
-              [placeholder]="storeDate"
-              displayFormat="DD/MM/YYYY"></ion-datetime>
+            [(ngModel)]="bill.bill_date"
+            [placeholder]="storeDate"
+            displayFormat="DD/MM/YYYY"></ion-datetime>
           </ion-item>
+          <button ion-button *ngIf="salezman !== 'All'" (click)="submitValue(bill)" full>submit</button>
         </ion-card-content>
       </ion-card>
       <ion-card *ngFor="let product of bill.data">
@@ -52,5 +66,4 @@
         </ion-card-content>
       </ion-card> 
   </div>
-
 </ion-content>

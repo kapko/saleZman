@@ -70,8 +70,7 @@ export class AppService {
     let mm = (m < 10) ? '0' + m : day.getMonth()+1;
 
     let date = `${dd}.${mm}.${day.getFullYear()}`;
-
-    return (withoutDate) ? date : `${date} ${days[day.getDay() - 1]}`;
+    return (withoutDate) ? date : `${date} ${days[(!day.getDay()) ? 6 : day.getDay() - 1]}`;
   }
 
   getDate(date): string {

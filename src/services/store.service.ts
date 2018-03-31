@@ -21,6 +21,8 @@ export class StoreService {
 
   supplyListPath: string = '/supply/';
 
+  testSupplyPath: string = '/test-supply/';
+
   paymentListPath: string = '/payments/';
 
   paymentPaidListPath: string = '/paid-list/';
@@ -156,6 +158,18 @@ export class StoreService {
 
   updatePaymentStatus(storeName: string, key: string): Promise<any> {
     return this.db.object(`payments/${storeName}/${key}/payment_status`).set('done');
+  }
+
+  addTestSupply(data: Object, key: string): Promise<any> {
+    return this.db
+      .object(this.testSupplyPath+`${this.authService.currentUserId}/${key}`)
+      .set(data);
+  }
+
+  getTestSupply(): Observable<any> {
+    return this.db
+      .list(this.testSupplyPath + this.authService.currentUserId)
+      .valueChanges();
   }
 
 }

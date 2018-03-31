@@ -30,8 +30,6 @@ export class DistributorRequestComponent {
       })
       .catch(err => this.appService.showToast(err.message));
 
-    // change status for user
-    this.userService.updateUserForAdmin(this.authService.currentUserId, null);
     // link this user for dist.
     this.myService.linkUser(this.notification.distId)
       .then(res => {

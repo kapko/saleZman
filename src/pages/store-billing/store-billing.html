@@ -1,22 +1,72 @@
 <app-header></app-header>
 <ion-content padding>
   <h5 text-center>Store Billing Page</h5>
-  <!-- <h5>{{ store?.name }}</h5>
-  <div class="tabs">
-    <p *ngFor="let tab of tabs"
-    (click)="tabSwitch(tab.icon)"
-    [ngClass]="{'active-tab': activeTabName == tab.icon}">
-      <ion-icon name="{{tab.icon}}"></ion-icon>
-      <span>{{tab.name}}</span>
-    </p>
+  <ion-item class="date">
+    <ion-label>Date </ion-label>
+    <ion-select [(ngModel)]="date" (ionChange)="filterByDate(date)">
+      <ion-option selected="true">Today</ion-option>
+      <ion-option>Yesterday</ion-option>
+      <ion-option>This week</ion-option>
+      <ion-option>This month</ion-option>
+      <ion-option>Any</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item class="date">
+    <ion-label>Date </ion-label>
+    <ion-select [(ngModel)]="user" (ionChange)="orderByUser(user)">
+      <ion-option *ngFor="let user of users" [value]="user.key">{{user.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <div>
+      <ion-card class="store">
+        <ion-card-content>
+          <p>Store Name: <span text-right>SFireb</span></p>
+          <ion-item>
+            <ion-label color="primary">Bill number: </ion-label>
+            <ion-input type="number" text-right placeholder="0"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">Bill value: </ion-label>
+            <ion-input type="number" text-right placeholder="0"></ion-input>
+          </ion-item>
+          <ion-item class="date">
+            <ion-label>Date</ion-label>
+            <ion-datetime
+              [placeholder]="storeDate"
+              displayFormat="DD/MM/YYYY"></ion-datetime>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content class="card">
+          <div>
+            <p><b>Name: </b>product name</p>
+            <span><b>Count: </b>1</span>
+            <span class="price"><b>Price: </b>123</span>
+          </div>
+        </ion-card-content>
+      </ion-card> 
   </div>
 
-  <ion-item *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'">
-    <ion-label>Company</ion-label>
-    <ion-select [(ngModel)]="defaultCompany" (ionChange)="sortByCompany(defaultCompany)">
-      <ion-option 
-        *ngFor="let company of companies" [value]="company.name">{{company.name}}</ion-option>
-    </ion-select>
-  </ion-item> -->
+
+  <!-- <div *ngFor="let product of products">
+    <ion-item-group>
+      <ion-item-divider>Store name<span>{{product.name}}</ion-item-divider>
+      <ion-card *ngFor="let prod of product.data">
+        <ion-card-content>
+          <div>
+            <i><b>Name: </b>{{prod.name}} {{prod.Weight}}</i>
+            <span><b>Count: </b>{{prod.counter}}</span>
+            <span><b>Price: </b>{{prod.Price}}</span>
+          </div>
+        </ion-card-content>
+      </ion-card> 
+    </ion-item-group>
+  </div> -->
+  
+
+
 
 </ion-content>

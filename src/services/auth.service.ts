@@ -9,7 +9,7 @@ export class AuthService {
 
   currentUserId: string;
 
-  currentUserStatus: string | null;
+  currentUserStatus: string | null = 'user';
 
   currentUserEmail: string;
 

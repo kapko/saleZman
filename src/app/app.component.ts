@@ -43,16 +43,15 @@ export class MyApp {
       .getProfile(uid)
       .takeUntil(this.subject)
       .subscribe(profile => {
-        if (profile && profile.email === this.authService.currentUserEmail && profile.status) {
-          this.showAdminButton = true;
-        } else {
-          this.showAdminButton = false;
-        }
-        // set permission for current user to order
-        if (profile && profile.status) {
-          this.authService.currentUserStatus = profile.status;
-        } else {
-          this.authService.currentUserStatus = null;
+        console.log('profile', profile);
+        if (profile && profile.email === this.authService.currentUserEmail) {
+          if (profile.status) {
+            this.showAdminButton = true;
+            this.authService.currentUserStatus = profile.status;
+          } else {
+            this.showAdminButton = false;
+            this.authService.currentUserStatus = null;
+          }
         }
       });
   }

@@ -11,6 +11,8 @@ export class MyUserService {
 
   userPath: string = '/users/';
 
+  linkUserdPath: string = '/linked-user/'
+
   distributorsUserPath: string = '/distributors-users/';
 
   constructor(
@@ -66,6 +68,12 @@ export class MyUserService {
     return this.db
       .object(`${this.distributorsUserPath}${this.authService.currentUserId}/${user.uid}`)
       .set({email: user.email, admin: false});
+  }
+
+  linkUser(distId: string): Promise<any> {
+    return this.db
+      .object(this.linkUserdPath+`${this.authService.currentUserId}/${distId}`)
+      .set(true);
   }
 
 }

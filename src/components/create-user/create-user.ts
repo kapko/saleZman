@@ -21,6 +21,7 @@ export class CreateUserComponent {
   ) { }
 
   createNewUser(email: string): any {
+    if (!email) return;
     if (email === this.authService.currentUserEmail) {
       this.appService.showToast("You can't link self account!");
       return;
@@ -38,6 +39,7 @@ export class CreateUserComponent {
         // check user for available
         switch(user[0].status) {
           case 'user':
+          case undefined:
             this.linkEmail(user[0].key);
             break;
           case 'distributor':

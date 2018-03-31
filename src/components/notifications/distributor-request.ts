@@ -3,6 +3,7 @@ import { NotificationService } from '../../services/notification-service';
 import { AppService } from '../../services/app-service';
 import { MyUserService } from '../../services/my-users-service';
 import { AuthService } from '../../services/auth.service';
+import { NotificationInterface } from '../../interfaces/notification-interface';
 
 @Component({
   selector: 'app-distributor-request',
@@ -10,16 +11,18 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class DistributorRequestComponent {
-  @Input() notification: any;
+  @Input() notification: NotificationInterface;
 
   constructor(
     private notificationService: NotificationService,
     private appService: AppService,
     private userService: MyUserService,
     private authService: AuthService,
+    private myService: MyUserService,
   ) {}
 
   accept(): void {
+    // update notification if accepted
     this.notificationService.acceptDistributorRequest(this.notification.distId)
       .then(res => {
         this.appService.showToast('You have accepted request');
@@ -27,7 +30,14 @@ export class DistributorRequestComponent {
       })
       .catch(err => this.appService.showToast(err.message));
 
+    // change status for user
     this.userService.updateUserForAdmin(this.authService.currentUserId, null);
+    // link this user for dist.
+    this.myService.linkUser(this.notification.distId)
+      .then(res => {
+        this.appService.showToast('You account linked for this distributor');
+      })
+      .catch(err => this.appService.showToast(err.message));
   }
 
   readNotificaion(): void {

@@ -17,6 +17,8 @@ export class StoreBillingPage {
   choosenDates: any[string] = [];
 
   date: string;
+  
+  bills: any[] = [];
 
   storeDate: string = this.appService.getCurrentDate(true);
 
@@ -46,11 +48,11 @@ export class StoreBillingPage {
   }
 
   ngOnInit():void {
-    this.choosenDates.push(this.appService.getDate(new Date()).replace(/\./g, '-'));
-    this.filterByDate('Today');
+    this.choosenDates.push(this.appService.getCurrentDate(true));
+    this.dateEvent('Today');
   }
 
-  filterByDate(date: string): void {
+  dateEvent(date: string): void {
     if (date) {
       // this.appService.presentLoading(true);
       this.choosenDates = [];
@@ -78,9 +80,41 @@ export class StoreBillingPage {
         default: 
           this.choosenDates = [];
       }
-      console.log('choosenDates', this.choosenDates);
-      // this.getAllData(this.choosenDates);
+      this.getBills();
     }
+  }
+
+  getBills(): void {
+    this.myUserService
+      .getStoreBill()
+      .map(data => this.grupeByStoreName(this.filterByDate(data)))
+      .subscribe(items => {
+        this.bills = items;
+        console.log('items', items);
+      });
+  }
+
+
+  filterByDate(data:any, key: string = 'order_date'): any {
+    console.log(this.choosenDates);
+    return data.filter(el => this.choosenDates.includes(el[key]));
+  }
+
+  grupeByStoreName(list): any {
+    let data = [];
+    var group_to_values = list.reduce(function (obj, item) {
+        obj[item.store_name] = obj[item.store_name] || [];
+        obj[item.store_name].push(item);
+        return obj;
+    }, []);
+    for (let i in group_to_values) {
+      let ob = {};
+      ob['name'] = i;
+      ob['data'] = group_to_values[i];
+      data.push(ob);
+    }
+
+    return data;
   }
 
   orderByUser(user: any): void {

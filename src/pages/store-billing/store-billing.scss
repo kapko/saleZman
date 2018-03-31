@@ -22,6 +22,12 @@ app-store-billing {
     }
   }
 
+  div.card-parent {
+    margin-bottom: 25px;
+    border-bottom: 4px solid #02b9e2;
+    padding-bottom: 15px;
+  }
+
   .card  {
     span.price {
       float: right;

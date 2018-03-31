@@ -3,7 +3,7 @@
   <h5 text-center>Store Billing Page</h5>
   <ion-item class="date">
     <ion-label>Date </ion-label>
-    <ion-select [(ngModel)]="date" (ionChange)="filterByDate(date)">
+    <ion-select [(ngModel)]="date" (ionChange)="dateEvent(date)">
       <ion-option selected="true">Today</ion-option>
       <ion-option>Yesterday</ion-option>
       <ion-option>This week</ion-option>
@@ -19,10 +19,10 @@
     </ion-select>
   </ion-item>
 
-  <div>
+  <div class="card-parent" *ngFor="let bill of bills">
       <ion-card class="store">
         <ion-card-content>
-          <p>Store Name: <span text-right>SFireb</span></p>
+          <p>Store Name: <span text-right>{{bill.name}}</span></p>
           <ion-item>
             <ion-label color="primary">Bill number: </ion-label>
             <ion-input type="number" text-right placeholder="0"></ion-input>
@@ -39,12 +39,12 @@
           </ion-item>
         </ion-card-content>
       </ion-card>
-      <ion-card>
+      <ion-card *ngFor="let product of bill.data">
         <ion-card-content class="card">
           <div>
-            <p><b>Name: </b>product name</p>
-            <span><b>Count: </b>1</span>
-            <span class="price"><b>Price: </b>123</span>
+            <p><b>Name: </b>{{product.name}}</p>
+            <span><b>Qty: </b>{{product.counter}}</span>
+            <span class="price"><b>Price: </b>{{product.price}}</span>
           </div>
         </ion-card-content>
       </ion-card> 

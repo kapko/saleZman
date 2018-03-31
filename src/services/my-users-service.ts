@@ -15,6 +15,8 @@ export class MyUserService {
 
   distributorsUserPath: string = '/distributors-users/';
 
+  storeBillPath: string = '/store-billing/';
+
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
@@ -80,6 +82,13 @@ export class MyUserService {
     return this.db
       .object(this.linkUserdPath+`/${uid}/${this.authService.currentUserId}`)
       .set(status);
+  }
+
+  getStoreBill(order_by: string | null = null): Observable<any> {
+    return this.db
+      .list(this.storeBillPath+this.authService.currentUserId, 
+      ref => (order_by) ? ref.orderByChild('order_by').equalTo(order_by) : ref)
+      .valueChanges();
   }
 
 }

@@ -71,10 +71,6 @@ export class MyUsersPage {
     console.log('user', user);
   }
 
-  // updateUser(user): void {
-  //   this.db.
-  // }
-
   ngOnDestroy(): void {
     this.subject.next();
     this.subject.complete();

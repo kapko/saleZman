@@ -89,7 +89,7 @@ export class AppService {
   }
 
   getSunday(date: Date): Date {
-    return new Date(date.setDate(date.getDate() - date.getDay()));
+    return new Date(date.setDate(date.getDate() - date.getDay()+7));
   }
 
   getYesterday(date: Date): Date {

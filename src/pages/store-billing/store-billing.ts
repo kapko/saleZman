@@ -16,22 +16,13 @@ export class StoreBillingPage {
 
   choosenDates: any[string] = [];
 
-  date: string;
-  
-  bills: any[] = [];
+  date: string = 'Today';
+
+  salezman: string;
 
   storeDate: string = this.appService.getCurrentDate(true);
 
-  users: any [] = [
-    {
-      key: '1',
-      name: 'first',
-    },
-    {
-      key: '2',
-      name: 'second',
-    },
-  ];
+  users: any [] = [];
 
   constructor(
     private modalController: ModalController,
@@ -39,17 +30,12 @@ export class StoreBillingPage {
     private appService: AppService,
     private authService: AuthService,
   ) {
+    this.getUsers();
     this.subject = new Subject();
-  }
-
-  ngOnDestroy(): void {
-    this.subject.next();
-    this.subject.complete();
   }
 
   ngOnInit():void {
     this.choosenDates.push(this.appService.getCurrentDate(true));
-    this.dateEvent('Today');
   }
 
   dateEvent(date: string): void {
@@ -77,26 +63,24 @@ export class StoreBillingPage {
             this.appService.getLastDayOfMonth(new Date()),
           );
           break;
-        default: 
-          this.choosenDates = [];
       }
+      console.log('choosenDates', this.choosenDates);
       this.getBills();
     }
   }
 
   getBills(): void {
+    console.log(this.salezman);
     this.myUserService
-      .getStoreBill()
+      .getStoreBill(this.salezman)
+      .takeUntil(this.subject)
       .map(data => this.grupeByStoreName(this.filterByDate(data)))
-      .subscribe(items => {
-        this.bills = items;
-        console.log('items', items);
+      .subscribe(bills => {
+        this.bills = bills;
       });
   }
 
-
   filterByDate(data:any, key: string = 'order_date'): any {
-    console.log(this.choosenDates);
     return data.filter(el => this.choosenDates.includes(el[key]));
   }
 
@@ -113,12 +97,31 @@ export class StoreBillingPage {
       ob['data'] = group_to_values[i];
       data.push(ob);
     }
-
     return data;
   }
 
-  orderByUser(user: any): void {
-    console.log('user', user);
+  orderByUser(salezman: string): void {
+    console.log('salezman', salezman);
+    this.salezman = salezman;
+    this.getBills();
+  }
+
+  getUsers(): void {
+    this.myUserService.getMyUsers()
+      .take(1)
+      .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })))
+      .subscribe(users => {
+        if (!users && !users.length) return;
+        // set salezman
+        this.salezman = users[0].key;
+        this.users = users;
+        this.dateEvent('Today');
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subject.next();
+    this.subject.complete();
   }
 
 }

@@ -1,6 +1,6 @@
 <ion-card *ngFor="let product of products">
-  <ion-card-content>
-    <ion-icon text-right name="create" (click)="edit(product)"></ion-icon>
+  <ion-card-content *ngIf="!product.edit">
+    <ion-icon text-right name="create" (click)="product.edit = true"></ion-icon>
     <ion-icon text-right name="trash" (click)="deleteItem(product)"></ion-icon>
     <ion-item>
       <p><b>Bill number:</b> {{product.bill_number}}</p>
@@ -11,6 +11,35 @@
       <p><b>Store name:</b> {{product.store_name}}</p>
       <p><b>Salezman:</b> {{(product.ordered_by | getEmail | async)?.email}}</p>
     </ion-item>
-    <button ion-button full (approveItem)="approveItem()">Approve</button>
+    <button ion-button full (click)="approveItem()">Approve</button>
   </ion-card-content>
+
+  <ion-card-content *ngIf="product.edit">
+    <p>Store Name: <span text-right>{{product.name}}</span></p>
+    <ion-item>
+      <ion-label color="primary">Bill number: </ion-label>
+      <ion-input 
+        type="number"
+        [(ngModel)]="product.bill_number"
+        text-right 
+        placeholder="0"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Bill value: </ion-label>
+      <ion-input 
+        type="number"
+        [(ngModel)]="product.amount"
+        text-right 
+        placeholder="0"></ion-input>
+    </ion-item>
+    <ion-item class="date">
+      <ion-label>Date</ion-label>
+      <ion-datetime
+      [(ngModel)]="product.bill_date"
+      [placeholder]="storeDate"
+      displayFormat="DD/MM/YYYY"></ion-datetime>
+    </ion-item>
+    <button ion-button full (click)="updateProduct(product)">save</button>
+  </ion-card-content>
+
 </ion-card>

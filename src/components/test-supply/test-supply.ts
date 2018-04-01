@@ -37,8 +37,8 @@ export class SupplyTestComponent {
     this.appService.showToast('approve this item');
   }
 
-  edit(): void {
-    this.appService.showToast('Edit this item');
+  updateProduct(product: any): void {
+    console.log(product);
   }
 
   deleteItem(): void {

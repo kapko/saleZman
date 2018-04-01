@@ -118,13 +118,14 @@ export class StoreBillingPage {
   }
 
   submitValue(bill: any): void {
+    let date = '';
+    
     // check for sumbit this product as before
     if (bill.data[0].checked) {
       this.appService.showToast('You are already submit this Store!');
       return;
     }
 
-    let date = '';
     if (!bill.bill_number || !bill.amount) {
       this.appService.showToast('Please re-enter fields');
       return;

@@ -12,35 +12,11 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class StoreCommentComponent {
-  @Input() salezman: string;
-  @Input() chooseDate: string [];
- 
-  products: any[] = [];
+  @Input() bill: any;
 
   subject: Subject<any>;
 
-  comments: any [] = [
-    {
-        "date" : "17.03.2018",
-        "message" : "Test1\n",
-        "uid" : "pH5lUh5UR1UZKKME56bvHtl29So1"
-      },
-    {
-        "date" : "17.03.2018",
-        "message" : "Test2\n",
-        "uid" : "pH5lUh5UR1UZKKME56bvHtl29So1"
-      },
-    {
-        "date" : "17.03.2018",
-        "message" : "Test3\n",
-        "uid" : "pH5lUh5UR1UZKKME56bvHtl29So1"
-      },
-    {
-        "date" : "17.03.2018",
-        "message" : "Test 4\n",
-        "uid" : "pH5lUh5UR1UZKKME56bvHtl29So1"
-      },
-  ];
+  comment: string = '';
 
   constructor(
     private appService: AppService,
@@ -50,11 +26,22 @@ export class StoreCommentComponent {
     this.subject = new Subject();
   }
 
-  getComments(): void {
-    // this.storeService
-    //   .getCommonCommit(this.store._name)
-    //   .takeUntil(this.subject)
-    //   .subscribe(messages => this.commits = messages)
+  ngOnChanges(): void {
+    if (this.bill) {
+      let data = this.bill.data[0];
+      let url = this.bill.name.toLowerCase() + '/';
+      url += `ordered-${data.order_by}-${data.order_date}`;
+      this.getComment(url);
+    }
+  }
+
+  getComment(url): void {
+    this.storeService
+      .getStoreBillingComment(url)
+      .takeUntil(this.subject)
+      .subscribe(comment => {
+        this.comment = comment;
+      });
   }
 
   ngOnDestroy(): void {

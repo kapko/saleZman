@@ -92,6 +92,7 @@ export class ListComponent {
 
     if (!count && +product.counter < 1) return;
     product.counter += (count) ? 1 : -1;
+    product.count_date = this.appService.getToday();
     if (this.showOrdered) {
       this.storeService.updateUsersOrderedProductList(product, this.store.name);
     } else {

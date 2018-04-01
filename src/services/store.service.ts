@@ -134,6 +134,10 @@ export class StoreService {
     return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${uid}-${this.getDate()}`).valueChanges();
   }
 
+  getStoreBillingComment(url): Observable<any> {
+      return this.db.object(`${this.commentPath}${url}`).valueChanges();
+  }
+
   updateSupplyItem(storeName: string, product: any): Promise<any> {
     return this.db.object(`supply/${storeName}/${product.key}`).set(product);
   }

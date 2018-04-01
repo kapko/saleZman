@@ -1,10 +1,8 @@
-<h4 *ngIf="comments.length" text-center>DEMO Comments: </h4>
-<ion-list>
-  <ion-card *ngFor="let comment of comments">
-    <ion-card-content>
-      <p><b>From: </b> email of commeted</p>
-      <p><b>Message: </b> {{comment?.message}}</p>
-      <p><b>Date: </b> {{comment?.date}}</p>
+<h4 text-center *ngIf="comment !== ''">Comment: </h4>
+<ion-list *ngIf="comment !== ''">
+  <ion-card>
+    <ion-card-content >
+      <p><b>Message: </b> {{comment}}</p>
     </ion-card-content>
   </ion-card>
 </ion-list>

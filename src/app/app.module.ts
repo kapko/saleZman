@@ -46,6 +46,7 @@ import { NotificationPage } from '../pages/notifications/notifications';
 import { NotificationService } from '../services/notification-service';
 import { DistributorRequestComponent } from '../components/notifications/distributor-request';
 import { SupplyTestComponent } from '../components/test-supply/test-supply';
+import { StoreCommentComponent } from '../components/store-comment/store-comment';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -85,6 +86,7 @@ let fireBaseConfig = {
     DistributorRequestComponent,
     StoreBillingPage,
     SupplyTestComponent,
+    StoreCommentComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,6 +129,7 @@ let fireBaseConfig = {
     DistributorRequestComponent,
     StoreBillingPage,
     SupplyTestComponent,
+    StoreCommentComponent,
   ],
   providers: [
     StatusBar,

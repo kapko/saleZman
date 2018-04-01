@@ -137,7 +137,7 @@ export class StoreBillingPage {
       bill_number: +bill.bill_number,
       amount: +bill.amount,
       store_name: bill.name,
-      ordered_by: this.salezman,
+      ordered_by: (this.salezman === 'All') ? bill.data[0].order_by : this.salezman,
       order_date: this.appService.getCurrentDate(true).replace(/\./ig, '-'),
       order_id: Date.now(),
       supply_status: 'pending',

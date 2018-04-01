@@ -50,7 +50,7 @@
             [placeholder]="storeDate"
             displayFormat="DD/MM/YYYY"></ion-datetime>
           </ion-item>
-          <button ion-button *ngIf="salezman !== 'All'" (click)="submitValue(bill)" full>submit</button>
+          <button ion-button (click)="submitValue(bill)" full>submit</button>
         </ion-card-content>
       </ion-card>
       <ion-card *ngFor="let product of bill.data">

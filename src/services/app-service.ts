@@ -80,6 +80,10 @@ export class AppService {
     return `${dd}-${mm}-${date.getFullYear()}`;
   }
 
+  getToday(): string {
+    return this.getCurrentDate(true).replace(/\./ig, '-');
+  }
+
   getMonday(d): Date {
     d = new Date(d);
     var day = d.getDay(),

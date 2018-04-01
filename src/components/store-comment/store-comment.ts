@@ -57,18 +57,6 @@ export class StoreCommentComponent {
     //   .subscribe(messages => this.commits = messages)
   }
 
-  submitCommit(event: any, uid: string = this.authService.currentUserId): void {
-    this.appService.showToast('It will apply');
-    // let value = event.target.value;
-    // let data = {};
-    // data['uid'] = uid;
-    // data['message'] = value;
-    // data['date'] = this.appService.getCurrentDate(true);
-    // // update data
-    // this.storeService.submitCommonCommit(data, this.store._name);
-    // this.comment = '';
-  }
-
   ngOnDestroy(): void {
     this.subject.next();
     this.subject.complete();

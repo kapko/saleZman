@@ -91,6 +91,12 @@ export class MyUserService {
       .valueChanges();
   }
 
+  getStoreOrderedItem(key: string): Observable<any> {
+    return this.db
+      .object(`${this.storeBillPath}${this.authService.currentUserId}/${key}`)
+      .valueChanges();
+  }
+
   clearStoreBillProduct(key: string): Promise<any> {
     return this.db
       .object(this.storeBillPath+`${this.authService.currentUserId}/${key}`)

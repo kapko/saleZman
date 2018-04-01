@@ -5,6 +5,8 @@ import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { NavController } from 'ionic-angular';
+import { EditBillStorePage } from '../../pages/edit-store-bill/edit-store-bill';
 
 @Component({
   selector: 'app-test-supply',
@@ -23,6 +25,7 @@ export class SupplyTestComponent {
     private appService: AppService,
     private storeService: StoreService,
     private authService: AuthService,
+    private navController: NavController,
   ) {
     this.subject = new Subject();
   }
@@ -48,25 +51,8 @@ export class SupplyTestComponent {
     this.appService.showToast('approve this item');
   }
 
-  updateProduct(product: any): void {
-    let date = '';
-    let key = `${product.order_id}-${product.ordered_by}`;
-    // check date for updates
-    if (product.bill_date.split('-')[0].length > 3) {
-      for (let i = 2; i >= 0; i--) {
-        let item = product.bill_date.split('-')[i];
-        date += (i === 2) ? item : '-' + item;
-      }
-    } else {
-      date = product.bill_date;
-    }
-
-    product.bill_date = date;
-    product.edit = false;
-    // update value of product
-    this.storeService.addTestSupply(product, key)
-      .then(res => this.appService.showToast('Updated'))
-      .catch(err => this.appService.showToast(err.message));
+  editItem(product: any): void {
+    this.navController.push(EditBillStorePage, product)
   }
 
   deleteItem(product: any): void {

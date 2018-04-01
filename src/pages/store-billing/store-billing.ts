@@ -34,7 +34,7 @@ export class StoreBillingPage {
   }
 
   ngOnInit():void {
-    this.choosenDates.push(this.appService.getCurrentDate(true).replace(/\./ig, '-'));
+    this.choosenDates.push(this.appService.getToday());
     this.dateEvent('Today');
   }
 
@@ -129,7 +129,7 @@ export class StoreBillingPage {
         date += (i === 2) ? item : '-' + item;
       }
     } else {
-      date = this.appService.getCurrentDate(true).replace(/\./ig, '-');
+      date = this.appService.getToday();
     }
 
     let supplyObject = {
@@ -138,25 +138,35 @@ export class StoreBillingPage {
       amount: +bill.amount,
       store_name: bill.name,
       ordered_by: (this.salezman === 'All') ? bill.data[0].order_by : this.salezman,
-      order_date: this.appService.getCurrentDate(true).replace(/\./ig, '-'),
+      order_date: this.appService.getToday(),
       order_id: Date.now(),
       supply_status: 'pending',
+      orderedKeys: this.getOrderKeys(bill),
     }
 
     let key = `${supplyObject.order_id}-${this.salezman}`;
-
     this.storeService.addTestSupply(supplyObject, key)
       .then(res => {
         this.appService.showToast('Please approve you request!');
       })
       .catch(err => this.appService.showToast(err.message));
     // clean store bill
-    this.cleanStoreBill(bill);
+    // this.cleanStoreBill(bill);
   }
 
   ngOnDestroy(): void {
     this.subject.next();
     this.subject.complete();
+  }
+
+  getOrderKeys(bill): string[] {
+    let keys = [];
+    for (let prod of bill.data) {
+      let key = prod.store_name + prod.name;
+      keys.push(key);
+    }
+
+    return keys;
   }
 
   cleanStoreBill(bill: any): Promise<any> {

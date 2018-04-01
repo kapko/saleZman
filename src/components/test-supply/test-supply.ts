@@ -38,14 +38,37 @@ export class SupplyTestComponent {
   }
 
   updateProduct(product: any): void {
-    console.log(product);
-    let key = `${product.order_id}-${product.amount}-${product.ordered_by}`;
-    console.log('key', key);
-    
+    let date = '';
+    let key = `${product.order_id}-${product.ordered_by}`;
+    // check date for updates
+    if (product.bill_date.split('-')[0].length > 3) {
+      for (let i = 2; i >= 0; i--) {
+        let item = product.bill_date.split('-')[i];
+        date += (i === 2) ? item : '-' + item;
+      }
+    } else {
+      date = product.bill_date;
+    }
+
+    product.bill_date = date;
+    product.edit = false;
+    // update value of product
+    this.storeService.addTestSupply(product, key)
+      .then(res => this.appService.showToast('Updated'))
+      .catch(err => this.appService.showToast(err.message));
   }
 
-  deleteItem(): void {
-    this.appService.showToast('delete this item');
+  deleteItem(product: any): void {
+    let key = `${product.order_id}-${product.ordered_by}`;
+    // REMOVE    
+    this.appService.showAlert('Do you want to remove this product?', [{
+      text: 'yes',
+      handler: e => {
+        this.storeService.addTestSupply(null, key)
+          .then(res => this.appService.showToast('Deleted'))
+          .catch(err => this.appService.showToast(err.message));
+      }
+    }, 'no']);
   }
 
   ngOnDestroy(): void {

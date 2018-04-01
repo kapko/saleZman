@@ -142,7 +142,7 @@ export class StoreBillingPage {
       supply_status: 'pending',
     }
 
-    let key = `${supplyObject.order_id}-${bill.amount}-${this.salezman}`;
+    let key = `${supplyObject.order_id}-${this.salezman}`;
 
     this.storeService.addTestSupply(supplyObject, key)
       .then(res => {

@@ -26,7 +26,7 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary">Bill value: </ion-label>
-      <ion-input 
+      <ion-input
         type="number"
         [(ngModel)]="product.amount"
         text-right 
@@ -36,7 +36,7 @@
       <ion-label>Date</ion-label>
       <ion-datetime
       [(ngModel)]="product.bill_date"
-      [placeholder]="storeDate"
+      [placeholder]="product.bill_date"
       displayFormat="DD/MM/YYYY"></ion-datetime>
     </ion-item>
     <button ion-button full (click)="updateProduct(product)">save</button>

@@ -161,6 +161,7 @@ export class StoreService {
   }
 
   addTestSupply(data: Object, key: string): Promise<any> {
+    // key = `order_id-amount-salezman`;
     return this.db
       .object(this.testSupplyPath+`${this.authService.currentUserId}/${key}`)
       .set(data);

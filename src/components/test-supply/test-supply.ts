@@ -39,6 +39,9 @@ export class SupplyTestComponent {
 
   updateProduct(product: any): void {
     console.log(product);
+    let key = `${product.order_id}-${product.amount}-${product.ordered_by}`;
+    console.log('key', key);
+    
   }
 
   deleteItem(): void {

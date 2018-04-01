@@ -91,4 +91,10 @@ export class MyUserService {
       .valueChanges();
   }
 
+  clearStoreBillProduct(key: string): Promise<any> {
+    return this.db
+      .object(this.storeBillPath+`${this.authService.currentUserId}/${key}`)
+      .set(null);
+  }
+
 }

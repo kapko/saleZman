@@ -34,7 +34,7 @@ export class StoreBillingPage {
   }
 
   ngOnInit():void {
-    this.choosenDates.push(this.appService.getCurrentDate(true));
+    this.choosenDates.push(this.appService.getCurrentDate(true).replace(/\./ig, '-'));
     this.dateEvent('Today');
   }
 
@@ -94,7 +94,7 @@ export class StoreBillingPage {
       ob['name'] = i;
       ob['bill_number'];
       ob['amount'];
-      ob['bill_date'] = '',
+      ob['bill_date'];
       ob['data'] = group_to_values[i];
       data.push(ob);
     }
@@ -118,13 +118,22 @@ export class StoreBillingPage {
   }
 
   submitValue(bill: any): void {
+    let date = '';
     if (!bill.bill_number || !bill.amount) {
       this.appService.showToast('Please re-enter fields');
       return;
     }
+    if (bill.bill_date) {
+      for (let i = 2; i >= 0; i--) {
+        let item = bill.bill_date.split('-')[i];
+        date += (i === 2) ? item : '-' + item;
+      }
+    } else {
+      date = this.appService.getCurrentDate(true).replace(/\./ig, '-');
+    }
 
     let supplyObject = {
-      bill_date: '',
+      bill_date: date,
       bill_number: +bill.bill_number,
       amount: +bill.amount,
       store_name: bill.name,
@@ -140,11 +149,22 @@ export class StoreBillingPage {
         this.appService.showToast('Please approve you request!');
       })
       .catch(err => this.appService.showToast(err.message));
+    // clean store bill
+    this.cleanStoreBill(bill);
   }
 
   ngOnDestroy(): void {
     this.subject.next();
     this.subject.complete();
+  }
+
+  cleanStoreBill(bill: any): Promise<any> {
+    let opt = [];
+    for (let prod of bill.data) {
+      let key = prod.store_name + prod.name;
+      this.myUserService.clearStoreBillProduct(key);
+    }
+    return Promise.all(opt);
   }
 
 }

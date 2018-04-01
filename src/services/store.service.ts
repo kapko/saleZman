@@ -160,8 +160,8 @@ export class StoreService {
     return this.db.object(`payments/${storeName}/${key}/payment_status`).set('done');
   }
 
-  addTestSupply(data: Object, key: string): Promise<any> {
-    // key = `order_id-amount-salezman`;
+  addTestSupply(data: Object, key: number): Promise<any> {
+    // key = `order_id`;
     return this.db
       .object(this.testSupplyPath+`${this.authService.currentUserId}/${key}`)
       .set(data);

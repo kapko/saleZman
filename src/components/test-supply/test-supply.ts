@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { NavController } from 'ionic-angular';
 import { EditBillStorePage } from '../../pages/edit-store-bill/edit-store-bill';
+import { MyUserService } from '../../services/my-users-service';
 
 @Component({
   selector: 'app-test-supply',
@@ -26,6 +27,7 @@ export class SupplyTestComponent {
     private storeService: StoreService,
     private authService: AuthService,
     private navController: NavController,
+    private myUserService: MyUserService,
   ) {
     this.subject = new Subject();
   }
@@ -56,16 +58,27 @@ export class SupplyTestComponent {
   }
 
   deleteItem(product: any): void {
-    let key = `${product.order_id}-${product.ordered_by}`;
+    let key = product.order_id;
     // REMOVE    
     this.appService.showAlert('Do you want to remove this product?', [{
       text: 'yes',
       handler: e => {
+        this.updateCheckedProducts(product);
         this.storeService.addTestSupply(null, key)
           .then(res => this.appService.showToast('Deleted'))
           .catch(err => this.appService.showToast(err.message));
       }
     }, 'no']);
+  }
+
+  updateCheckedProducts(product: any): void {
+    let opt = [];
+    for (let key of product.orderedKeys) {
+      opt.push(
+        this.myUserService.checkedSubmitedOrder(key, null)
+      )
+    }
+    Promise.all(opt);
   }
 
   ngOnDestroy(): void {

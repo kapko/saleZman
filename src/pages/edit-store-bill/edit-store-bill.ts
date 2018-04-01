@@ -31,7 +31,6 @@ export class EditBillStorePage {
     this.subject = new Subject();
     this.product = this.navParams.data;
     this.orderedItems = this.getStoreOrderedItem(this.product);
-    console.log(this.orderedItems);
   }
 
   getStoreOrderedItem(product: any): any[] {
@@ -39,7 +38,6 @@ export class EditBillStorePage {
     for (let key of product.orderedKeys) {
       orderedItems.push(this.myService.getStoreOrderedItem(key).take(1));
     }
-    console.log('orderedItems', orderedItems);
     return orderedItems;
   }
 
@@ -59,9 +57,9 @@ export class EditBillStorePage {
     product.bill_date = date;
     product.edit = false;
     // update value of product
-    this.storeService.addTestSupply(product, key)
-      .then(res => this.appService.showToast('Updated'))
-      .catch(err => this.appService.showToast(err.message));
+    // this.storeService.addTestSupply(product, key)
+    //   .then(res => this.appService.showToast('Updated'))
+    //   .catch(err => this.appService.showToast(err.message));
   }
 
   ngOnDestroy(): void {

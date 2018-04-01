@@ -118,6 +118,12 @@ export class StoreBillingPage {
   }
 
   submitValue(bill: any): void {
+    // check for sumbit this product as before
+    if (bill.data[0].checked) {
+      this.appService.showToast('You are already submit this Store!');
+      return;
+    }
+
     let date = '';
     if (!bill.bill_number || !bill.amount) {
       this.appService.showToast('Please re-enter fields');
@@ -138,20 +144,20 @@ export class StoreBillingPage {
       amount: +bill.amount,
       store_name: bill.name,
       ordered_by: (this.salezman === 'All') ? bill.data[0].order_by : this.salezman,
-      order_date: this.appService.getToday(),
+      order_date: bill.data[0].order_date,
       order_id: Date.now(),
       supply_status: 'pending',
       orderedKeys: this.getOrderKeys(bill),
     }
 
-    let key = `${supplyObject.order_id}-${this.salezman}`;
+    let key = supplyObject.order_id;
     this.storeService.addTestSupply(supplyObject, key)
       .then(res => {
         this.appService.showToast('Please approve you request!');
       })
       .catch(err => this.appService.showToast(err.message));
     // clean store bill
-    // this.cleanStoreBill(bill);
+    this.checkedSubmitedOrder(bill);
   }
 
   ngOnDestroy(): void {
@@ -169,11 +175,11 @@ export class StoreBillingPage {
     return keys;
   }
 
-  cleanStoreBill(bill: any): Promise<any> {
+  checkedSubmitedOrder(bill: any): Promise<any> {
     let opt = [];
     for (let prod of bill.data) {
       let key = prod.store_name + prod.name;
-      this.myUserService.clearStoreBillProduct(key);
+      this.myUserService.checkedSubmitedOrder(key);
     }
     return Promise.all(opt);
   }

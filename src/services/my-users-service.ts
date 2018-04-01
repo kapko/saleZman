@@ -97,10 +97,10 @@ export class MyUserService {
       .valueChanges();
   }
 
-  clearStoreBillProduct(key: string): Promise<any> {
+  checkedSubmitedOrder(key: string, checked: boolean | null = true): Promise<any> {
     return this.db
-      .object(this.storeBillPath+`${this.authService.currentUserId}/${key}`)
-      .set(null);
+      .object(this.storeBillPath+`${this.authService.currentUserId}/${key}/checked`)
+      .set(checked);
   }
 
 }

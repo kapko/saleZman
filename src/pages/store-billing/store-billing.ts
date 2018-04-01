@@ -138,6 +138,7 @@ export class StoreBillingPage {
       amount: +bill.amount,
       store_name: bill.name,
       ordered_by: this.salezman,
+      order_date: this.appService.getCurrentDate(true).replace(/\./ig, '-'),
       order_id: Date.now(),
       supply_status: 'pending',
     }

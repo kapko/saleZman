@@ -167,9 +167,10 @@ export class StoreService {
       .set(data);
   }
 
-  getTestSupply(): Observable<any> {
+  getTestSupply(salezman: string | null = null): Observable<any> {
     return this.db
-      .list(this.testSupplyPath + this.authService.currentUserId)
+      .list(this.testSupplyPath + this.authService.currentUserId, 
+      ref => (salezman) ? ref.orderByChild('ordered_by').equalTo(salezman) : ref)
       .valueChanges();
   }
 

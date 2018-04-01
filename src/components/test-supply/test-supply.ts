@@ -12,6 +12,9 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class SupplyTestComponent {
+  @Input() salezman: string;
+  @Input() chooseDate: string [];
+ 
   products: any[] = [];
 
   subject: Subject<any>;
@@ -22,12 +25,20 @@ export class SupplyTestComponent {
     private authService: AuthService,
   ) {
     this.subject = new Subject();
+  }
+
+  ngOnChanges(): void {
+    if (this.salezman) {
+      this.salezman = (this.salezman === 'All') ? null : this.salezman;
+    }
+
     this.getTestSupply();
   }
 
   getTestSupply(): void {
-    this.storeService.getTestSupply()
+    this.storeService.getTestSupply(this.salezman)
       .takeUntil(this.subject)
+      .map(data => data.filter(el => this.chooseDate.includes(el['order_date'])))
       .subscribe(products => {
         this.products = products;
       });

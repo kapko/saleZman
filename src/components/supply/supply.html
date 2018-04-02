@@ -18,7 +18,7 @@
       </span>
     </div>
     <p><b>Order by: </b>{{ (product.order_by | getEmail | async)?.email }}</p>
-    <p><b>Ordered date: </b>{{product.ordered_date}}</p>
+    <p><b>Ordered date: </b>{{product.order_date}}</p>
     <div class="footer" *ngIf="product.supplied_by">
       <p><b>Supplied by:</b> {{ (product.supplied_by | getEmail | async)?.email }}</p>
       <p><b>Supplied date:</b> {{product.supply_date}}</p>

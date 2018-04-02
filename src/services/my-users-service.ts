@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { AppService } from './app-service';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -19,7 +18,6 @@ export class MyUserService {
 
   constructor(
     private db: AngularFireDatabase,
-    private appService: AppService,
     private authService: AuthService,
   ) { }
 
@@ -101,6 +99,12 @@ export class MyUserService {
     return this.db
       .object(this.storeBillPath+`${this.authService.currentUserId}/${key}/checked`)
       .set(checked);
+  }
+
+  clearStoreBillProduct(key: string): Promise<any> {
+    return this.db
+      .object(this.storeBillPath+`${this.authService.currentUserId}/${key}`)
+      .set(null);
   }
 
 }

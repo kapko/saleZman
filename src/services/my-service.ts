@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { AppService } from './app-service';
-import { StoreService } from './store.service';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -19,7 +17,6 @@ export class MyService {
 
   constructor(
     private db: AngularFireDatabase,
-    private appService: AppService,
     private authService: AuthService,
   ) { }
 

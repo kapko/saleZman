@@ -23,6 +23,8 @@ export class StoreService {
 
   testSupplyPath: string = '/test-supply/';
 
+  testSupplyItemPath: string = '/test-supply-items/';
+
   paymentListPath: string = '/payments/';
 
   paymentPaidListPath: string = '/paid-list/';
@@ -135,7 +137,7 @@ export class StoreService {
   }
 
   getStoreBillingComment(url): Observable<any> {
-      return this.db.object(`${this.commentPath}${url}`).valueChanges();
+    return this.db.object(`${this.commentPath}${url}`).valueChanges();
   }
 
   updateSupplyItem(storeName: string, product: any): Promise<any> {
@@ -176,6 +178,17 @@ export class StoreService {
       .list(this.testSupplyPath + this.authService.currentUserId, 
       ref => (salezman) ? ref.orderByChild('ordered_by').equalTo(salezman) : ref)
       .valueChanges();
+  }
+
+  setTestSupplyItem(key: string, product: any): Promise<any> {
+    return this.db
+      .object(`${this.testSupplyItemPath}${this.authService.currentUserId}/${key}`)
+      .set(product);
+  }
+
+  getTestSupplyItem(key: string): Observable<any> {
+    return this.db
+      .object(this.testSupplyItemPath+`${this.authService.currentUserId}/${key}`).valueChanges();
   }
 
 }

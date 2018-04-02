@@ -144,7 +144,7 @@ export class StoreBillingPage {
       bill_number: +bill.bill_number,
       amount: +bill.amount,
       store_name: bill.name,
-      ordered_by: (this.salezman === 'All') ? bill.data[0].order_by : this.salezman,
+      order_by: (this.salezman === 'All') ? bill.data[0].order_by : this.salezman,
       order_date: bill.data[0].order_date,
       order_id: Date.now(),
       supply_status: 'pending',
@@ -180,7 +180,11 @@ export class StoreBillingPage {
     let opt = [];
     for (let prod of bill.data) {
       let key = prod.store_name + prod.name;
-      this.myUserService.checkedSubmitedOrder(key);
+      opt.push(
+        // set item for test-supply-items
+        this.storeService.setTestSupplyItem(key, prod),
+        this.myUserService.clearStoreBillProduct(key)
+      )
     }
     return Promise.all(opt);
   }

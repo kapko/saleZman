@@ -3,7 +3,7 @@ import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { AppService } from './app-service';
 import { AuthService } from './auth.service';
-import { NotificationType, RequestType } from '../interfaces/notification-interface';
+import { RequestType } from '../interfaces/notification-interface';
 import { MyUserService } from './my-users-service';
 
 @Injectable()

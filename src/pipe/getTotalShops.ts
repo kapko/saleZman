@@ -1,5 +1,4 @@
 import { Injectable, Pipe } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 
 @Pipe({
@@ -8,9 +7,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class GetShopNumberPipe {
-  constructor(
-    private authService: AuthService
-  ) { }
+  constructor() { }
 
   transform(shops: any): number {
     let totalShopNumber = 0;

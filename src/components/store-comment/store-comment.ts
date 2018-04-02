@@ -1,10 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { AppService } from '../../services/app-service';
 import { StoreService } from '../../services/store.service';
-import { storeName } from '../../interfaces/city.store';
-import 'rxjs';
 import { Subject } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-store-comment',
@@ -19,9 +15,7 @@ export class StoreCommentComponent {
   comment: string = '';
 
   constructor(
-    private appService: AppService,
     private storeService: StoreService,
-    private authService: AuthService,
   ) {
     this.subject = new Subject();
   }

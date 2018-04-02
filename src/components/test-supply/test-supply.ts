@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AppService } from '../../services/app-service';
 import { StoreService } from '../../services/store.service';
-import { storeName } from '../../interfaces/city.store';
-import 'rxjs';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { NavController } from 'ionic-angular';
@@ -49,7 +47,11 @@ export class SupplyTestComponent {
       });
   }
 
-  approveItem(): void {
+  approveItem(product: any): void {
+    delete product.orderedKeys;
+    delete product.edit;
+    console.log('product', product);
+    
     this.appService.showToast('approve this item');
   }
 

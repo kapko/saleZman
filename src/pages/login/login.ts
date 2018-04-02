@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AppService } from '../../services/app-service';
 import { AuthService } from '../../services/auth.service';

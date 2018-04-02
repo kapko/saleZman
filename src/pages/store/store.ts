@@ -3,8 +3,6 @@ import { Tabs } from 'ionic-angular';
 import { storeName } from '../../interfaces/city.store';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
-import 'rxjs/add/operator/do';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'store-page',

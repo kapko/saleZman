@@ -51,7 +51,7 @@ export class SupplyTestComponent {
     delete product.orderedKeys;
     delete product.edit;
     this.storeService.testSupplyPath
-    this.storeService.addSupply(product, product.store_name);
+    this.storeService.addSupply(product, product.store_name.toLowerCase());
     this.storeService.addTestSupply(null, product.order_id);
     this.appService.showToast('Your product in Supply Page');
   }

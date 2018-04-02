@@ -50,9 +50,10 @@ export class SupplyTestComponent {
   approveItem(product: any): void {
     delete product.orderedKeys;
     delete product.edit;
-    console.log('product', product);
-    
-    this.appService.showToast('approve this item');
+    this.storeService.testSupplyPath
+    this.storeService.addSupply(product, product.store_name);
+    this.storeService.addTestSupply(null, product.order_id);
+    this.appService.showToast('Your product in Supply Page');
   }
 
   editItem(product: any): void {

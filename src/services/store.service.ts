@@ -166,11 +166,17 @@ export class StoreService {
     return this.db.object(`payments/${storeName}/${key}/payment_status`).set('done');
   }
 
-  addTestSupply(data: Object, key: number): Promise<any> {
+  addTestSupply(data: Object | null, key: number): Promise<any> {
     // key = `order_id`;
     return this.db
       .object(this.testSupplyPath+`${this.authService.currentUserId}/${key}`)
       .set(data);
+  }
+
+  addSupply(data: Object, storeName: string): void {
+    this.db
+      .list(this.supplyListPath+storeName)
+      .push(data);
   }
 
   getTestSupply(salezman: string | null = null): Observable<any> {

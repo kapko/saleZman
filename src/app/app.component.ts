@@ -33,8 +33,8 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.rootPage = (this.authService.emailVerified) ? StoreBillingPage : LoginPage;
-      // this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
+      // this.rootPage = (this.authService.emailVerified) ? StoreBillingPage : LoginPage;
+      this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
     });
   }
 

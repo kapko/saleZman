@@ -12,18 +12,18 @@
       <div [ngSwitch]="payment.method">
         <div *ngSwitchCase="'cash'">
           <p><b>Paid option: </b>cash</p>
-          <p><b>Cash Amount: </b>{{payment.cash_amount}}</p>
+          <p><b>Cash Amount: </b>{{payment.payment_amount}}</p>
         </div>
         <div *ngSwitchCase="'chq'">
           <p><b>Paid option: </b>cheque</p>
-          <p><b>Cheque Amount: </b>{{payment.chq_amount}}</p>
+          <p><b>Cheque Amount: </b>{{payment.payment_amount}}</p>
           <p><b>Cheque Bank: </b>{{payment.chq_bank}}</p>
           <p><b>Cheque Date: </b>{{payment.chq_date}}</p>
           <p><b>Cheque Number: </b>{{payment.chq_number}}</p>
         </div>
         <div *ngSwitchCase="'neft'">
           <p><b>Paid option: </b>neft</p>
-          <p><b>Neft Amount: </b>{{payment.neft_amount}}</p>
+          <p><b>Neft Amount: </b>{{payment.payment_amount}}</p>
           <p><b>Neft Date: </b>{{payment.neft_date}}</p>
         </div>
       </div>

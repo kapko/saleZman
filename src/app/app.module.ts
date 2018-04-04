@@ -48,6 +48,7 @@ import { DistributorRequestComponent } from '../components/notifications/distrib
 import { SupplyTestComponent } from '../components/test-supply/test-supply';
 import { StoreCommentComponent } from '../components/store-comment/store-comment';
 import { EditBillStorePage } from '../pages/edit-store-bill/edit-store-bill';
+import { MyUsersWorkPage } from '../pages/my-users-work/my-users-work';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -89,6 +90,7 @@ let fireBaseConfig = {
     SupplyTestComponent,
     StoreCommentComponent,
     EditBillStorePage,
+    MyUsersWorkPage,
   ],
   imports: [
     BrowserModule,
@@ -133,6 +135,7 @@ let fireBaseConfig = {
     SupplyTestComponent,
     StoreCommentComponent,
     EditBillStorePage,
+    MyUsersWorkPage,
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,34 @@
+<app-header></app-header>
+
+<ion-content padding>
+    <ion-item>
+      <ion-label>My Users</ion-label>
+      <ion-select [(ngModel)]="user">
+        <ion-option>All</ion-option>
+        <ion-option 
+          *ngFor="let item of users" 
+          [value]="item.key">{{(item.key | getEmail | async)?.email}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>My Users Work</ion-label>
+      <ion-select 
+        [(ngModel)]="options" 
+        multiple="true"
+        (ionChange)="optionsUpdate(options)">
+        <ion-option *ngFor="let item of options">{{item}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+  <ion-item class="date">
+    <ion-label>Date </ion-label>
+    <ion-select [(ngModel)]="date">
+      <ion-option 
+        *ngFor="let day of days"
+        [value]="day">{{day}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- <app-my-worked-list [date]="date" [options]="options"></app-my-worked-list> -->
+</ion-content>

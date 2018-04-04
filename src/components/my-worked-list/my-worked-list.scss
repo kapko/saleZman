@@ -42,6 +42,10 @@ app-my-worked-list {
       font-size: 12px;
       flex: 1 0 50%;
     }
+
+    span:last-child {
+      text-align: right;
+    }
     
     p {
       font-size: 12px!important;

@@ -20,20 +20,24 @@ export class MyService {
     private authService: AuthService,
   ) { }
 
-  getStockData(userId: string = this.authService.currentUserId): Observable<any> {
-    return this.db.list(this.myStockPath + userId).valueChanges();
+  getStockData(userId: string | null): Observable<any> {
+    return this.db.list(this.myStockPath+this.getUserId(userId)).valueChanges();
   }
 
-  getPaymentData(userId: string = this.authService.currentUserId): Observable<any> {
-    return this.db.list(this.myPaymentPath + userId).valueChanges();
+  getPaymentData(userId: string | null): Observable<any> {
+    return this.db.list(this.myPaymentPath+this.getUserId(userId)).valueChanges();
   }
 
-  getOrderedData(userId: string = this.authService.currentUserId): Observable<any> {
-    return this.db.list(this.myOrderedPath + userId).valueChanges();
+  getOrderedData(userId: string | null): Observable<any> {
+    return this.db.list(this.myOrderedPath+this.getUserId(userId)).valueChanges();
   }
 
-  getSupplyData(userId: string = this.authService.currentUserId): Observable<any> {
-    return this.db.list(this.mySupplyPath + userId).valueChanges();
+  getSupplyData(userId: string | null): Observable<any> {
+    return this.db.list(this.mySupplyPath+this.getUserId(userId)).valueChanges();
   }
+
+  getUserId(userId: string | null): string {
+    return (userId) ? userId : this.authService.currentUserId;
+   }
 
 }

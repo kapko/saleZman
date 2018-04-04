@@ -10,6 +10,7 @@ import { AppService } from '../../services/app-service';
 export class MyWorkedListComponent {
   @Input() options: any[string];
   @Input() date: string;
+  @Input() distUserId: string;
 
   stockList: any[] = [];
   objectKeys = Object.keys;
@@ -23,12 +24,10 @@ export class MyWorkedListComponent {
     private myService: MyService,
     private appService: AppService
   ){
-    this.appService.presentLoading(true);
-    this.getAllData();
   }
 
   ngOnInit():void {
-    this.choosenDates.push(this.appService.getDate(new Date()).replace(/\./g, '-'));
+    this.choosenDates.push(this.appService.getToday());
   }
 
   ngOnChanges(): void {
@@ -59,13 +58,14 @@ export class MyWorkedListComponent {
         default: 
           this.choosenDates = [];
       }
-      this.getAllData(this.choosenDates);
+
+      this.getAllData(this.choosenDates, (this.distUserId && this.distUserId === 'All') ? null : this.distUserId);
     }
   }
 
-  getAllData(date: any[string] = null): void {
+  getAllData(date: any[string] = null, distUserId: string | null = null): void {
     // stock list
-    this.myService.getStockData()
+    this.myService.getStockData(distUserId)
       .take(1)
       .do(() => this.appService.hideLoading())
       .map(data => {
@@ -76,7 +76,7 @@ export class MyWorkedListComponent {
         this.stockList = list;
       });
     // ordered list
-    this.myService.getOrderedData()
+    this.myService.getOrderedData(distUserId)
       .take(1)
       .map(data => {
         this.priceValue['ordered'] = this.getPrice(this.filterByDate(data));
@@ -86,7 +86,7 @@ export class MyWorkedListComponent {
         this.orderedList = list;
       });
     // payment list
-    this.myService.getPaymentData()
+    this.myService.getPaymentData(distUserId)
       .take(1)
       .map(data => {
         let filtered = this.filterByDate(data, 'payment_date');
@@ -97,7 +97,7 @@ export class MyWorkedListComponent {
         this.paymentList = list;
       });
     // supply list
-    this.myService.getSupplyData()
+    this.myService.getSupplyData(distUserId)
       .take(1)
       .map(data => {
         let filtered = this.filterByDate(data, 'supply_date');

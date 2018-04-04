@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
+import { MyService } from './my-service';
 
 @Injectable()
 
@@ -19,10 +20,23 @@ export class MyUserService {
   constructor(
     private db: AngularFireDatabase,
     private authService: AuthService,
+    private myService: MyService,
   ) { }
 
   getMyUsers(): Observable<any> {
     return this.db.list(this.distributerPath + this.authService.currentUserId).snapshotChanges();
+  }
+
+  getMyUserWorks(): Observable<any> {
+    return this.getMyUsers()
+      .take(1)
+      .flatMap(users => {
+        // return users;
+        return users.map(item => {
+          console.log(item);
+          return this.myService.getOrderedData(item.key).take(1);
+        });
+      });
   }
 
   getUserByEmail(email: string): Observable<any> {

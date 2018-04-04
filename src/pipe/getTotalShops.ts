@@ -1,5 +1,4 @@
 import { Injectable, Pipe } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Pipe({
   name: 'getShopNumber'

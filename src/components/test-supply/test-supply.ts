@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { AppService } from '../../services/app-service';
 import { StoreService } from '../../services/store.service';
 import { Subject } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
 import { NavController } from 'ionic-angular';
 import { EditBillStorePage } from '../../pages/edit-store-bill/edit-store-bill';
 import { MyUserService } from '../../services/my-users-service';
@@ -23,7 +22,6 @@ export class SupplyTestComponent {
   constructor(
     private appService: AppService,
     private storeService: StoreService,
-    private authService: AuthService,
     private navController: NavController,
     private myUserService: MyUserService,
   ) {

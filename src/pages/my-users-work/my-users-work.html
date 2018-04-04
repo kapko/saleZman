@@ -33,5 +33,10 @@
     </ion-select>
   </ion-item>
 
-  <app-my-worked-list [date]="date" [options]="options" [distUserId]="user"></app-my-worked-list>
+  <app-my-worked-list *ngIf="user !== 'All'; else myWork" [date]="date" [options]="options" [distUserId]="user"></app-my-worked-list>
+  
+  <ng-template #myWork>
+    <app-my-users-work-list *ngIf="user === 'All'"></app-my-users-work-list>
+  </ng-template>
+  
 </ion-content>

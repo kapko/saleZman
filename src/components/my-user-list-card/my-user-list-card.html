@@ -1,0 +1,9 @@
+<ion-card *ngFor="let stock of data">
+  <ion-card-header>{{(stock.user | getEmail | async)?.email}}</ion-card-header>
+  <ion-card-content>
+    <div>
+      <b>Shops: </b> {{ (stock.data | async)?.length }}
+      <b class="value">Value: <span count [data]="stock.data"></span></b> 
+    </div>
+  </ion-card-content>
+</ion-card>

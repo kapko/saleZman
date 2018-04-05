@@ -15,6 +15,14 @@ export class MyService {
 
   mySupplyPath: string = '/my-work-supply/';
 
+  activityStockPath: string = '/activities/stock/';
+
+  activityOrderPath: string = '/activities/order/';
+
+  activitySupplyPath: string = '/activities/supply/';
+
+  activityPaymentPath: string = '/activities/payment/';
+
   constructor(
     private db: AngularFireDatabase,
     private authService: AuthService,
@@ -39,5 +47,21 @@ export class MyService {
   getUserId(userId: string | null): string {
     return (userId) ? userId : this.authService.currentUserId;
    }
+
+  getStockActivity(userId: string): Observable<any> {
+    return this.db.list(`${this.activityStockPath}${userId}`).valueChanges();
+  }
+
+  getOrderActivity(userId: string): Observable<any> {
+    return this.db.list(`${this.activityOrderPath}${userId}`).valueChanges();
+  }
+
+  getPaymentActivity(userId: string): Observable<any> {
+    return this.db.list(`${this.activityPaymentPath}${userId}`).valueChanges();
+  }
+
+  getSupplyActivity(userId: string): Observable<any> {
+    return this.db.list(`${this.activitySupplyPath}${userId}`).valueChanges();
+  }
 
 }

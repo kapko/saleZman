@@ -31,11 +31,14 @@ export class MyUserService {
     return this.getMyUsers()
       .take(1)
       .flatMap(users => {
-        // return users;
-        return users.map(item => {
-          console.log(item);
-          return this.myService.getOrderedData(item.key).take(1);
-        });
+
+        let observables = [];
+
+        for (let item of users) {
+          observables.push(this.myService.getStockActivity(item.key).take(1));
+        }
+
+        return Observable.forkJoin(...observables);
       });
   }
 

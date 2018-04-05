@@ -1,79 +1,19 @@
-<p class="title"><b>Stock: </b> <i>Total shops:</i> 17 <i>Total value:</i> 800</p>
-<ion-card>
-  <ion-card-header>letscodebishkek@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>5</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card>
-<ion-card>
-  <ion-card-header>test@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>12</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card> 
-
-<p class="title"><b>Order: </b> <i>Total shops:</i> 17 <i>Total value:</i> 800</p>
-<ion-card>
-  <ion-card-header>letscodebishkek@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>5</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card>
-<ion-card>
-  <ion-card-header>test@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>12</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card> 
-
-<p class="title"><b>Supply: </b> <i>Total shops:</i> 17 <i>Total value:</i> 800</p>
-<ion-card>
-  <ion-card-header>letscodebishkek@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>5</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card>
-<ion-card>
-  <ion-card-header>test@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>12</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card> 
-
-<p class="title"><b>Payment: </b> <i>Total shops:</i> 17 <i>Total value:</i> 800</p>
-<ion-card>
-  <ion-card-header>letscodebishkek@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>5</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card>
-<ion-card>
-  <ion-card-header>test@gmail.com</ion-card-header>
-  <ion-card-content>
-    <div>
-      <i><b>shops: </b>12</i>
-      <span><b>Value: </b>400</span>
-    </div>
-  </ion-card-content>
-</ion-card> 
+<div *ngIf="options.includes('stock')">
+  <app-my-list-head [header]="'Stock: '" [data]="stock"></app-my-list-head>
+  <app-my-user-list-card [data]="stock"></app-my-user-list-card>
+</div>
+<!-- order -->
+<div *ngIf="options.includes('order')">
+  <app-my-list-head [header]="'Orders: '" [data]="order"></app-my-list-head>
+  <app-my-user-list-card [data]="order"></app-my-user-list-card>
+</div>
+<!-- supply -->
+<div *ngIf="options.includes('supply')">
+  <app-my-list-head [header]="'Supply: '" [data]="supply"></app-my-list-head>
+  <app-my-user-list-card [data]="supply"></app-my-user-list-card>
+</div>
+<!-- payment -->
+<div *ngIf="options.includes('payment')">
+  <app-my-list-head [header]="'Payments: '" [data]="payment"></app-my-list-head>
+  <app-my-user-list-card [data]="payment"></app-my-user-list-card>
+</div>

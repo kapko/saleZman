@@ -23,11 +23,10 @@ export class MyWorkedListComponent {
   constructor(
     private myService: MyService,
     private appService: AppService
-  ){
-  }
+  ){ }
 
   ngOnInit():void {
-    this.choosenDates.push(this.appService.getToday());
+    this.choosenDates.push(this.appService.getDate(new Date()).replace(/\./g, '-'));
   }
 
   ngOnChanges(): void {

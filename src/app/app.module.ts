@@ -50,6 +50,9 @@ import { StoreCommentComponent } from '../components/store-comment/store-comment
 import { EditBillStorePage } from '../pages/edit-store-bill/edit-store-bill';
 import { MyUsersWorkPage } from '../pages/my-users-work/my-users-work';
 import { MyUsersWorkedListComponent } from '../components/my-users-work-list/my-users-work-list';
+import { CountDirective } from '../directives/get-count';
+import { MyListHeadComponent } from '../components/my-list-head/my-list-head';
+import { MyUserListCardComponent } from '../components/my-user-list-card/my-user-list-card';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -92,7 +95,10 @@ let fireBaseConfig = {
     StoreCommentComponent,
     EditBillStorePage,
     MyUsersWorkPage,
-    MyUsersWorkedListComponent
+    MyUsersWorkedListComponent,
+    CountDirective,
+    MyListHeadComponent,
+    MyUserListCardComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +144,9 @@ let fireBaseConfig = {
     StoreCommentComponent,
     EditBillStorePage,
     MyUsersWorkPage,
-    MyUsersWorkedListComponent
+    MyUsersWorkedListComponent,
+    MyListHeadComponent,
+    MyUserListCardComponent
   ],
   providers: [
     StatusBar,

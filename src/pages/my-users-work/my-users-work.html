@@ -36,7 +36,9 @@
   <app-my-worked-list *ngIf="user !== 'All'; else myWork" [date]="date" [options]="options" [distUserId]="user"></app-my-worked-list>
   
   <ng-template #myWork>
-    <app-my-users-work-list *ngIf="user === 'All'"></app-my-users-work-list>
+    <app-my-users-work-list 
+      *ngIf="user === 'All'"
+      [options]="options"></app-my-users-work-list>
   </ng-template>
   
 </ion-content>

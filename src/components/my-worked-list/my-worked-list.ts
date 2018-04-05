@@ -26,40 +26,39 @@ export class MyWorkedListComponent {
   ){ }
 
   ngOnInit():void {
-    this.choosenDates.push(this.appService.getDate(new Date()).replace(/\./g, '-'));
+    this.choosenDates.push(this.appService.getToday());
   }
 
   ngOnChanges(): void {
-    if (this.date) {
-      this.appService.presentLoading(true);
-      this.choosenDates = [];
-      switch(this.date) {
-        case 'Today':
-          this.choosenDates.push( this.appService.getDate(new Date()) );
-          break;
-        case 'Yesterday':
-          this.choosenDates.push(
-            this.appService.getDate(this.appService.getYesterday(new Date()))
-          );
-          break;
-        case 'This week':
-          this.choosenDates = this.appService.getDates(
-            this.appService.getMonday(new Date), 
-            this.appService.getSunday(new Date)
-          );
-          break;
-        case 'This month':
-          this.choosenDates = this.appService.getDates(
-            this.appService.getFirstDayOfMonth(new Date()),
-            this.appService.getLastDayOfMonth(new Date()),
-          );
-          break;
-        default: 
-          this.choosenDates = [];
-      }
-
-      this.getAllData(this.choosenDates, (this.distUserId && this.distUserId === 'All') ? null : this.distUserId);
+    this.date = (this.date) ? this.date : 'Today';
+    this.appService.presentLoading(true);
+    this.choosenDates = [];
+    switch(this.date) {
+      case 'Today':
+        this.choosenDates.push( this.appService.getDate(new Date()) );
+        break;
+      case 'Yesterday':
+        this.choosenDates.push(
+          this.appService.getDate(this.appService.getYesterday(new Date()))
+        );
+        break;
+      case 'This week':
+        this.choosenDates = this.appService.getDates(
+          this.appService.getMonday(new Date), 
+          this.appService.getSunday(new Date)
+        );
+        break;
+      case 'This month':
+        this.choosenDates = this.appService.getDates(
+          this.appService.getFirstDayOfMonth(new Date()),
+          this.appService.getLastDayOfMonth(new Date()),
+        );
+        break;
+      default: 
+        this.choosenDates = [];
     }
+
+    this.getAllData(this.choosenDates, (this.distUserId && this.distUserId === 'All') ? null : this.distUserId);
   }
 
   getAllData(date: any[string] = null, distUserId: string | null = null): void {

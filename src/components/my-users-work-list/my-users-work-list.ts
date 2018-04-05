@@ -64,16 +64,16 @@ export class MyUsersWorkedListComponent {
       let data;
       switch (val) {
         case 'stock':
-          data = this.myService.getStockActivity(user.key);
+          data = this.myService.getStockActivity(user.key).take(1);
           break;
         case 'order':
-          data = this.myService.getOrderActivity(user.key);
+          data = this.myService.getOrderActivity(user.key).take(1);
           break;
         case 'supply':
-          data = this.myService.getSupplyActivity(user.key);
+          data = this.myService.getSupplyActivity(user.key).take(1);
           break;
         case 'payment':
-          data = this.myService.getPaymentActivity(user.key);
+          data = this.myService.getPaymentActivity(user.key).take(1);
           break;
       }
   

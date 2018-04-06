@@ -197,4 +197,10 @@ export class StoreService {
       .object(this.testSupplyItemPath+`${this.authService.currentUserId}/${key}`).valueChanges();
   }
 
+  addProduct(val: Object): Promise<any> {
+    return this.db
+      .object(this.productPath+this.authService.currentUserId+`${val['key']}`)
+      .update(val);
+  }
+
 }

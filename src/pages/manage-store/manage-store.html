@@ -1,0 +1,31 @@
+<app-header></app-header>
+<ion-content padding>
+  <h5 text-center>Manage Stores</h5>
+  <app-add-store 
+    *ngIf="showAddProduct"
+    (cancelAddPriduct)="cancelAddPriduct()"></app-add-store>
+
+  <ion-card>
+    <ion-card-content>
+      <p><b>Company name:</b> <span>- First Name</span></p>
+      <p><b>Address 1</b> <span>- First Name</span></p>
+      <p><b>Address 2</b> <span>- First Name</span></p>
+      <p><b>City</b> <span>- First Name</span></p>
+      <p><b>zipcode</b> <span>- First Name</span></p>
+      <p><b>Contact person</b> <span>- First Name</span></p>
+      <p><b>Phone number</b> <span>- First Name</span></p>
+      <p><b>email</b> <span>- First Name</span></p>
+      <p><b>Certificate 1</b> <span>- First Name</span></p>
+      <p><b>Certificate 2</b> <span>- First Name</span></p>
+      <p><b>GST</b> <span>- First Name</span></p>
+      <p><b>Bank name</b> <span>- First Name</span></p>
+      <p><b>Account number</b> <span>- First Name</span></p>
+      <p><b>Branch</b> <span>- First Name</span></p>
+      <p><b>IFSC</b> <span>- First Name</span></p>
+      <p><b>Address</b> <span>- First Name</span></p>
+      <p><b>Description</b> <span>- First Name</span></p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-icon class="add-product" (click)="showAddProduct = true" name="add-circle"></ion-icon>
+</ion-content>

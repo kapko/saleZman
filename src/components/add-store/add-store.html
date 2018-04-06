@@ -1,0 +1,34 @@
+<form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+
+  <ion-list>
+    <div *ngFor="let field of fields">
+      <ion-item *ngIf="field !== 'description'">
+        <ion-label>{{field.name}}</ion-label>
+        <ion-input
+          text-right 
+          [formControlName]="field.controller"
+          placeholder="******"
+          type="text"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="field.controller === 'description'">
+        <ion-label>textarea</ion-label>
+        <ion-textarea 
+          text-right 
+          [formControlName]="field.controller"
+          type="text"
+          placeholder="******"></ion-textarea>
+      </ion-item>
+    </div>
+  </ion-list>
+
+  <!-- <button
+    ion-button 
+    [disabled]="form.invalid"
+    type="submit">submit</button> -->
+  <button
+    ion-button 
+    type="submit">submit</button>
+
+  <button color="danger" ion-button (click)="cancelForm()">canlel</button>
+
+</form>

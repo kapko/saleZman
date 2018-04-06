@@ -53,6 +53,9 @@ import { MyUsersWorkedListComponent } from '../components/my-users-work-list/my-
 import { CountDirective } from '../directives/get-count';
 import { MyListHeadComponent } from '../components/my-list-head/my-list-head';
 import { MyUserListCardComponent } from '../components/my-user-list-card/my-user-list-card';
+import { ManageProductPage } from '../pages/manage-products/manage-products';
+import { AddStoreComponent } from '../components/add-store/add-product';
+import { ManageStorePage } from '../pages/manage-store/manage-store';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -98,7 +101,10 @@ let fireBaseConfig = {
     MyUsersWorkedListComponent,
     CountDirective,
     MyListHeadComponent,
-    MyUserListCardComponent
+    MyUserListCardComponent,
+    ManageProductPage,
+    AddStoreComponent,
+    ManageStorePage
   ],
   imports: [
     BrowserModule,
@@ -146,7 +152,10 @@ let fireBaseConfig = {
     MyUsersWorkPage,
     MyUsersWorkedListComponent,
     MyListHeadComponent,
-    MyUserListCardComponent
+    MyUserListCardComponent,
+    ManageProductPage,
+    AddStoreComponent,
+    ManageStorePage
   ],
   providers: [
     StatusBar,

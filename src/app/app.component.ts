@@ -11,6 +11,8 @@ import { AppService } from '../services/app-service';
 import { Subject } from 'rxjs';
 import { StoreBillingPage } from '../pages/store-billing/store-billing';
 import { MyUsersWorkPage } from '../pages/my-users-work/my-users-work';
+import { ManageProductPage } from '../pages/manage-products/manage-products';
+import { ManageStorePage } from '../pages/manage-store/manage-store';
 @Component({
   selector: 'app-component',
   templateUrl: 'app.html'
@@ -35,7 +37,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       // this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
-      this.rootPage = (this.authService.emailVerified) ? MyUsersWorkPage : LoginPage;
+      this.rootPage = (this.authService.emailVerified) ? ManageStorePage : LoginPage;
     });
   }
 
@@ -81,6 +83,12 @@ export class MyApp {
       break;
       case 'myUsersWork':
         component = MyUsersWorkPage;
+      break;
+      case 'manageProduct':
+        component = ManageProductPage;
+      break;
+      case 'manageStore':
+        component = ManageStorePage;
       break;
     }
     this.nav.setRoot(component);

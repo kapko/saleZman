@@ -24,7 +24,7 @@
       </ion-select>
     </ion-item>
 
-  <ion-item class="date">
+  <ion-item class="date" *ngIf="user !== 'All'">
     <ion-label>Date </ion-label>
     <ion-select [(ngModel)]="date">
       <ion-option 

@@ -42,6 +42,7 @@ export class AppService {
       message: message,
       buttons: buttons,
       title: title,
+      cssClass: 'alert-showing',
       enableBackdropDismiss
     });
 

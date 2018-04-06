@@ -51,8 +51,17 @@ export class StoreService {
     return this.db.object(this.userStoreNamePath + uid).valueChanges();
   }
 
-  getCompanies(): Observable<any> {
-    return this.db.list(this.companyPath).valueChanges();
+  getCompanies(uid: string = this.authService.currentUserId): Observable<any> {
+    return this.db
+      .list(this.companyPath+uid)
+      .snapshotChanges()
+      .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
+  }
+
+  removeCompanyById(key: string, uid: string = this.authService.currentUserId): Promise<any> {
+    return this.db
+      .object(this.companyPath+`${uid}/${key}`)
+      .set(null)
   }
 
   getStoreData(url: string): Observable<any> {
@@ -65,6 +74,13 @@ export class StoreService {
       this.productPath + 'simple_store', // here dynamic storeName
       ref => (company) ? ref.orderByChild('company').equalTo(company) : ref
     ).valueChanges();
+  }
+
+  getProductsById(uid: string = this.authService.currentUserId, company: string = null): Observable<any>{
+    return this.db
+      .list(this.productPath+uid)
+      .snapshotChanges()
+      .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
 
   getUserProductList(storeName: string, uid: string = this.authService.currentUserId): Observable<any> {

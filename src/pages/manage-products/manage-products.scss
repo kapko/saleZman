@@ -9,6 +9,16 @@ app-manage-products {
     color: #02b9e2;
   }
 
+  p.action {
+    overflow: hidden;
+    padding: 0 0 5px 0;
+    ion-icon {
+      float: right;
+      font-size: 18px;
+      padding: 5px 10px;
+    }
+  }
+
   h5 {
     padding-top: 10px;
   }

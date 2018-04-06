@@ -1,6 +1,47 @@
 <app-header></app-header>
 <ion-content padding>
   <h5 text-center>Manage Products</h5>
+  <app-add-company 
+    *ngIf="showAddCompany"
+    (cancelAddPriduct)="cancelAddPriduct()"></app-add-company>
 
-  <ion-icon class="add-product" (click)="showAddProduct = true" name="add-circle"></ion-icon>
+  <h5 text-center>My Companies: </h5>
+  <ion-card>
+    <ion-card-content>
+      <p><b>Company name:</b> <span>- First Name</span></p>
+      <p><b>Address 1</b> <span>- First Name</span></p>
+      <p><b>Address 2</b> <span>- First Name</span></p>
+      <p><b>City</b> <span>- First Name</span></p>
+      <p><b>zipcode</b> <span>- First Name</span></p>
+      <p><b>Contact person</b> <span>- First Name</span></p>
+      <p><b>Phone number</b> <span>- First Name</span></p>
+      <p><b>email</b> <span>- First Name</span></p>
+      <p><b>Certificate 1</b> <span>- First Name</span></p>
+      <p><b>Certificate 2</b> <span>- First Name</span></p>
+      <p><b>GST</b> <span>- First Name</span></p>
+      <p><b>Bank name</b> <span>- First Name</span></p>
+      <p><b>Account number</b> <span>- First Name</span></p>
+      <p><b>Branch</b> <span>- First Name</span></p>
+      <p><b>IFSC</b> <span>- First Name</span></p>
+      <p><b>Address</b> <span>- First Name</span></p>
+      <p><b>Description</b> <span>- First Name</span></p>
+    </ion-card-content>
+  </ion-card>
+
+  <h5 text-center>My Products: </h5>
+  <ion-card>
+    <ion-card-content>
+      <p><b>Name:</b> <span>- First Name</span></p>
+      <p><b>Weight:</b> <span>- First Name</span></p>
+      <p><b>EAN: </b> <span>- First Name</span></p>
+      <p><b>HSN: </b> <span>- First Name</span></p>
+      <p><b>MRP: </b> <span>- First Name</span></p>
+      <p><b>TAX: </b> <span>- First Name</span></p>
+      <p><b>Price: </b> <span>- First Name</span></p>
+      <p><b>Life: </b> <span>- First Name</span></p>
+      <p><b>Company: </b> <span>- First Name</span></p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-icon class="add-product" (click)="createItem()" name="add-circle"></ion-icon>
 </ion-content>

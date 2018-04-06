@@ -13,6 +13,17 @@ app-component {
 
 }
 
+ion-alert {
+  div.alert-message {
+    text-align: center;
+  }
+
+  span.button-inner {
+    display: block;
+    text-align: center;
+  }
+
+}
 
 ion-tabs {
   top: auto;

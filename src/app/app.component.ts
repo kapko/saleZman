@@ -37,7 +37,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       // this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
-      this.rootPage = (this.authService.emailVerified) ? ManageStorePage : LoginPage;
+      this.rootPage = (this.authService.emailVerified) ? ManageProductPage : LoginPage;
     });
   }
 
@@ -88,7 +88,7 @@ export class MyApp {
         component = ManageProductPage;
       break;
       case 'manageStore':
-        component = ManageStorePage;
+        // component = ManageStorePage;
       break;
     }
     this.nav.setRoot(component);

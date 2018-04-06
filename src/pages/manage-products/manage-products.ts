@@ -16,6 +16,8 @@ export class ManageProductPage {
 
   showAddProduct: boolean = true;
 
+  showAddCompany: boolean = true;
+
   constructor(
     private modalController: ModalController,
     private myUserService: MyUserService,
@@ -31,7 +33,21 @@ export class ManageProductPage {
   }
 
   cancelAddPriduct(): void {
-    this.showAddProduct = false;
+    this.showAddCompany = false;
+  }
+
+  createItem(): void {
+    this.appService.showAlert('I want create ', [
+      {
+        text: 'Company',
+        handler: e => this.showAddCompany = true
+      },
+      {
+        text: 'Product',
+        handler: e => this.showAddProduct = true
+      },
+      'Cancel'
+    ]);
   }
 
 }

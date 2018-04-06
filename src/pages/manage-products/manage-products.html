@@ -2,10 +2,10 @@
 <ion-content padding>
   <h5 text-center>Manage Products</h5>
 
-  <h5 text-center>My Companies: </h5>
+  <h5 text-center>{{(companies.length) ? 'My Companies:' : "Don't have a company" }} </h5>
   <ion-card *ngFor="let company of companies">
     <p class="action">
-      <ion-icon name="trash" (click)="deleteCompany(company.key)"></ion-icon>
+      <ion-icon name="trash" (click)="deleteItem(company.key)"></ion-icon>
     </p>
     <ion-card-content>
       <p><b>Company name: </b><span> {{company.company_name}}</span></p>
@@ -28,18 +28,21 @@
     </ion-card-content>
   </ion-card>
 
-  <h5 text-center>My Products: </h5>
-  <ion-card>
+  <h5 text-center>{{(products.length) ? 'My Products:' : "Don't have a product" }}  </h5>
+  <ion-card *ngFor="let prod of products">
+    <p class="action">
+      <ion-icon name="trash" (click)="deleteItem(prod.key, 'product')"></ion-icon>
+    </p>
     <ion-card-content>
-      <p><b>Name:</b> <span>- First Name</span></p>
-      <p><b>Weight:</b> <span>- First Name</span></p>
-      <p><b>EAN: </b> <span>- First Name</span></p>
-      <p><b>HSN: </b> <span>- First Name</span></p>
-      <p><b>MRP: </b> <span>- First Name</span></p>
-      <p><b>TAX: </b> <span>- First Name</span></p>
-      <p><b>Price: </b> <span>- First Name</span></p>
-      <p><b>Life: </b> <span>- First Name</span></p>
-      <p><b>Company: </b> <span>- First Name</span></p>
+      <p><b>Name: </b><span>{{prod.name}}</span></p>
+      <p><b>Weight: </b><span>{{prod.weight}}</span></p>
+      <p><b>EAN: </b><span>{{prod.ean}}</span></p>
+      <p><b>HSN: </b><span>{{prod.hsn}}</span></p>
+      <p><b>MRP: </b><span>{{prod.mrp}}</span></p>
+      <p><b>TAX: </b><span>{{prod.tax}}</span></p>
+      <p><b>Price: </b><span>{{prod.price}}</span></p>
+      <p><b>Life: </b><span>{{prod.life}}</span></p>
+      <p><b>Company: </b><span>{{prod.company}}</span></p>
     </ion-card-content>
   </ion-card>
   <ion-icon class="add-product" (click)="createItem()" name="add-circle"></ion-icon>

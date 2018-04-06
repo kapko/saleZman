@@ -43,19 +43,22 @@ export class ManageProductPage {
       .subscribe(products => this.products = products);
   }
 
-  deleteCompany(key: string): void{
-    this.appService.showAlert('Do you want to remove this company ', [
+  deleteItem(key: string, val: string = 'company'): void{
+    this.appService.showAlert(`Do you want to remove ${val}?`, [
       {
         text: 'yes',
         handler: e => {
           // action
-          this.storeService.removeCompanyById(key);
+          if (val === 'company') {
+            this.storeService.removeCompanyById(key);
+          } else {
+            this.storeService.removeProductById(key);
+          }
           this.appService.showToast('Removed');
         }
       },
       'no'
     ]);
-
   }
 
   createItem(): void {

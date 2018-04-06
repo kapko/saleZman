@@ -64,6 +64,12 @@ export class StoreService {
       .set(null)
   }
 
+  removeProductById(key: string, uid: string = this.authService.currentUserId): Promise<any> {
+    return this.db
+      .object(this.productPath+`${uid}/${key}`)
+      .set(null)
+  }
+
   getStoreData(url: string): Observable<any> {
     return this.db.list(this.storePath, 
       ref => ref.orderByChild('url').equalTo(url)).valueChanges();
@@ -215,7 +221,7 @@ export class StoreService {
 
   addProduct(val: Object): any {
     return this.db
-      .list(this.companyPath+this.authService.currentUserId)
+      .list(this.productPath+this.authService.currentUserId)
       .push(val);
   }
 

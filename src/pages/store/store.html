@@ -1,6 +1,7 @@
 <app-header></app-header>
 <ion-content padding>
   <h5>{{ store?.name }}</h5>
+
   <div class="tabs">
     <p *ngFor="let tab of tabs"
     (click)="tabSwitch(tab.icon)"
@@ -14,7 +15,7 @@
     <ion-label>Company</ion-label>
     <ion-select [(ngModel)]="defaultCompany" (ionChange)="sortByCompany(defaultCompany)">
       <ion-option 
-        *ngFor="let company of companies" [value]="company.name">{{company.name}}</ion-option>
+        *ngFor="let company of companies" [value]="company.company_name">{{company.company_name}}</ion-option>
     </ion-select>
   </ion-item>
 

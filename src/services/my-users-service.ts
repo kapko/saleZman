@@ -3,6 +3,7 @@ import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import { MyService } from './my-service';
+import { StoreService } from './store.service';
 
 @Injectable()
 
@@ -21,10 +22,26 @@ export class MyUserService {
     private db: AngularFireDatabase,
     private authService: AuthService,
     private myService: MyService,
+    private storeService: StoreService
   ) { }
 
   getMyUsers(): Observable<any> {
     return this.db.list(this.distributerPath + this.authService.currentUserId).snapshotChanges();
+  }
+
+  getDistCompany(): any {
+    return this.db
+      .list(this.linkUserdPath+this.authService.currentUserId)
+      .snapshotChanges()
+      .take(1)
+      .flatMap(data => {
+        let companies = [];
+        data.map(item => {
+          companies.push(this.storeService.getCompanies(item.key).take(1));
+        });
+
+        return Observable.forkJoin(...companies).defaultIfEmpty([]);
+      });
   }
 
   getMyUserWorks(): Observable<any> {

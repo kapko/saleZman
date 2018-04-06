@@ -225,4 +225,10 @@ export class StoreService {
       .push(val);
   }
 
+  addCompany(val: Object): any {
+    return this.db
+      .list(this.companyPath+this.authService.currentUserId)
+      .push(val);
+  }
+
 }

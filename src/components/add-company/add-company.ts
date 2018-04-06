@@ -52,7 +52,7 @@ export class AddCompanyComponent {
 
   submitForm(form: NgForm): void {
     this.appService.presentLoading(true);
-    this.storeService.addProduct(form.value)
+    this.storeService.addCompany(form.value)
       .then(e => {
         this.appService.showToast('Product created');
         this.appService.hideLoading();

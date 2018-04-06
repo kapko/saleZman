@@ -3,6 +3,8 @@ import { Tabs } from 'ionic-angular';
 import { storeName } from '../../interfaces/city.store';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
+import { MyUserService } from '../../services/my-users-service';
+import { merge } from 'rxjs/operator/merge';
 
 @Component({
   selector: 'store-page',
@@ -17,14 +19,16 @@ export class StorePage {
 
   activeTabName: string = 'list-box';
   defaultCompany: string = 'All Company';
-  // tabs: any = ['list-box', 'basket', 'briefcase', 'card'];
   tabs: any = [{icon: 'list-box', name: 'Stock'},{icon: 'basket', name: 'Order'},{icon: 'briefcase', name: 'Supply'},{icon: 'card', name: 'Payment'}];
   companies: any[] = [];
 
   constructor(
     private storeService: StoreService,
     private appService: AppService,
+    private myUserService: MyUserService
   ) {
+    this.getDists();
+
     this.appService.presentLoading(true);
     this.storeService.getStoreNameOfProduct()
       .take(1)
@@ -37,9 +41,18 @@ export class StorePage {
     this.storeService.getCompanies()
       .take(1)
       .subscribe(items => {
-        this.companies = items;
       });
   }
+
+  getDists(): any {
+    this.myUserService
+      .getDistCompany()
+      .map(data => data.reduce((a, b) => a.concat(b), []))
+      .subscribe(companies => {
+        this.companies = companies;
+        console.log('this.companies', this.companies);
+      });
+  } 
 
   getProducts(storeNamePath: string, company: string = null): void {
     if (company === 'All Company') company = null;

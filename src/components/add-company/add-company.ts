@@ -1,22 +1,19 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
+import { NavController } from 'ionic-angular';
 
 export interface AddProductForm {
   name: string;
   controller: string;
 }
-
 @Component({
   selector: 'app-add-company',
   templateUrl: 'add-company.html',
 })
 
 export class AddCompanyComponent {
-  @Output()
-  cancelAddPriduct: EventEmitter<void> = new EventEmitter();
-
   form: FormGroup;
 
   fields: AddProductForm[] = [];
@@ -24,6 +21,7 @@ export class AddCompanyComponent {
   constructor(
     private storeService: StoreService,
     private appService: AppService,
+    private navController: NavController
   ) {
     this.form = new FormGroup({
       company_name: new FormControl('', Validators.required),
@@ -59,13 +57,8 @@ export class AddCompanyComponent {
         this.appService.showToast('Product created');
         this.appService.hideLoading();
         form.reset();
-        this.cancelForm();
       })
       .catch(err => this.appService.showToast(err.message))
-  }
-
-  cancelForm(): void {
-    this.cancelAddPriduct.emit();
   }
 
 }

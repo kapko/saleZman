@@ -1,11 +1,9 @@
 <app-header></app-header>
 <ion-content padding>
-  <h5 text-center>Create new company</h5>
+  <h5 text-center>Create new product</h5>
   <form [formGroup]="form" (ngSubmit)="submitForm(form)">
-
     <ion-list>
       <div *ngFor="let field of fields">
-
         <ion-item *ngIf="field !== 'description'">
           <ion-label>{{field.name}}</ion-label>
           <ion-input
@@ -14,19 +12,8 @@
             placeholder="******"
             type="text"></ion-input>
         </ion-item>
-
-        <ion-item *ngIf="field.controller === 'description'">
-          <ion-label>textarea</ion-label>
-          <ion-textarea 
-            text-right 
-            [formControlName]="field.controller"
-            type="text"
-            placeholder="******"></ion-textarea>
-        </ion-item>
-
       </div>
     </ion-list>
-
     <button ion-button [disabled]="form.invalid" type="submit">submit</button>
   </form>
 </ion-content>

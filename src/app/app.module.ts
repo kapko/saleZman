@@ -56,6 +56,7 @@ import { MyUserListCardComponent } from '../components/my-user-list-card/my-user
 import { ManageProductPage } from '../pages/manage-products/manage-products';
 import { ManageStorePage } from '../pages/manage-store/manage-store';
 import { AddCompanyComponent } from '../components/add-company/add-company';
+import { AddProductComponent } from '../components/add-product/add-product';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -104,7 +105,8 @@ let fireBaseConfig = {
     MyUserListCardComponent,
     ManageProductPage,
     ManageStorePage,
-    AddCompanyComponent
+    AddCompanyComponent,
+    AddProductComponent    
   ],
   imports: [
     BrowserModule,
@@ -155,7 +157,8 @@ let fireBaseConfig = {
     MyUserListCardComponent,
     ManageProductPage,
     ManageStorePage,
-    AddCompanyComponent
+    AddCompanyComponent,
+    AddProductComponent
   ],
   providers: [
     StatusBar,

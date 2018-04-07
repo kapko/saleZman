@@ -7,6 +7,7 @@ import { NavParams } from 'ionic-angular';
 export interface AddProductForm {
   name: string;
   controller: string;
+  type: string;
 }
 
 @Component({
@@ -33,18 +34,19 @@ export class AddProductComponent {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       weight: new FormControl('', Validators.required),
-      ean: new FormControl('', Validators.required),
-      hsn: new FormControl('', Validators.required),
-      mrp: new FormControl('', Validators.required),
-      tax: new FormControl('', Validators.required),
+      EAN: new FormControl('', Validators.required),
+      HSN: new FormControl('', Validators.required),
+      MRP: new FormControl('', Validators.required),
+      TAX: new FormControl('', Validators.required),
       price: new FormControl('', Validators.required),
       life: new FormControl('', Validators.required),
       company: new FormControl('', Validators.required)
     });
     
     Object.keys(this.form.value).map(key => {
-      let name = key[0].toUpperCase() + key.substring(1);
-      this.fields.push({name, controller: key});
+      let name = key[0].toUpperCase() + key.substring(1), type;
+      type = this.appService.getType(key);
+      this.fields.push({name, controller: key, type});
     });
     // update values of form
     this.updateForm();

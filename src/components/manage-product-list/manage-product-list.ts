@@ -45,13 +45,13 @@ export class ManageProductListCompany {
 
   // edit
   editItem(data: Object, val: string = null): void {
-
     if (val) {
+      delete data['show'];
       this.navController.push(AddProductComponent, data);
     } else {
+      delete data['show'];
       this.navController.push(AddCompanyComponent, data);
     }
-
   }
 
   //delete

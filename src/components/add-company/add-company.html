@@ -6,27 +6,28 @@
     <ion-list>
       <div *ngFor="let field of fields">
 
-        <ion-item *ngIf="field !== 'description'">
+        <ion-item *ngIf="field.name !== 'Description'">
           <ion-label>{{field.name}}</ion-label>
           <ion-input
             text-right 
             [formControlName]="field.controller"
             placeholder="******"
-            type="text"></ion-input>
+            [type]="field.type"></ion-input>
         </ion-item>
 
-        <ion-item *ngIf="field.controller === 'description'">
-          <ion-label>textarea</ion-label>
+        <ion-item *ngIf="field.name === 'Description'">
+          <ion-label>Description</ion-label>
           <ion-textarea 
             text-right 
             [formControlName]="field.controller"
             type="text"
-            placeholder="******"></ion-textarea>
+            placeholder="text"></ion-textarea>
         </ion-item>
 
       </div>
     </ion-list>
 
-    <button ion-button [disabled]="form.invalid" type="submit">submit</button>
+    <!-- <button ion-button [disabled]="form.invalid" type="submit">submit</button> -->
+    <button ion-button type="submit">submit</button>
   </form>
 </ion-content>

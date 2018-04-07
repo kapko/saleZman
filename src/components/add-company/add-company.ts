@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 
 export interface AddProductForm {
   name: string;
   controller: string;
+  type: string;
 }
+
 @Component({
   selector: 'app-add-company',
   templateUrl: 'add-company.html',
@@ -23,7 +25,6 @@ export class AddCompanyComponent {
   constructor(
     private storeService: StoreService,
     private appService: AppService,
-    private navController: NavController,
     private navParams: NavParams,
   ) {
     this.form = new FormGroup({
@@ -37,19 +38,20 @@ export class AddCompanyComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       certificate_1: new FormControl('', Validators.required),
       certificate_2: new FormControl('', Validators.required),
-      gst: new FormControl('', Validators.required),
+      GST: new FormControl('', Validators.required),
       bank: new FormControl('', Validators.required),
       account_number: new FormControl('', [Validators.required, Validators.minLength(4)]),
       branch: new FormControl('', Validators.required),
-      ifsc: new FormControl('', Validators.required),
+      IFSC: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
     });
-    
+
     Object.keys(this.form.value).map(key => {
       let val = key[0].toUpperCase() + key.substring(1);
       let name = val.replace('_', ' ');
-      this.fields.push({name, controller: key});
+      let type = this.appService.getType(key);
+      this.fields.push({name, controller: key, type});
     });
 
     // edit

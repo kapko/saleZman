@@ -127,4 +127,30 @@ export class AppService {
     return data.foreach(c => ({ key: c.payload.key, ...c.payload.val() }));
   }
 
+  getType(key: string): string {
+    let type;
+    switch(key) {
+      case 'price':
+      case 'Weight':
+      case 'TAX':
+      case 'HSN':
+      case 'EAN':
+      case 'MRP':
+      case 'account_number':
+      case 'zipcode':
+      case 'phone':
+      case 'GST':
+      case 'contact_person':
+      case 'weight':
+        type = 'number';
+        break;
+      case 'email':
+        type = 'email';
+        break;
+      default:
+        type = 'text';
+    }
+    return type;
+  }
+
 }

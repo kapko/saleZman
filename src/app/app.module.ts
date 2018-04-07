@@ -57,6 +57,7 @@ import { ManageProductPage } from '../pages/manage-products/manage-products';
 import { ManageStorePage } from '../pages/manage-store/manage-store';
 import { AddCompanyComponent } from '../components/add-company/add-company';
 import { AddProductComponent } from '../components/add-product/add-product';
+import { ManageProductListCompany } from '../components/manage-product-list/manage-product-list';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -106,7 +107,8 @@ let fireBaseConfig = {
     ManageProductPage,
     ManageStorePage,
     AddCompanyComponent,
-    AddProductComponent    
+    AddProductComponent,
+    ManageProductListCompany
   ],
   imports: [
     BrowserModule,
@@ -158,7 +160,8 @@ let fireBaseConfig = {
     ManageProductPage,
     ManageStorePage,
     AddCompanyComponent,
-    AddProductComponent
+    AddProductComponent,
+    ManageProductListCompany
   ],
   providers: [
     StatusBar,

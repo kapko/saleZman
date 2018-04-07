@@ -2,48 +2,7 @@
 <ion-content padding>
   <h5 text-center>Manage Products</h5>
 
-  <h5 text-center>{{(companies.length) ? 'My Companies:' : "Don't have a company" }} </h5>
-  <ion-card *ngFor="let company of companies">
-    <p class="action">
-      <ion-icon name="trash" (click)="deleteItem(company.key)"></ion-icon>
-    </p>
-    <ion-card-content>
-      <p><b>Company name: </b><span> {{company.company_name}}</span></p>
-      <p><b>Address 1: </b><span>{{company.address_1}}</span></p>
-      <p><b>Address 2: </b><span>{{company.address_2}}</span></p>
-      <p><b>City: </b><span>{{company.city}}</span></p>
-      <p><b>zipcode: </b><span>{{company.zipcode}}</span></p>
-      <p><b>Contact person: </b><span>{{company.contact_person}}</span></p>
-      <p><b>Phone number: </b><span>{{company.phone}}</span></p>
-      <p><b>email: </b><span>{{company.email}}</span></p>
-      <p><b>Certificate 1: </b><span>{{company.certificate_1}}</span></p>
-      <p><b>Certificate 2: </b><span>{{company.certificate_2}}</span></p>
-      <p><b>GST: </b><span>{{company.gst}}</span></p>
-      <p><b>Bank name: </b><span>{{company.bank}}</span></p>
-      <p><b>Account number: </b><span>{{company.account_number}}</span></p>
-      <p><b>Branch: </b><span>{{company.branch}}</span></p>
-      <p><b>IFSC: </b><span>{{company.ifsc}}</span></p>
-      <p><b>Address: </b><span>{{company.address}}</span></p>
-      <p><b>Description: </b><span>{{company.description}}</span></p>
-    </ion-card-content>
-  </ion-card>
+  <app-manage-product-list></app-manage-product-list>
 
-  <h5 text-center>{{(products.length) ? 'My Products:' : "Don't have a product" }}  </h5>
-  <ion-card *ngFor="let prod of products">
-    <p class="action">
-      <ion-icon name="trash" (click)="deleteItem(prod.key, 'product')"></ion-icon>
-    </p>
-    <ion-card-content>
-      <p><b>Name: </b><span>{{prod.name}}</span></p>
-      <p><b>Weight: </b><span>{{prod.weight}}</span></p>
-      <p><b>EAN: </b><span>{{prod.ean}}</span></p>
-      <p><b>HSN: </b><span>{{prod.hsn}}</span></p>
-      <p><b>MRP: </b><span>{{prod.mrp}}</span></p>
-      <p><b>TAX: </b><span>{{prod.tax}}</span></p>
-      <p><b>Price: </b><span>{{prod.price}}</span></p>
-      <p><b>Life: </b><span>{{prod.life}}</span></p>
-      <p><b>Company: </b><span>{{prod.company}}</span></p>
-    </ion-card-content>
-  </ion-card>
   <ion-icon class="add-product" (click)="createItem()" name="add-circle"></ion-icon>
 </ion-content>

@@ -69,7 +69,7 @@ export class AddProductComponent {
       .then(e => {
         form.reset();
         this.appService.hideLoading();
-        this.appService.showToast('Product updated');
+        this.appService.showToast('Product created');
       })
       .catch(err => this.appService.showToast(err.message))
 
@@ -88,7 +88,7 @@ export class AddProductComponent {
   updateForm(): void {
     let params = this.navParams.data;
 
-    if (params !== {}) {
+    if (Object.keys(params).length) {
       this.editProduct = true;
       for (let key in params) {
         if (key !== 'key') {

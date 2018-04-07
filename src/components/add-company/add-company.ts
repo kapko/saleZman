@@ -54,7 +54,7 @@ export class AddCompanyComponent {
 
     // edit
     let params = this.navParams.data;
-    if (params !== {}) {
+    if (Object.keys(params).length) {
       this.editCompany = true;
       for (let key in params) {
         if (key !== 'key') {

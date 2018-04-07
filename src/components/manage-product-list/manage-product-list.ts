@@ -56,7 +56,11 @@ export class ManageProductListCompany {
 
   //delete
   deleteItem(key: string, val: string = 'company'): void{
-    this.appService.showAlert(`Do you want to remove ${val}?`, [
+    let text = (val === 'company')
+      ? 'Do you want to remove this company and all product linked to this company?'
+      : 'Do you want to remove this product?';
+
+    this.appService.showAlert(text, [
       {
         text: 'yes',
         handler: e => {

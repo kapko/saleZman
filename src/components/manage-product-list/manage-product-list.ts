@@ -13,7 +13,7 @@ import { StoreService } from '../../services/store.service';
 })
 
 export class ManageProductListCompany {
-  subject: Subject<any>;
+  subject: Subject<any> = new Subject();
 
   companies: any[] = [];
 
@@ -24,20 +24,33 @@ export class ManageProductListCompany {
     private navController: NavController,
     private storeService: StoreService
   ) {
-    this.subject = new Subject();
     this.getData();
   }
 
   getData(): void {
+    // get companies
     this.storeService.getCompanies()
       .takeUntil(this.subject)
       .subscribe(companies => this.companies = companies);
-    
+
+    // get products
     this.storeService.getProductsById()
       .takeUntil(this.subject)
       .subscribe(products => this.products = products);
   }
 
+  // edit
+  editItem(data: Object, val: string = null): void {
+
+    if (val) {
+      this.navController.push(AddProductComponent, data);
+    } else {
+      this.navController.push(AddCompanyComponent, data);
+    }
+
+  }
+
+  //delete
   deleteItem(key: string, val: string = 'company'): void{
     this.appService.showAlert(`Do you want to remove ${val}?`, [
       {

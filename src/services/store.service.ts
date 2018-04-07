@@ -231,4 +231,10 @@ export class StoreService {
       .push(val);
   }
 
+  updateCompany(val: Object, key: string): Promise<any> {
+    return this.db
+      .object(`${this.companyPath}${this.authService.currentUserId}/${key}`)
+      .set(val);
+  }
+
 }

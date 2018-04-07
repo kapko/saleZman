@@ -2,7 +2,7 @@
   <ion-card>
     <p class="action company">
       <ion-icon name="trash" (click)="deleteItem(company.key)"></ion-icon>
-      <ion-icon name="create" (click)="editItem(company.key)"></ion-icon>
+      <ion-icon name="create" (click)="editItem(company)"></ion-icon>
     </p>
     <ion-card-content class="company card">
       <p><b>Company name: </b><span> {{company.company_name}}</span></p>
@@ -30,7 +30,7 @@
     <ion-card *ngIf="prod.company === company.company_name">
       <p class="action">
         <ion-icon name="trash" (click)="deleteItem(prod.key, 'product')"></ion-icon>
-        <ion-icon name="create" (click)="editItem(company.key, 'product')"></ion-icon>
+        <ion-icon name="create" (click)="editItem(prod, 'product')"></ion-icon>
       </p>
       <ion-card-content class="card">
         <p><b>Product Name: </b><span>{{prod.name}}</span></p>

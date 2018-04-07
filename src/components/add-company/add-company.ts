@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 export interface AddProductForm {
   name: string;
@@ -18,10 +18,13 @@ export class AddCompanyComponent {
 
   fields: AddProductForm[] = [];
 
+  editCompany: boolean = false;
+
   constructor(
     private storeService: StoreService,
     private appService: AppService,
-    private navController: NavController
+    private navController: NavController,
+    private navParams: NavParams,
   ) {
     this.form = new FormGroup({
       company_name: new FormControl('', Validators.required),
@@ -48,17 +51,38 @@ export class AddCompanyComponent {
       let name = val.replace('_', ' ');
       this.fields.push({name, controller: key});
     });
+
+    // edit
+    let params = this.navParams.data;
+    if (params !== {}) {
+      this.editCompany = true;
+      for (let key in params) {
+        if (key !== 'key') {
+          this.form.controls[key].setValue(params[key]);
+        }
+      }
+    }
+
   }
 
   submitForm(form: NgForm): void {
     this.appService.presentLoading(true);
-    this.storeService.addCompany(form.value)
-      .then(e => {
-        this.appService.showToast('Product created');
-        this.appService.hideLoading();
-        form.reset();
-      })
-      .catch(err => this.appService.showToast(err.message))
+    if (this.editCompany) {
+      // update
+      this.storeService.updateCompany(form.value, this.navParams.data.key)
+        .then(res => this.appService.showToast('Product updated'))
+        .catch(err => this.appService.showToast(err.message));
+      this.appService.hideLoading();
+    } else {
+      // create
+      this.storeService.addCompany(form.value)
+        .then(e => {
+          this.appService.showToast('Product created');
+          this.appService.hideLoading();
+          form.reset();
+        })
+        .catch(err => this.appService.showToast(err.message));
+    }
   }
 
 }

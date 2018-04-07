@@ -70,14 +70,14 @@ export class AddCompanyComponent {
     if (this.editCompany) {
       // update
       this.storeService.updateCompany(form.value, this.navParams.data.key)
-        .then(res => this.appService.showToast('Product updated'))
+        .then(res => this.appService.showToast('Company updated'))
         .catch(err => this.appService.showToast(err.message));
       this.appService.hideLoading();
     } else {
       // create
       this.storeService.addCompany(form.value)
         .then(e => {
-          this.appService.showToast('Product created');
+          this.appService.showToast('Company created');
           this.appService.hideLoading();
           form.reset();
         })

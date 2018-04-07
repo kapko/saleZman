@@ -18,7 +18,7 @@
           <ion-label>Company</ion-label> 
           <ion-select formControlName="company">
             <ion-option *ngFor="let company of companies" 
-            [value]="company.company_name">{{company.company_name}}</ion-option>
+            [value]="company.key">{{company.company_name}}</ion-option>
           </ion-select>
         </ion-item>
       </div>  

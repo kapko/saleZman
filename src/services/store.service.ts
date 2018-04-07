@@ -225,6 +225,12 @@ export class StoreService {
       .push(val);
   }
 
+  updateProduct(val: Object, key: string): Promise<any> {
+    return this.db
+      .object(`${this.productPath}${this.authService.currentUserId}/${key}`)
+      .set(val);
+  }
+
   addCompany(val: Object): any {
     return this.db
       .list(this.companyPath+this.authService.currentUserId)

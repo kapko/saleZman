@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
-import { NavController } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 
 export interface AddProductForm {
   name: string;
@@ -21,11 +21,15 @@ export class AddProductComponent {
 
   companies: any[] = [];
 
+  editProduct: boolean = false;
+
   constructor(
     private storeService: StoreService,
     private appService: AppService,
-    private navController: NavController,
+    private navParams: NavParams
   ) {
+    this.getCompanies();
+
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       weight: new FormControl('', Validators.required),
@@ -42,24 +46,57 @@ export class AddProductComponent {
       let name = key[0].toUpperCase() + key.substring(1);
       this.fields.push({name, controller: key});
     });
-
-    this.storeService
-      .getCompanies()
-      .take(1)
-      .subscribe(companies => this.companies = companies);
+    // update values of form
+    this.updateForm();
   }
 
   submitForm(form: NgForm): void {
-    // loader
     this.appService.presentLoading(true);
-    // submit
+
+    if (this.editProduct) {
+      // update
+      this.storeService.updateProduct(form.value, this.navParams.data.key)
+        .then(res => {
+        this.appService.hideLoading();
+        this.appService.showToast('Product updated');
+        })
+        .catch(err => this.appService.showToast(err.message));
+      return;
+    }
+
+    // create
     this.storeService.addProduct(form.value)
       .then(e => {
-        this.appService.showToast('Product created');
-        this.appService.hideLoading();
         form.reset();
+        this.appService.hideLoading();
+        this.appService.showToast('Product updated');
       })
       .catch(err => this.appService.showToast(err.message))
+
+  }
+
+  getCompanies(): void {
+    // get this.companies
+    this.storeService
+      .getCompanies()
+      .take(1)
+      .subscribe(companies => {
+        this.companies = companies;
+      });
+  }
+
+  updateForm(): void {
+    let params = this.navParams.data;
+
+    if (params !== {}) {
+      this.editProduct = true;
+      for (let key in params) {
+        if (key !== 'key') {
+          this.form.controls[key].setValue(params[key]); 
+        }
+      }
+
+    }
   }
 
 }

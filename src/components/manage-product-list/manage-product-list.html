@@ -27,7 +27,7 @@
 
   <!-- products -->
   <div *ngFor="let prod of products">
-    <ion-card *ngIf="prod.company === company.company_name">
+    <ion-card *ngIf="prod.company === company.key">
       <p class="action">
         <ion-icon name="trash" (click)="deleteItem(prod.key, 'product')"></ion-icon>
         <ion-icon name="create" (click)="editItem(prod, 'product')"></ion-icon>
@@ -41,7 +41,7 @@
         <p><b>TAX: </b><span>{{prod.tax}}</span></p>
         <p><b>Price: </b><span>{{prod.price}}</span></p>
         <p><b>Life: </b><span>{{prod.life}}</span></p>
-        <p><b>Company name: </b><span>{{prod.company}}</span></p>
+        <p><b>Company name: </b><span>{{company.company_name}}</span></p>
       </ion-card-content>
     </ion-card>
   </div>

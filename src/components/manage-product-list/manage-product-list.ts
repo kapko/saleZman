@@ -31,12 +31,16 @@ export class ManageProductListCompany {
     // get companies
     this.storeService.getCompanies()
       .takeUntil(this.subject)
-      .subscribe(companies => this.companies = companies);
+      .subscribe(companies => {
+        this.companies = companies;
+      });
 
     // get products
     this.storeService.getProductsById()
       .takeUntil(this.subject)
-      .subscribe(products => this.products = products);
+      .subscribe(products => {
+        this.products = products;
+      });
   }
 
   // edit

@@ -4,7 +4,7 @@
   <form [formGroup]="form" (ngSubmit)="submitForm(form)">
     <ion-list>
       <div *ngFor="let field of fields">
-        <ion-item *ngIf="field !== 'description'">
+        <ion-item *ngIf="field.controller !== 'company'">
           <ion-label>{{field.name}}</ion-label>
           <ion-input
             text-right 
@@ -13,7 +13,17 @@
             type="text"></ion-input>
         </ion-item>
       </div>
+      <div class="company">
+        <ion-item>
+          <ion-label>Company</ion-label> 
+          <ion-select formControlName="company">
+            <ion-option *ngFor="let company of companies" 
+            [value]="company.company_name">{{company.company_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </div>  
     </ion-list>
-    <button ion-button [disabled]="form.invalid" type="submit">submit</button>
+    <!-- [disabled]="form.invalid" -->
+    <button ion-button  type="submit">submit</button>
   </form>
 </ion-content>

@@ -7,6 +7,10 @@ app-add-product {
     border-bottom: none!important;
   }
 
+  div.company ion-item {
+    border-bottom: 1px solid #dedede;
+  }
+
   form {
     padding-bottom: 40px;
   }

@@ -62,17 +62,24 @@ export class ManageProductPage {
   }
 
   createItem(): void {
-    this.appService.showAlert('I want create ', [
-      {
+    this.appService.showAlert('I want create ', [{
         text: 'Company',
         handler: e => this.navController.push(AddCompanyComponent)
       },
       {
         text: 'Product',
-        handler: e => this.navController.push(AddProductComponent)
+        handler: e => {
+          this.storeService.getCompanies()
+            .subscribe(item => {
+              if (item && item.length) {
+                this.navController.push(AddProductComponent);
+              } else {
+                this.appService.showToast('Please create company first');
+              }
+            })
+        }
       },
-      'Cancel'
-    ]);
+      'Cancel']);
   }
 
   // unsibscribe

@@ -19,6 +19,8 @@ export class AddProductComponent {
 
   fields: AddProductForm[] = [];
 
+  companies: any[] = [];
+
   constructor(
     private storeService: StoreService,
     private appService: AppService,
@@ -40,10 +42,17 @@ export class AddProductComponent {
       let name = key[0].toUpperCase() + key.substring(1);
       this.fields.push({name, controller: key});
     });
+
+    this.storeService
+      .getCompanies()
+      .take(1)
+      .subscribe(companies => this.companies = companies);
   }
 
   submitForm(form: NgForm): void {
+    // loader
     this.appService.presentLoading(true);
+    // submit
     this.storeService.addProduct(form.value)
       .then(e => {
         this.appService.showToast('Product created');

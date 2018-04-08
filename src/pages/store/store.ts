@@ -27,47 +27,41 @@ export class StorePage {
     private appService: AppService,
     private myUserService: MyUserService
   ) {
-    this.getDists();
-
+    this.getDistsCompany();
+    this.getProducts();
     this.appService.presentLoading(true);
     this.storeService.getStoreNameOfProduct()
       .take(1)
       .subscribe(store => {
         if (!store) return;
         this.store = store;
-        this.getProducts(store.url);
-      });
-
-    this.storeService.getCompanies()
-      .take(1)
-      .subscribe(items => {
       });
   }
 
-  getDists(): any {
+  getDistsCompany(): any {
     this.myUserService
       .getDistCompany()
       .map(data => data.reduce((a, b) => a.concat(b), []))
       .subscribe(companies => {
         this.companies = companies;
-        console.log('this.companies', this.companies);
       });
   } 
 
-  getProducts(storeNamePath: string, company: string = null): void {
+  getProducts(company: string = null): void {
     if (company === 'All Company') company = null;
 
-    this.storeService
-      .getProducts(storeNamePath, company)
-      .do(() => this.appService.hideLoading())
-      .take(1)
+    this.myUserService
+      .getDistProducts(company)
+      .do(e => this.appService.hideLoading())
+      .map(data => data.reduce((a, b) => a.concat(b), []))
       .subscribe(products => {
         this.products = products;
       });
   }
 
   sortByCompany(company: string): void {
-    this.getProducts(this.store.url, company);
+    this.appService.presentLoading(true);
+    this.getProducts(company);
   }
 
   tabSwitch(tabName: string): void {

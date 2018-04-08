@@ -26,7 +26,9 @@ export class MyUserService {
   ) { }
 
   getMyUsers(): Observable<any> {
-    return this.db.list(this.distributerPath + this.authService.currentUserId).snapshotChanges();
+    return this.db
+      .list(this.distributerPath + this.authService.currentUserId)
+      .snapshotChanges();
   }
 
   getDistCompany(): any {
@@ -41,6 +43,21 @@ export class MyUserService {
         });
 
         return Observable.forkJoin(...companies).defaultIfEmpty([]);
+      });
+  }
+
+  getDistProducts(company: string): Observable<any>{
+    return this.db
+      .list(this.linkUserdPath+this.authService.currentUserId)
+      .snapshotChanges()
+      .take(1)
+      .flatMap(dists => {
+        let products = [];
+        dists.map(item => {
+          products.push(this.storeService.getProducts(item.key, company).take(1));
+        });
+
+        return Observable.forkJoin(...products).defaultIfEmpty([]);
       });
   }
 

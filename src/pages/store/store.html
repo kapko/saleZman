@@ -14,8 +14,9 @@
   <ion-item *ngIf="activeTabName === 'list-box' || activeTabName === 'basket'">
     <ion-label>Company</ion-label>
     <ion-select [(ngModel)]="defaultCompany" (ionChange)="sortByCompany(defaultCompany)">
+      <ion-option selected="true">All Company</ion-option>
       <ion-option 
-        *ngFor="let company of companies" [value]="company.company_name">{{company.company_name}}</ion-option>
+        *ngFor="let company of companies" [value]="company.key">{{company.company_name}}</ion-option>
     </ion-select>
   </ion-item>
 

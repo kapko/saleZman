@@ -54,6 +54,8 @@ export class AddProductComponent {
 
   submitForm(form: NgForm): void {
     this.appService.presentLoading(true);
+    // set default counter;
+    form.value.counter = 0;
 
     if (this.editProduct) {
       // update
@@ -74,7 +76,6 @@ export class AddProductComponent {
         this.appService.showToast('Product created');
       })
       .catch(err => this.appService.showToast(err.message))
-
   }
 
   getCompanies(): void {
@@ -89,6 +90,7 @@ export class AddProductComponent {
 
   updateForm(): void {
     let params = this.navParams.data;
+    delete params.counter;
 
     if (Object.keys(params).length) {
       this.editProduct = true;

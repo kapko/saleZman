@@ -75,9 +75,9 @@ export class StoreService {
       ref => ref.orderByChild('url').equalTo(url)).valueChanges();
   }
 
-  getProducts(storeName: string, company: string = null): Observable<any>{
+  getProducts(uid: string, company: string = null): Observable<any>{
     return this.db.list(
-      this.productPath + 'simple_store', // here dynamic storeName
+      this.productPath + uid,
       ref => (company) ? ref.orderByChild('company').equalTo(company) : ref
     ).valueChanges();
   }

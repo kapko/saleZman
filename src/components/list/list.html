@@ -7,11 +7,11 @@
 
 <ion-card *ngFor="let product of rowProducts">
   <ion-card-content>
-    <ion-card-title> {{ product.name }} {{product.Weight}}</ion-card-title>
+    <ion-card-title> {{ product.name }} {{product.weight}}</ion-card-title>
     <div class="product-raw">
-      <span><b>price: </b> {{product.Price}}</span>
+      <span><b>Price: </b> {{product.price}}</span>
       <span><b>MRP: </b> {{product.MRP}}</span>
-      <span><b>tax: </b> {{product.TAX}}</span>
+      <span><b>TAX: </b> {{product.TAX}}</span>
     </div>
     <div class="counter">
       <ion-icon class="left" name="remove-circle" (click)="count(product, false)"></ion-icon>

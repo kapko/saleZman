@@ -31,7 +31,7 @@ export class MyUserService {
       .snapshotChanges();
   }
 
-  getDistCompany(): any {
+  getDistCompany(): Observable<any> {
     return this
       .getSnapShotDist()
       .flatMap(data => {
@@ -42,6 +42,36 @@ export class MyUserService {
           return Observable.forkJoin(...companies).defaultIfEmpty([]);
         });
   }
+
+  getDistPayment(storeName: string): Observable<any> {
+    return this
+      .getSnapShotDist()
+      .flatMap(data => {
+        let payments = [];
+        data.map(dist => {
+          // store_name && distributor_id
+          payments.push(this.storeService.getPaymentList(storeName, dist.key).take(1));
+        });
+        // return list of payment by dist.
+        return Observable.forkJoin(...payments).defaultIfEmpty([]);
+      });
+  }
+
+  getDistPaid(storeName: string): any {
+    return this
+      .getSnapShotDist()
+      .flatMap((data: any) => {
+        let paid = [];
+
+        data.map(dist => {
+          // store_name && distributor_id
+          paid.push(this.storeService.getPaidList(storeName, dist.key).take(1));
+        });
+        // return list of payment by dist.
+        return Observable.forkJoin(...paid).defaultIfEmpty([]);
+      });
+  }
+  
 
   getDistProducts(company: string): Observable<any>{
     return this

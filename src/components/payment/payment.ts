@@ -3,8 +3,8 @@ import { AppService } from '../../services/app-service';
 import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
-import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { MyUserService } from '../../services/my-users-service';
 
 @Component({
   selector: 'app-payment',
@@ -32,8 +32,6 @@ export class PaymentComponent {
 
   billValue: string = 'Last 5 bills';
 
-  subject: Subject<any>;
-
   comment: string = '';
 
   cash_amount: number = null;
@@ -45,42 +43,40 @@ export class PaymentComponent {
     private appService: AppService,
     private storeService: StoreService,
     private authService: AuthService,
+    private myUserService: MyUserService
   ) {
-    this.subject = new Subject();
     this.appService.presentLoading(true);
   }
 
   ngOnChanges(): void {
     if (!this.store) return;
-    this.getPaymentList(this.store._name, 5);
+    this.getPaidList(this.store._name);
+    this.getPaymentList(this.store._name);
   }
 
-  getPaymentList(storeName: string, limit: number = null): void {
-    this.storeService
-      .getPaymentList(storeName, limit)
-      .do((e) => this.appService.hideLoading())
-      .takeUntil(this.subject)
-      .map(changes => {
-        this.billIds = [];
-        return changes.map(c => {
-          this.billIds.push(c.payload.key);
-          return ({ key: c.payload.key, ...c.payload.val() });
-        })
-      })
-      .subscribe(supplies => {
-        this.products = supplies;
-        this.rowProducts = supplies;
-        this.getPaidList(this.store._name);
+
+  getPaymentList(storeName: string, limit: number = 5): void {
+    this.myUserService.getDistPayment(storeName)
+      .map(data => data
+        .reduce((a, b) => a.concat(b), [])
+        .slice(0).slice(-limit)
+      )
+      .do(e => this.appService.hideLoading())
+      .subscribe(payments => {
+        this.products = payments;
+        this.rowProducts = payments;
       });
   }
 
-  getPaidList(storeName: string, limit: number = null): void {
-    this.storeService.getPaidList(storeName, limit)
-      .takeUntil(this.subject)
-      .map(data => {
-        return data.filter(el => this.billIds.includes(el.key) ).reverse();
-      })
-      .subscribe(paidItems => this.paidList = paidItems);
+  getPaidList(storeName: string, limit: number = 5): void {
+    this.myUserService.getDistPaid(storeName)
+      .map(data => data
+        .reduce((a, b) => a.concat(b), [])
+        .slice(0).slice(-limit)
+      )
+      .subscribe(paidItems => {
+        this.paidList = paidItems;
+      });
   }
 
   sortByBill(value: string): void {
@@ -141,14 +137,11 @@ export class PaymentComponent {
 
       this.storeService.addPayment(this.store._name, product);
       this.appService.showToast('Your payment completed.');
+      this.getPaidList(this.store._name);
+
     } else {
       this.appService.showToast('ERROR: Payment amount more then bill amount for ' + balance);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.subject.next();
-    this.subject.complete();
   }
 
 }

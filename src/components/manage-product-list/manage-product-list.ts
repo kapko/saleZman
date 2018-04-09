@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController } from 'ionic-angular';
-import { CreateUserComponent } from '../../components/create-user/create-user';
+import { NavController } from 'ionic-angular';
 import { AppService } from '../../services/app-service';
 import { Subject } from 'rxjs';
 import { AddCompanyComponent } from '../../components/add-company/add-company';

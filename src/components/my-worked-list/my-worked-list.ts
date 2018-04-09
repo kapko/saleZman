@@ -136,7 +136,7 @@ export class MyWorkedListComponent {
 
   getPrice(data): number {
     let totalValue = 0;
-    data.forEach(prod => totalValue += prod.Price * prod.counter);
+    data.forEach(prod => totalValue += prod.price * prod.counter);
     return totalValue;
   }
 

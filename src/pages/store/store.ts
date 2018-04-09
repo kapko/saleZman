@@ -4,7 +4,6 @@ import { storeName } from '../../interfaces/city.store';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
 import { MyUserService } from '../../services/my-users-service';
-import { merge } from 'rxjs/operator/merge';
 
 @Component({
   selector: 'store-page',
@@ -28,8 +27,7 @@ export class StorePage {
     private myUserService: MyUserService
   ) {
     this.getDistsCompany();
-    this.getProducts();
-    this.appService.presentLoading(true);
+    this.sortByCompany(this.defaultCompany);
     this.storeService.getStoreNameOfProduct()
       .take(1)
       .subscribe(store => {
@@ -69,8 +67,7 @@ export class StorePage {
     switch (tabName) {
       case 'list-box':
       case 'basket':
-        this.appService.presentLoading(true);
-        this.getProducts(this.store.url);
+        this.sortByCompany(this.defaultCompany);
         break;
       case 'briefcase':
         break;

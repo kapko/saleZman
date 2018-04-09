@@ -106,19 +106,33 @@ export class StoreService {
     .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
 
-  getPaymentList(storeName: string, limit: number = null): Observable<any> {
+  getPaymentList(storeName: string, distId: string): Observable<any> {
     return this.db.list(
       this.paymentListPath + storeName,
-      ref => (limit) ? ref.limitToLast(limit) : ref
-    ).snapshotChanges();
+      ref => ref.orderByChild('dist_id').equalTo(distId)
+    )
+    .snapshotChanges()
+    .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
 
-  getPaidList(storeName: string, limit: number = null): Observable<any> {
+  getPaidList(storeName: string, distId: string): Observable<any> {
     return this.db.list(
       this.paymentPaidListPath + storeName,
-      ref => (limit) ? ref.limitToLast(limit) : ref
-    ).valueChanges();
+      ref => ref.orderByChild('dist_id').equalTo(distId)
+    )
+    .snapshotChanges()
+    .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
+
+  // getPList(storeName: string, distId: string): Observable<any> {
+  //   return this.db.list(
+  //     // this.paymentPaidListPath + storeName,
+  //     this.paymentListPath + storeName,
+  //     ref => ref.equalTo('dist_id').equalTo(distId)
+  //   )
+  //   .snapshotChanges()
+  //   .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
+  // }
 
   getUserOrderedList(storeName:string, uid: string = this.authService.currentUserId): Observable<any> {
     return this.db

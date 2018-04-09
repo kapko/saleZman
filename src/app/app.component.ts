@@ -7,12 +7,10 @@ import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
 import { MyWorkPage } from '../pages/my-work/my-work';
 import { MyUsersPage } from '../pages/my-users/my-users';
-import { AppService } from '../services/app-service';
 import { Subject } from 'rxjs';
 import { StoreBillingPage } from '../pages/store-billing/store-billing';
 import { MyUsersWorkPage } from '../pages/my-users-work/my-users-work';
 import { ManageProductPage } from '../pages/manage-products/manage-products';
-import { ManageStorePage } from '../pages/manage-store/manage-store';
 @Component({
   selector: 'app-component',
   templateUrl: 'app.html'
@@ -30,7 +28,6 @@ export class MyApp {
     private menuController: MenuController,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private appService: AppService,
   ) {
     this.subject = new Subject();
     this.platform.ready().then(() => {

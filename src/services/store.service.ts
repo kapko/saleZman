@@ -76,10 +76,13 @@ export class StoreService {
   }
 
   getProducts(uid: string, company: string = null): Observable<any>{
-    return this.db.list(
+    return this.db
+    .list(
       this.productPath + uid,
       ref => (company) ? ref.orderByChild('company').equalTo(company) : ref
-    ).valueChanges();
+    )
+    .snapshotChanges()
+    .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
 
   getProductsById(uid: string = this.authService.currentUserId, company: string = null): Observable<any>{
@@ -90,14 +93,17 @@ export class StoreService {
   }
 
   getUserProductList(storeName: string, uid: string = this.authService.currentUserId): Observable<any> {
-    return this.db.list(`${this.usersProductPath}${storeName}/${uid}/${this.getDate()}`).valueChanges();
+    return this.db.list(`${this.usersProductPath}${storeName}/${uid}/${this.getDate()}`).snapshotChanges()
+    .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
 
-  getSupplyList(storeName: string, limit: number = null): Observable<any> {
+  getSupplyList(distId: string, storeName: string): Observable<any> {
     return this.db.list(
       this.supplyListPath + storeName,
-      ref => (limit) ? ref.limitToLast(limit) : ref
-    ).snapshotChanges();
+      ref => ref.orderByChild('dist_id').equalTo(distId)
+    )
+    .snapshotChanges()
+    .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
 
   getPaymentList(storeName: string, limit: number = null): Observable<any> {
@@ -115,14 +121,16 @@ export class StoreService {
   }
 
   getUserOrderedList(storeName:string, uid: string = this.authService.currentUserId): Observable<any> {
-    return this.db.list(`${this.usersOrderedProductPath}${storeName}/${uid}/${this.getDate()}`).valueChanges();
+    return this.db
+    .list(`${this.usersOrderedProductPath}${storeName}/${uid}/${this.getDate()}`).snapshotChanges()
+    .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
   }
 
   updateUsersProductList(product: any, storeName: string, uid: string = this.authService.currentUserId): Promise<void> {
     let data = (!product.counter) ? null : product;
   
     return this.db
-      .object(`${this.usersProductPath}${storeName}/${uid}/${this.getDate()}/${product._name}${product.Weight}`)
+      .object(`${this.usersProductPath}${storeName}/${uid}/${this.getDate()}/${product.key}`)
       .set(data);
   }
 
@@ -130,7 +138,7 @@ export class StoreService {
     let data = (!product.counter) ? null : product;
 
     return this.db
-      .object(`${this.usersOrderedProductPath}${storeName}/${uid}/${this.getDate()}/${product._name}${product.Weight}`)
+      .object(`${this.usersOrderedProductPath}${storeName}/${uid}/${this.getDate()}/${product.key}`)
       .set(data);
   }
 

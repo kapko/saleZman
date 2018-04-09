@@ -32,33 +32,52 @@ export class MyUserService {
   }
 
   getDistCompany(): any {
-    return this.db
-      .list(this.linkUserdPath+this.authService.currentUserId)
-      .snapshotChanges()
-      .take(1)
+    return this
+      .getSnapShotDist()
       .flatMap(data => {
-        let companies = [];
-        data.map(item => {
-          companies.push(this.storeService.getCompanies(item.key).take(1));
+          let companies = [];
+          data.map(item => {
+            companies.push(this.storeService.getCompanies(item.key).take(1));
+          });
+          return Observable.forkJoin(...companies).defaultIfEmpty([]);
         });
-
-        return Observable.forkJoin(...companies).defaultIfEmpty([]);
-      });
   }
 
   getDistProducts(company: string): Observable<any>{
+    return this
+      .getSnapShotDist()
+      .flatMap(dists => {
+          let products = [];
+          dists.map(item => {
+            products.push(
+              this.storeService.getProducts(item.key, company).take(1)
+            );
+          });
+          return Observable.forkJoin(...products).defaultIfEmpty([]);
+        });
+  }
+
+  getDistSupply(storeName: string): Observable<any> {
+    return this.getSnapShotDist()
+      .flatMap(dists => {
+        let supplies = [];
+        dists.map(item => {
+          supplies.push(
+            // dist_id && store_name
+            this.storeService.getSupplyList(item.key, storeName).take(1)
+          )
+        })
+        return Observable
+          .forkJoin(...supplies)
+          .defaultIfEmpty([]);
+      });
+  }
+
+  getSnapShotDist(): Observable<any> {
     return this.db
       .list(this.linkUserdPath+this.authService.currentUserId)
       .snapshotChanges()
-      .take(1)
-      .flatMap(dists => {
-        let products = [];
-        dists.map(item => {
-          products.push(this.storeService.getProducts(item.key, company).take(1));
-        });
-
-        return Observable.forkJoin(...products).defaultIfEmpty([]);
-      });
+      .take(1);
   }
 
   getMyUserWorks(): Observable<any> {
@@ -137,7 +156,8 @@ export class MyUserService {
     return this.db
       .list(this.storeBillPath+this.authService.currentUserId, 
       ref => (order_by) ? ref.orderByChild('order_by').equalTo(order_by) : ref)
-      .valueChanges();
+      .snapshotChanges()
+      .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })))
   }
 
   getStoreOrderedItem(key: string): Observable<any> {

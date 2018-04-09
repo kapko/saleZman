@@ -3,6 +3,7 @@ import { MyUserService } from '../../services/my-users-service';
 import { AppService } from '../../services/app-service';
 import { Subject } from 'rxjs';
 import { StoreService } from '../../services/store.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-store-billing',
@@ -28,6 +29,7 @@ export class StoreBillingPage {
     private myUserService: MyUserService,
     private appService: AppService,
     private storeService: StoreService,
+    private authService: AuthService
   ) {
     this.getUsers();
     this.subject = new Subject();
@@ -149,6 +151,7 @@ export class StoreBillingPage {
       order_id: Date.now(),
       supply_status: 'pending',
       orderedKeys: this.getOrderKeys(bill),
+      dist_id: this.authService.currentUserId
     }
 
     let key = supplyObject.order_id;
@@ -169,7 +172,7 @@ export class StoreBillingPage {
   getOrderKeys(bill): string[] {
     let keys = [];
     for (let prod of bill.data) {
-      let key = prod.store_name + prod.name;
+      let key = prod.key;
       keys.push(key);
     }
 
@@ -179,7 +182,7 @@ export class StoreBillingPage {
   checkedSubmitedOrder(bill: any): Promise<any> {
     let opt = [];
     for (let prod of bill.data) {
-      let key = prod.store_name + prod.name;
+      let key = prod.key;
       opt.push(
         // set item for test-supply-items
         this.storeService.setTestSupplyItem(key, prod),

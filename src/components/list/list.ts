@@ -59,14 +59,18 @@ export class ListComponent {
     this.storeService
       .getUserProductList(this.store.name)
       .takeUntil(this.subject)
-      .subscribe(items => this.usersProduct = items);
+      .subscribe(items => {
+        this.usersProduct = items;
+      });
   }
 
   getOrderedList(): void {
     this.storeService
       .getUserOrderedList(this.store.name)
       .takeUntil(this.subject)
-      .subscribe(items => this.usersProduct = items);
+      .subscribe(items => {
+        this.usersProduct = items;
+      });
   }
 
   selectAllProduct(event: boolean): void {

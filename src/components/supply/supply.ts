@@ -5,6 +5,7 @@ import { storeName } from '../../interfaces/city.store';
 import 'rxjs';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { MyUserService } from '../../services/my-users-service';
 
 @Component({
   selector: 'app-supply',
@@ -32,6 +33,7 @@ export class SupplyComponent {
     private appService: AppService,
     private storeService: StoreService,
     private authService: AuthService,
+    private myUserService: MyUserService
   ) {
     this.subject = new Subject();
     this.appService.presentLoading(true);
@@ -40,17 +42,17 @@ export class SupplyComponent {
   ngOnChanges(): void {
     if (!this.store) return;
     this.getComments();
-    this.getSupplyList(this.store._name, 5);
+    this.getSupplyList(this.store._name);
   }
 
-  getSupplyList(storeName: string, limit: number = null): void {
-    this.storeService
-      .getSupplyList(storeName, limit)
-      .do(() => this.appService.hideLoading())
-      .take(1)
-      .map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
+  getSupplyList(storeName: string, limit: number = 5): void {
+    this.myUserService
+      .getDistSupply(storeName)
+      .map(data => data.reduce((a, b) => a.concat(b), []))
+      .do(arr => {
+        this.appService.hideLoading();
+        arr.slice(0).slice(- limit);
+      })
       .subscribe(supplies => {
         this.products = supplies;
         this.rowProducts = supplies;
@@ -69,8 +71,6 @@ export class SupplyComponent {
       case 'Last 15 bills':
         limit = 15;
         break;
-      default:
-        limit = null;
     }
 
     this.getSupplyList(this.store._name, limit);

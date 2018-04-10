@@ -91,6 +91,7 @@ export class PaymentComponent {
   getPaidListForDist(limit: number): void {
     this.storeService
       .getPaidList(this.store._name, this.authService.currentUserId)
+      .take(1)
       .map(data => {
         this.appService.hideLoading();
         return data.slice(0).slice(-limit)

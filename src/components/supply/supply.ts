@@ -41,18 +41,39 @@ export class SupplyComponent {
 
   ngOnChanges(): void {
     if (!this.store) return;
+    this.getProductsForSupply();
     this.getComments();
-    this.getSupplyList(this.store._name);
   }
 
-  getSupplyList(storeName: string, limit: number = 5): void {
+  getProductsForSupply(limit: number = 5): void {
+    let status = this.authService.currentUserStatus;
+    if (!status) {
+      this.getSupplyList(limit);
+    } else {
+      this.getSupplyForDist(limit);
+    }
+  }
+
+  getSupplyList(limit: number = 5): void {
     this.myUserService
-      .getDistSupply(storeName)
+      .getDistSupply(this.store._name)
       .map(data => data.reduce((a, b) => a.concat(b), []))
       .do(arr => {
         this.appService.hideLoading();
         arr.slice(0).slice(- limit);
       })
+      .subscribe(supplies => {
+        this.products = supplies;
+        this.rowProducts = supplies;
+      });
+  }
+
+  getSupplyForDist(limit: number = 5): void {
+    this.storeService
+      .getSupplyList(this.authService.currentUserId, this.store._name)
+      .take(1)
+      .map(data => data.slice(0).slice(-limit))
+      .do(e => this.appService.hideLoading())
       .subscribe(supplies => {
         this.products = supplies;
         this.rowProducts = supplies;
@@ -73,7 +94,7 @@ export class SupplyComponent {
         break;
     }
 
-    this.getSupplyList(this.store._name, limit);
+    this.getProductsForSupply(limit);
   }
 
   supplyItem(product: any): void {

@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import { AppService } from '../../services/app-service';
 import { StoreService } from '../../services/store.service';
 import { storeName } from '../../interfaces/city.store';
-import 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { MyUserService } from '../../services/my-users-service';
+import 'rxjs';
 
 @Component({
   selector: 'app-payment',
@@ -36,7 +36,6 @@ export class PaymentComponent {
 
   cash_amount: number = null;
 
-
   date: string = this.appService.getCurrentDate(true);
 
   constructor(
@@ -44,19 +43,40 @@ export class PaymentComponent {
     private storeService: StoreService,
     private authService: AuthService,
     private myUserService: MyUserService
-  ) {
-    this.appService.presentLoading(true);
-  }
+  ) { }
 
   ngOnChanges(): void {
     if (!this.store) return;
-    this.getPaidList(this.store._name);
-    this.getPaymentList(this.store._name);
+    this.getAllPayments();
+  }
+
+  getAllPayments(limit: number = 5): void {
+    this.appService.presentLoading(true);
+
+    if (!this.authService.currentUserStatus) {
+      this.getPaidList(limit);
+      this.getPaymentList(limit);
+    } else {
+      this.getPaymentListForDist(limit);
+      this.getPaidListForDist(limit);
+    }
   }
 
 
-  getPaymentList(storeName: string, limit: number = 5): void {
-    this.myUserService.getDistPayment(storeName)
+  getPaymentListForDist(limit): void {
+    this.storeService
+      .getPaymentList(this.store._name, this.authService.currentUserId)
+      .take(1)
+      .map(data => data.slice(0).slice(-limit))
+      .subscribe(payments => {
+        this.products = payments;
+        this.rowProducts = payments;
+      });
+  }
+
+  getPaymentList(limit: number = 5): void {
+    this.myUserService
+      .getDistPayment(this.store._name)
       .map(data => data
         .reduce((a, b) => a.concat(b), [])
         .slice(0).slice(-limit)
@@ -68,8 +88,20 @@ export class PaymentComponent {
       });
   }
 
-  getPaidList(storeName: string, limit: number = 5): void {
-    this.myUserService.getDistPaid(storeName)
+  getPaidListForDist(limit: number): void {
+    this.storeService
+      .getPaidList(this.store._name, this.authService.currentUserId)
+      .map(data => {
+        this.appService.hideLoading();
+        return data.slice(0).slice(-limit)
+      })
+      .subscribe(paidItems => {
+        this.paidList = paidItems;
+      });
+  }
+
+  getPaidList(limit: number = 5): void {
+    this.myUserService.getDistPaid(this.store._name)
       .map(data => data
         .reduce((a, b) => a.concat(b), [])
         .slice(0).slice(-limit)
@@ -95,7 +127,7 @@ export class PaymentComponent {
         limit = null;
     }
 
-    this.getPaymentList(this.store._name, limit);
+    this.getAllPayments(limit);
   }
 
   payOptionEvent(product: Object, opt: string): void {
@@ -137,7 +169,7 @@ export class PaymentComponent {
 
       this.storeService.addPayment(this.store._name, product);
       this.appService.showToast('Your payment completed.');
-      this.getPaidList(this.store._name);
+      this.getAllPayments();
 
     } else {
       this.appService.showToast('ERROR: Payment amount more then bill amount for ' + balance);

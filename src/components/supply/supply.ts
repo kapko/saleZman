@@ -42,15 +42,16 @@ export class SupplyComponent {
   ngOnChanges(): void {
     if (!this.store) return;
     this.getProductsForSupply();
-    this.getComments();
   }
 
   getProductsForSupply(limit: number = 5): void {
     let status = this.authService.currentUserStatus;
     if (!status) {
       this.getSupplyList(limit);
+      this.getComments();
     } else {
       this.getSupplyForDist(limit);
+      this.getDistComments();
     }
   }
 
@@ -115,7 +116,19 @@ export class SupplyComponent {
   }
 
   getComments(): void {
-    this.myUserService.getDistComments(this.store._name)
+    this.myUserService.getComments(this.store._name)
+      .map(data => data
+        .reduce((a, b) => a.concat(b), [])
+        .slice(0).slice(-5)
+      )
+      .subscribe(messages => {
+        this.commits = messages;
+      });
+  }
+
+  getDistComments(): void {
+    this.myUserService
+      .getDistComments(this.store._name)
       .map(data => data
         .reduce((a, b) => a.concat(b), [])
         .slice(0).slice(-5)
@@ -135,6 +148,7 @@ export class SupplyComponent {
     this.storeService.submitCommonCommit(data, this.store._name);
     this.comment = '';
     this.getComments();
+    this.getDistComments();
   }
 
   ngOnDestroy(): void {

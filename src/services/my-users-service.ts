@@ -43,9 +43,27 @@ export class MyUserService {
         });
   }
 
-  getDistComments(storeName: string): Observable<any> {
+  getComments(storeName: string): Observable<any> {
     return this
       .getSnapShotDist()
+      .flatMap(data => {
+          let comments = [];
+          data.push({ key: this.authService.currentUserId });
+
+          data.map(item => {
+            comments.push(
+              this.storeService.getCommonCommit(item.key, storeName).take(1)
+            );
+          });
+
+          return Observable.forkJoin(...comments).defaultIfEmpty([]);
+        });
+  }
+
+  getDistComments(storeName: string): Observable<any> {
+    return this
+      .getMyUsers()
+      .take(1)
       .flatMap(data => {
           let comments = [];
           data.push({ key: this.authService.currentUserId });

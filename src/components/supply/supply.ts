@@ -115,10 +115,14 @@ export class SupplyComponent {
   }
 
   getComments(): void {
-    this.storeService
-      .getCommonCommit(this.store._name)
-      .takeUntil(this.subject)
-      .subscribe(messages => this.commits = messages)
+    this.myUserService.getDistComments(this.store._name)
+      .map(data => data
+        .reduce((a, b) => a.concat(b), [])
+        .slice(0).slice(-5)
+      )
+      .subscribe(messages => {
+        this.commits = messages;
+      });
   }
 
   submitCommit(event: any, uid: string = this.authService.currentUserId): void {
@@ -130,6 +134,7 @@ export class SupplyComponent {
     // update data
     this.storeService.submitCommonCommit(data, this.store._name);
     this.comment = '';
+    this.getComments();
   }
 
   ngOnDestroy(): void {

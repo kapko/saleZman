@@ -86,7 +86,7 @@ export class PaymentComponent {
         this.products = payments;
         this.rowProducts = payments;
       });
-  }
+  } 
 
   getPaidListForDist(limit: number): void {
     this.storeService

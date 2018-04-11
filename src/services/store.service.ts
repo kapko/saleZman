@@ -170,10 +170,13 @@ export class StoreService {
     return this.db.list(`${commitPath}${storeName}/`).push(value);
   }
 
-  getCommonCommit(storeName: string, payment: boolean = false): Observable<any> {
+  getCommonCommit(distId: string, storeName: string, payment: boolean = false): Observable<any> {
     let commitPath = (payment) ? this.paymentCommentPath : this.supplyCommentPath;
 
-    return this.db.list(`${commitPath}${storeName}`, ref => ref.limitToLast(5)).valueChanges();
+    return this.db.list(`${commitPath}${storeName}`, 
+      ref => ref.orderByChild('uid').equalTo(distId)
+    )
+    .valueChanges();
   }
 
   getComment(storeName: string, commentUrl: string, uid: string = this.authService.currentUserId): Observable<any> {

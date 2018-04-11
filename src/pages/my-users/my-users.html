@@ -7,7 +7,7 @@
       <span>Email: {{ (user.key | getEmail | async)?.email }}</span>
       <span>Activation: <i class="activation">{{ (user.activated) ? 'active' : 'none'}}</i></span>
       <div>
-        <span>Status : <i (click)="activateUser(user)">{{(user.status) ? 'disable' : 'enaible'}}</i></span>
+        <span>Status : <i (click)="activateUser(user)">{{(user.status) ? 'Disable' : 'Enable'}}</i></span>
       </div>
     </ion-card-content>
   </ion-card>

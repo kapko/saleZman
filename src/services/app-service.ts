@@ -139,9 +139,9 @@ export class AppService {
       case 'account_number':
       case 'zipcode':
       case 'phone':
-      case 'GST':
+      // case 'GST':
       case 'contact_person':
-      case 'weight':
+      // case 'weight':
         type = 'number';
         break;
       case 'email':

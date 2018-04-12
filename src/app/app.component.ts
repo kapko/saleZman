@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { StoreBillingPage } from '../pages/store-billing/store-billing';
 import { MyUsersWorkPage } from '../pages/my-users-work/my-users-work';
 import { ManageProductPage } from '../pages/manage-products/manage-products';
+import { PersonalStorePage } from '../pages/personal-store/personal-store';
 @Component({
   selector: 'app-component',
   templateUrl: 'app.html'
@@ -33,7 +34,8 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
+      // this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
+      this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
     });
   }
 

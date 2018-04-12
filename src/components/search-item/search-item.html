@@ -1,0 +1,15 @@
+<a (click)="openStore(item)">{{ item.name }}</a>
+<!-- update -->
+<ion-icon *ngIf="currentUid === item.created_by" 
+  (click)="updateItem(item)"
+  class="update" name="brush"></ion-icon>
+<!-- remove -->
+<ion-icon *ngIf="currentUid === item.created_by" 
+  (click)="updateItem(item, 'remove')"
+  class="update" name="trash"></ion-icon>
+<!-- actions -->
+<ion-icon
+  *ngIf="!hideIcons && currentUid !== item.created_by"
+  (click)="updatePersonStore(item)"
+  [ngClass]="{'remove-circle': checkPersonId(item)}"
+  name="{{ (checkPersonId(item)) ? 'remove-circle' : 'add-circle'}}"></ion-icon>

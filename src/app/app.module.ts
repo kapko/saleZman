@@ -59,6 +59,10 @@ import { AddCompanyComponent } from '../components/add-company/add-company';
 import { AddProductComponent } from '../components/add-product/add-product';
 import { ManageProductListCompany } from '../components/manage-product-list/manage-product-list';
 import { DemicalPipe } from '../pipe/demical';
+import { SearchListComponent } from '../components/search-list/search-list';
+import { SearchItemComponent } from '../components/search-item/search-item';
+import { PersonalStorePage } from '../pages/personal-store/personal-store';
+import { CreateStoreComponent } from '../components/create-store/create-store';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -110,7 +114,11 @@ let fireBaseConfig = {
     DemicalPipe,
     AddCompanyComponent,
     AddProductComponent,
-    ManageProductListCompany
+    ManageProductListCompany,
+    SearchListComponent,
+    SearchItemComponent,
+    PersonalStorePage,
+    CreateStoreComponent
   ],
   imports: [
     BrowserModule,
@@ -163,7 +171,11 @@ let fireBaseConfig = {
     ManageStorePage,
     AddCompanyComponent,
     AddProductComponent,
-    ManageProductListCompany
+    ManageProductListCompany,
+    SearchListComponent,
+    SearchItemComponent,
+    PersonalStorePage,
+    CreateStoreComponent
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class CityService {
@@ -10,8 +11,11 @@ export class CityService {
 
   storeNamesPath: string = '/store-names/';
 
+  personalStorePath: string = '/personal-store/';
+
   constructor(
     private db: AngularFireDatabase,
+    private authService: AuthService
   ) {}
 
   getCities(): Observable<any> {
@@ -24,7 +28,16 @@ export class CityService {
       ref => (query.city) 
         ? ref.orderByChild('city').equalTo(query.city) 
         : ref.limitToFirst(query.limit))
-      .valueChanges();
+      .snapshotChanges();
+  }
+
+  getPersonalStores(query: any): Observable<any> {
+    return this.db.list(
+      this.personalStorePath + this.authService.currentUserId,
+      ref => (query.city) 
+        ? ref.orderByChild('city').equalTo(query.city) 
+        : ref.limitToFirst(query.limit))
+      .snapshotChanges();
   }
 
 }

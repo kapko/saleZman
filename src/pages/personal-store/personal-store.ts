@@ -6,10 +6,11 @@ import { CityService } from '../../services/city.service';
 import { AppService } from '../../services/app-service';
 
 @Component({
-  selector: 'search-page',
-  templateUrl: 'search.html'
+  selector: 'personal-store',
+  templateUrl: 'personal-store.html'
 })
-export class SearchPage {
+
+export class PersonalStorePage {
   cities: Observable<any>;
   date: string;
   cityName: string;

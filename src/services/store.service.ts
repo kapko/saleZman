@@ -43,6 +43,12 @@ export class StoreService {
     private authService: AuthService
   ) {}
 
+  setPersonToStore(storeId: string, val: boolean | null = true): Promise<any> {
+    return this.db
+      .object(this.storePath+storeId+'/persons/'+this.authService.currentUserId)
+      .set(val);
+  }
+
   setUserStoreName(storeData: storeName, uid: string = this.authService.currentUserId): Promise<void> {
     return this.db.object(this.userStoreNamePath + uid).update(storeData);
   }
@@ -198,6 +204,14 @@ export class StoreService {
 
   addPayment(storeName: string, product: Object): any {
     return this.db.list(this.paymentPaidListPath + storeName).push(product);
+  }
+  
+  addStore(val: any): any {
+    return this.db.list(this.storePath).push(val);
+  }
+
+  updateStore(key: string, val: Object | null = null): Promise<any> {
+    return this.db.object(this.storePath + key).set(val);
   }
 
   // balance

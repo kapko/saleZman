@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { AppService } from '../services/app-service';
 import { NavController } from 'ionic-angular';
 import { ProfilePage } from '../pages/profile/profile';
-import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
 import { Observable, Subject } from 'rxjs';
 import { NotificationPage } from '../pages/notifications/notifications';
 import { NotificationService } from '../services/notification-service';
+import { PersonalStorePage } from '../pages/personal-store/personal-store';
 
 @Component({
   selector: 'app-header',
@@ -63,7 +63,7 @@ export class HeaderComponent {
   }
 
   moveToHome(): void {
-    this.nav.setRoot(SearchPage);
+    this.nav.setRoot(PersonalStorePage);
   }
 
   getEmail(): any {

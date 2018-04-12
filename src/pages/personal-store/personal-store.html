@@ -1,6 +1,6 @@
 <app-header></app-header>
 <ion-content padding>
-  <h4>Common Store Page</h4>
+  <h4>Personal Store Page</h4>
   <ion-list>
     <ion-item>
       <ion-label>City</ion-label>
@@ -13,9 +13,9 @@
 
   <!-- list -->
   <search-list
-    [personalStore]="false"
+    [personalStore]="true"
     [searchEvent]="searchEvent"
     [city]="cityModel"></search-list>
-
 </ion-content>
+
 <app-footer></app-footer>

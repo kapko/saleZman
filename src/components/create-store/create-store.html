@@ -1,0 +1,23 @@
+<app-header></app-header>
+<ion-content padding>
+  <h5 text-center>Create new Store</h5>
+  <form [formGroup]="form" (ngSubmit)="submitForm(form)">
+
+    <ion-list>
+      <div *ngFor="let field of fields">
+
+        <ion-item *ngIf="field.name !== 'Description'">
+          <ion-label>{{field.name}}</ion-label>
+          <ion-input
+            text-right
+            [formControlName]="field.controller"
+            placeholder="******"
+            [type]="field.type"></ion-input>
+        </ion-item>
+
+      </div>
+    </ion-list>
+
+    <button ion-button [disabled]="form.invalid" type="submit">submit</button>
+  </form>
+</ion-content>

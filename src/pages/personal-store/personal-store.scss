@@ -8,6 +8,18 @@ personal-store {
     padding-top: 10px;
     margin: 0;
     font-size: 18px;
+    padding-left: 30px;
+    float: left;
+  }
+
+  div.title {
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .active {
+    color:#02b9e2;
   }
 
 }

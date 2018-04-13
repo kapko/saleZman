@@ -6,7 +6,19 @@ search-page {
   h4 {
     text-align: center;
     font-size: 18px;
-    padding: 10px 0 0 0;
+    margin: 0;
+    padding:10px 0 0 30px;
+    float: left;
+  }
+
+  div.title {
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .active {
+    color:#02b9e2;
   }
 
 }

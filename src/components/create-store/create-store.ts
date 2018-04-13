@@ -28,6 +28,18 @@ export class CreateStoreComponent {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       discount: new FormControl('', Validators.required),
+      adress_1: new FormControl('', Validators.required),
+      adress_2: new FormControl(''),
+      city: new FormControl('', Validators.required),
+      zipcode: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.required),
+      contact_person: new FormControl('', Validators.required),
+      GST: new FormControl('', Validators.required),
+      latitude: new FormControl('', Validators.required),
+      longitude: new FormControl('', Validators.required),
+      category: new FormControl('', Validators.required),
+      rating: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required)
     });
 
     Object.keys(this.form.value).map(key => {
@@ -39,8 +51,14 @@ export class CreateStoreComponent {
 
     // edit
     this.navData = this.navParams.data;
-    this.form.controls['name'].setValue(this.navData['name']);
-    this.form.controls['discount'].setValue(this.navData['discount']);
+    if (Object.keys(this.navData).length) {
+      this.editCompany = true;
+      for (let key in this.navData) {
+        if (key === "_name" || key === 'key' || key === 'url' || key === 'created_by') {} else {
+          this.form.controls[key].setValue(this.navData[key]);
+        }
+      }
+    }
   }
 
   submitForm(form: NgForm): void {
@@ -69,8 +87,6 @@ export class CreateStoreComponent {
         })
         .catch(err => console.log(err));
     }
-
-    
   }
 
 }

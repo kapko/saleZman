@@ -15,6 +15,15 @@
             [type]="field.type"></ion-input>
         </ion-item>
 
+        <ion-item *ngIf="field.name === 'Description'">
+          <ion-label>Description</ion-label>
+          <ion-textarea 
+            text-right 
+            [formControlName]="field.controller"
+            type="text"
+            placeholder="text"></ion-textarea>
+        </ion-item>
+
       </div>
     </ion-list>
 

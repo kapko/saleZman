@@ -10,6 +10,7 @@ import { PersonalStorePage } from '../personal-store/personal-store';
   selector: 'search-page',
   templateUrl: 'search.html'
 })
+
 export class SearchPage {
   cities: Observable<any>;
   date: string;

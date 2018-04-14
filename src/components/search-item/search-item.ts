@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { StorePage } from '../../pages/store/store';
 import { storeName } from '../../interfaces/city.store';
 import { StoreService } from '../../services/store.service';
 import { AuthService } from '../../services/auth.service';
 import { AppService } from '../../services/app-service';
 import { CreateStoreComponent } from '../create-store/create-store';
+import { StoreMarginComponent } from '../store-margin/store-margin';
 
 @Component({
   selector: 'search-item',
@@ -24,7 +25,8 @@ export class SearchItemComponent {
     private storeService: StoreService,
     private authService: AuthService,
     private appService: AppService,
-    private navController: NavController
+    private navController: NavController,
+    private modalController: ModalController
   ) {}
 
   get item(): Object {
@@ -44,6 +46,12 @@ export class SearchItemComponent {
   @Input()
   set hideIcons(val: boolean) {
     this._hideIcons = val;
+  }
+
+  updateMargin(item: Object): void {
+    this.modalController
+      .create(StoreMarginComponent, item)
+      .present();
   }
 
   updatePersonStore(item: any): void {

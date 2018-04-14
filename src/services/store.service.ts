@@ -37,6 +37,8 @@ export class StoreService {
 
   balanceOfPaymentPath: string = '/balance-of-payment/';
 
+  persolanStorePath: string = '/personal-store/';
+
   constructor(
     private db: AngularFireDatabase,
     private appService: AppService,
@@ -212,6 +214,18 @@ export class StoreService {
 
   updateStore(key: string, val: Object | null = null): Promise<any> {
     return this.db.object(this.storePath + key).set(val);
+  }
+
+  updatePersonalStore(key: string, val: Object | null = null): Promise<any> {
+    return this.db
+      .object(`${this.persolanStorePath}${this.authService.currentUserId}/${key}`)
+      .update(val);
+  }
+
+  getPersonalStoreById(key: string): Observable<any> {
+    return this.db
+      .object(`${this.persolanStorePath}${this.authService.currentUserId}/${key}`)
+      .valueChanges();
   }
 
   // balance

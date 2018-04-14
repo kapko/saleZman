@@ -136,7 +136,8 @@ export class AppService {
       case 'HSN':
       case 'EAN':
       case 'MRP':
-      // case 'account_number':
+      case 'latitude':
+      case 'longitude':
       case 'zipcode':
       case 'phone':
       // case 'GST':

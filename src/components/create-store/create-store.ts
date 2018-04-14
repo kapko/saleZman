@@ -27,7 +27,6 @@ export class CreateStoreComponent {
   ) {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
-      discount: new FormControl('', Validators.required),
       adress_1: new FormControl('', Validators.required),
       adress_2: new FormControl(''),
       city: new FormControl('', Validators.required),
@@ -54,7 +53,7 @@ export class CreateStoreComponent {
     if (Object.keys(this.navData).length) {
       this.editCompany = true;
       for (let key in this.navData) {
-        if (key === "_name" || key === 'key' || key === 'url' || key === 'created_by') {} else {
+        if (this.checkForEmtyFields(key)) {
           this.form.controls[key].setValue(this.navData[key]);
         }
       }
@@ -86,6 +85,14 @@ export class CreateStoreComponent {
           form.reset();
         })
         .catch(err => console.log(err));
+    }
+  }
+
+  checkForEmtyFields(key): boolean {
+    if (key === "_name" || key === 'key' || key === 'url' || key === 'created_by' || key === 'personal_description' || key === 'personal_margin') {
+      return false;
+    } else {
+      return true;
     }
   }
 

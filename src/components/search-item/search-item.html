@@ -1,12 +1,23 @@
 <a (click)="openStore(item)">{{ item.name }}</a>
+<!-- margin -->
+<ion-icon
+  name="cog"
+  class="update"
+  *ngIf="hideIcons"
+  [ngClass]="{'active-margin': item.personal_margin || item.personal_description}"
+  (click)="updateMargin(item)"></ion-icon>
 <!-- update -->
-<ion-icon *ngIf="currentUid === item.created_by" 
+<ion-icon 
+  *ngIf="currentUid === item.created_by" 
   (click)="updateItem(item)"
-  class="update" name="brush"></ion-icon>
+  class="update"
+  name="brush"></ion-icon>
 <!-- remove -->
-<ion-icon *ngIf="currentUid === item.created_by" 
+<ion-icon 
+  *ngIf="currentUid === item.created_by" 
   (click)="updateItem(item, 'remove')"
-  class="update" name="trash"></ion-icon>
+  class="update"
+  name="trash"></ion-icon>
 <!-- actions -->
 <ion-icon
   *ngIf="!hideIcons && currentUid !== item.created_by"

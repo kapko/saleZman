@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>{{storeName}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">Margin: </ion-label>
+      <ion-input 
+        type="text" 
+        text-right
+        [(ngModel)]="personal_margin" 
+        name="margin" 
+        placeholder="****"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Description: </ion-label>
+      <ion-textarea 
+        text-right
+        [(ngModel)]="personal_description"
+        name="description" 
+        type="text"
+        placeholder="text"></ion-textarea>
+    </ion-item>
+    <button 
+      ion-button (click)="updateItem()">submit</button>
+    <button ion-button (click)="updateItem('cancel')" color="light">cancel</button>
+  </ion-list>
+</ion-content>

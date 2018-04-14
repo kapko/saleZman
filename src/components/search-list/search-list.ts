@@ -1,15 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NavController, InfiniteScroll, MenuController } from 'ionic-angular';
+import { InfiniteScroll } from 'ionic-angular';
 import { CityService } from '../../services/city.service';
-import { StorePage } from '../../pages/store/store';
 // interface
 import { storeName } from '../../interfaces/city.store';
-import { AppService } from '../../services/app-service';
 // rxjs
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
 import { Subject, Observable } from 'rxjs';
-import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'search-list',
@@ -27,10 +24,7 @@ export class SearchListComponent {
   personalPage: boolean = true;
 
   constructor(
-    private navCtrl: NavController,
     private cityService: CityService,
-    private appService: AppService,
-    private storeService: StoreService,
   ) { }
 
   // resolve data

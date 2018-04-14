@@ -1,4 +1,4 @@
-<ion-menu type="overlay" [content]="content">
+<ion-menu type="overlay" [content]="content" [ngClass]="{'admin-menu': showAdminButton}">
   <ion-header menuToggle>
     <ion-toolbar>
       <ion-title text-center>Menu</ion-title>
@@ -21,9 +21,9 @@
       <button ion-item (click)="navigate('myUsers')">My Users</button>
       <button ion-item (click)="navigate('myUsersWork')">My User Works</button>
       <button ion-item (click)="navigate('manageProduct')">Manage Products</button>
-      <button ion-item (click)="navigate('manageStore')">Manage Stores</button>
-      <button ion-item>Store pending Payments</button>
-      <button ion-item>My Settings - In App Purchase </button>
+      <!-- <button ion-item (click)="navigate('manageStore')">Manage Stores</button> -->
+      <!-- <button ion-item>Store pending Payments</button> -->
+      <!-- <button ion-item>My Settings - In App Purchase </button> -->
       <button (click)="logout()" ion-item>Logout</button>
       <button ion-item (click)="showAdmin = false">User</button>
     </ion-list>

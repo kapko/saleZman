@@ -6,15 +6,22 @@ ion-content {
 }
 
 app-component {
-
   .distributer {
     color:#02b9e2;
   }
+}
 
+.admin-menu {
+  ion-content {
+    background-color: #6ce4ff;
+    button {
+      background-color: #6ce4ff;
+      color:#000;
+    }
+  }
 }
 
 ion-alert.alert-showing {
-
   div.alert-message {
     text-align: center;
   }
@@ -23,7 +30,6 @@ ion-alert.alert-showing {
     display: block;
     text-align: center;
   }
-
 }
 
 ion-tabs {

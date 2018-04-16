@@ -4,6 +4,7 @@ import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';
 import { NavParams } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
+import { CityService } from '../../services/city.service';
 
 @Component({
   selector: 'create-store',
@@ -19,17 +20,23 @@ export class CreateStoreComponent {
 
   navData: Object | null = null;
 
+  cities: any[] = [];
+
   constructor(
     private storeService: StoreService,
     private appService: AppService,
     private navParams: NavParams,
-    private authService: AuthService
+    private authService: AuthService,
+    private cityService: CityService
   ) {
+    this.getAllCities();
+
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       adress_1: new FormControl('', Validators.required),
       adress_2: new FormControl(''),
       city: new FormControl('', Validators.required),
+      area: new FormControl('', Validators.required),
       zipcode: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
       contact_person: new FormControl('', Validators.required),
@@ -58,6 +65,15 @@ export class CreateStoreComponent {
         }
       }
     }
+
+  }
+
+  getAllCities(): void {
+    this.cityService.getCities()
+      .take(1)
+      .subscribe(cities => {
+        this.cities = cities;
+      });
   }
 
   submitForm(form: NgForm): void {

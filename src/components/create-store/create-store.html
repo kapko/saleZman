@@ -6,13 +6,22 @@
     <ion-list>
       <div *ngFor="let field of fields">
 
-        <ion-item *ngIf="field.name !== 'Description'">
+        <ion-item *ngIf="field.name !== 'Description' && field.name !== 'City'">
           <ion-label>{{field.name}}</ion-label>
           <ion-input
             text-right
             [formControlName]="field.controller"
             placeholder="******"
             [type]="field.type"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="field.name === 'City'">
+          <ion-label>City</ion-label>
+          <ion-select [formControlName]="field.controller">
+            <ion-option
+              *ngFor="let city of cities"
+              [value]="city.name">{{city.name}}</ion-option>
+          </ion-select>
         </ion-item>
 
         <ion-item *ngIf="field.name === 'Description'">

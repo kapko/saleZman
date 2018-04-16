@@ -20,6 +20,7 @@ export class SearchListComponent {
   limit: number = 20;
   infiniteScroll: InfiniteScroll;
   subject: Subject<any> = new Subject();
+  activeDays: string[] = [];
 
   personalPage: boolean = true;
 
@@ -33,6 +34,12 @@ export class SearchListComponent {
     this.personalPage = val;
     this.getData({limit: this.limit});
   }
+
+  // @Input()
+  // set activityDays(days: string[]) {
+    // console.log('days', days);
+    // this.activeDays = days;
+  // }
 
   // filter by company name
   @Input()

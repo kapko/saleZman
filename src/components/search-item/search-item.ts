@@ -19,6 +19,11 @@ export class SearchItemComponent {
 
   private _hideIcons: boolean;
 
+  // @Input()
+  // set activityDays(days: string[]) {
+  //   console.log('activityDays', days);
+  // }
+
   currentUid: string = this.authService.currentUserId;
 
   constructor(

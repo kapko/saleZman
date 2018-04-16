@@ -92,6 +92,10 @@ export class AppService {
     return new Date(d.setDate(diff));
   }
 
+  getCustomDate(val: number): Date {
+    return new Date(new Date().setDate(new Date().getDate() - val));
+  }
+
   getSunday(date: Date): Date {
     return new Date(date.setDate(date.getDate() - date.getDay()+7));
   }

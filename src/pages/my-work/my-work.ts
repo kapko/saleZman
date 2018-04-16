@@ -12,4 +12,5 @@ export class MyWorkPage {
   optionsUpdate(options: any[string]): void {
     this.options = options;
   }
+
 }

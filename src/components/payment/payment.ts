@@ -65,7 +65,7 @@ export class PaymentComponent {
 
   getPaymentListForDist(limit): void {
     this.storeService
-      .getPaymentList(this.store._name, this.authService.currentUserId)
+      .getPaymentList(this.store.key, this.authService.currentUserId)
       .take(1)
       .map(data => data.slice(0).slice(-limit))
       .subscribe(payments => {
@@ -76,7 +76,7 @@ export class PaymentComponent {
 
   getPaymentList(limit: number = 5): void {
     this.myUserService
-      .getDistPayment(this.store._name)
+      .getDistPayment(this.store.key)
       .map(data => data
         .reduce((a, b) => a.concat(b), [])
         .slice(0).slice(-limit)
@@ -90,7 +90,7 @@ export class PaymentComponent {
 
   getPaidListForDist(limit: number): void {
     this.storeService
-      .getPaidList(this.store._name, this.authService.currentUserId)
+      .getPaidList(this.store.key, this.authService.currentUserId)
       .take(1)
       .map(data => {
         this.appService.hideLoading();
@@ -102,7 +102,7 @@ export class PaymentComponent {
   }
 
   getPaidList(limit: number = 5): void {
-    this.myUserService.getDistPaid(this.store._name)
+    this.myUserService.getDistPaid(this.store.key)
       .map(data => data
         .reduce((a, b) => a.concat(b), [])
         .slice(0).slice(-limit)
@@ -159,7 +159,7 @@ export class PaymentComponent {
       this.storeService.setBalance(product['key'], balance);
       if (balance === 0) {
         // update payment status to 'done'
-        this.storeService.updatePaymentStatus(this.store._name, product['key']);
+        this.storeService.updatePaymentStatus(this.store.key, product['key']);
       }
 
       this.keyForRemove.forEach(key => delete product[key]);
@@ -168,7 +168,7 @@ export class PaymentComponent {
       product['collected_by'] = this.authService.currentUserId;
       Object.assign(product, val);
 
-      this.storeService.addPayment(this.store._name, product);
+      this.storeService.addPayment(this.store.key, product);
       this.appService.showToast('Your payment completed.');
       this.getAllPayments();
 

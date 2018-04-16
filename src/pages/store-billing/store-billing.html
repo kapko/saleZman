@@ -26,7 +26,7 @@
   <div class="card-parent" *ngFor="let bill of bills; let i = index;">
       <ion-card class="store">
         <ion-card-content>
-          <p>Store Name: <span text-right>{{bill.name}}</span></p>
+          <p>Store Name: <span text-right>{{ (bill.store_key | getStoreDetails | async)?.name }}</span></p>
           <ion-item>
             <ion-label color="primary">Bill number: </ion-label>
             <ion-input 

@@ -12,6 +12,7 @@ import { AppService } from '../services/app-service';
 import { MyUserService } from '../services/my-users-service';
 // pipes
 import { GetEmailPipe } from '../pipe/get-email';
+import { GetStoreDetailsPipe } from '../pipe/get-store';
 // firebase
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -88,6 +89,7 @@ let fireBaseConfig = {
     ListComponent,
     SupplyComponent,
     GetEmailPipe,
+    GetStoreDetailsPipe,
     PaymentComponent,
     ChqComponent,
     NeftComponent,

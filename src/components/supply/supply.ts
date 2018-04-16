@@ -57,7 +57,7 @@ export class SupplyComponent {
 
   getSupplyList(limit: number = 5): void {
     this.myUserService
-      .getDistSupply(this.store._name)
+      .getDistSupply(this.store.key)
       .map(data => data.reduce((a, b) => a.concat(b), []))
       .do(arr => {
         this.appService.hideLoading();
@@ -71,7 +71,7 @@ export class SupplyComponent {
 
   getSupplyForDist(limit: number = 5): void {
     this.storeService
-      .getSupplyList(this.authService.currentUserId, this.store._name)
+      .getSupplyList(this.authService.currentUserId, this.store.key)
       .take(1)
       .map(data => data.slice(0).slice(-limit))
       .do(e => this.appService.hideLoading())
@@ -111,12 +111,12 @@ export class SupplyComponent {
     product.supplied_by = uid;
     // update data
     return Promise.all([
-      this.storeService.updateSupplyItem(this.store._name, product), this.storeService.addSupplyToPayment(this.store._name, product)
+      this.storeService.updateSupplyItem(this.store.key, product), this.storeService.addSupplyToPayment(this.store.key, product)
     ]);
   }
 
   getComments(): void {
-    this.myUserService.getComments(this.store._name)
+    this.myUserService.getComments(this.store.key)
       .map(data => data
         .reduce((a, b) => a.concat(b), [])
         .slice(0).slice(-5)
@@ -128,7 +128,7 @@ export class SupplyComponent {
 
   getDistComments(): void {
     this.myUserService
-      .getDistComments(this.store._name)
+      .getDistComments(this.store.key)
       .map(data => data
         .reduce((a, b) => a.concat(b), [])
         .slice(0).slice(-5)
@@ -145,7 +145,7 @@ export class SupplyComponent {
     data['message'] = value;
     data['date'] = this.appService.getCurrentDate(true);
     // update data
-    this.storeService.submitCommonCommit(data, this.store._name);
+    this.storeService.submitCommonCommit(data, this.store.key);
     this.comment = '';
     this.getComments();
     this.getDistComments();

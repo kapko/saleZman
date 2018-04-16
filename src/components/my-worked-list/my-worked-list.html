@@ -3,7 +3,7 @@
   <h4 *ngIf="!stockList.length"><i>don't have any products</i></h4>
   
   <div class="product-parent" *ngFor="let product of stockList">
-    <h4>{{product.name}}</h4>
+    <h4>{{(product.store_key | getStoreDetails | async)?.name}}</h4>
     <div *ngFor="let prod of product.data">
       <ion-card>
         <ion-card-content>
@@ -24,7 +24,7 @@
   <h4 *ngIf="!orderedList.length"><i>don't have any products</i></h4>
 
   <div class="product-parent" *ngFor="let product of orderedList">
-    <h4>{{product.name}}</h4>
+    <h4>{{(product.store_key | getStoreDetails | async)?.name}}</h4>
     <div *ngFor="let prod of product.data">
       <ion-card>
         <ion-card-content>
@@ -45,7 +45,7 @@
   <h4 *ngIf="!supplyList.length"><i>don't have any products</i></h4>
 
   <div class="product-parent" *ngFor="let product of supplyList">
-    <h4>Store: {{product.name}}</h4>
+    <h4>Store: {{(product.store_key | getStoreDetails | async)?.name}}</h4>
     <div *ngFor="let prod of product.data">
       <ion-card>
         <ion-card-content>
@@ -68,7 +68,7 @@
   <h4 *ngIf="!paymentList.length"><i>don't have any products</i></h4>
 
   <div class="product-parent" *ngFor="let product of paymentList">
-    <h4>Store: {{product.name}}</h4>
+    <h4>Store: {{(product.store_key | getStoreDetails | async)?.name}}</h4>
     <div *ngFor="let prod of product.data">
       <ion-card>
         <ion-card-content>

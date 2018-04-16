@@ -126,7 +126,7 @@ export class MyWorkedListComponent {
     }, []);
     for (let i in group_to_values) {
       let ob = {};
-      ob['name'] = i;
+      ob['store_key'] = i;
       ob['data'] = group_to_values[i];
       data.push(ob);
     }

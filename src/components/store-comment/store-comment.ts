@@ -23,7 +23,7 @@ export class StoreCommentComponent {
   ngOnChanges(): void {
     if (this.bill) {
       let data = this.bill.data[0];
-      let url = this.bill.name.toLowerCase() + '/';
+      let url = this.bill.store_key + '/';
       url += `ordered-${data.order_by}-${data.order_date}`;
       this.getComment(url);
     }

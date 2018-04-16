@@ -55,6 +55,10 @@ export class StoreService {
     return this.db.object(this.userStoreNamePath + uid).update(storeData);
   }
 
+  getStoreByKey(key: string): Observable<any> {
+    return this.db.object(this.storePath + key).valueChanges();
+  }
+
   getStoreNameOfProduct(uid: string = this.authService.currentUserId): Observable<any> {
     return this.db.object(this.userStoreNamePath + uid).valueChanges();
   }

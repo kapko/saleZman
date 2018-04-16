@@ -57,7 +57,7 @@ export class ListComponent {
 
   getProductList(): void {
     this.storeService
-      .getUserProductList(this.store.name)
+      .getUserProductList(this.store.key)
       .takeUntil(this.subject)
       .subscribe(items => {
         this.usersProduct = items;
@@ -66,7 +66,7 @@ export class ListComponent {
 
   getOrderedList(): void {
     this.storeService
-      .getUserOrderedList(this.store.name)
+      .getUserOrderedList(this.store.key)
       .takeUntil(this.subject)
       .subscribe(items => {
         this.usersProduct = items;
@@ -98,25 +98,25 @@ export class ListComponent {
     product.counter += (count) ? 1 : -1;
     product.count_date = this.appService.getToday();
     if (this.showOrdered) {
-      this.storeService.updateUsersOrderedProductList(product, this.store.name);
+      this.storeService.updateUsersOrderedProductList(product, this.store.key);
     } else {
-      this.storeService.updateUsersProductList(product, this.store.name);
+      this.storeService.updateUsersProductList(product, this.store.key);
     }
   }
 
   removeProduct(product: any): void {
     product['counter'] = 0;
     if (this.showOrdered) {
-      this.storeService.updateUsersOrderedProductList(product, this.store.name);
+      this.storeService.updateUsersOrderedProductList(product, this.store.key);
     } else {
-      this.storeService.updateUsersProductList(product, this.store.name);
+      this.storeService.updateUsersProductList(product, this.store.key);
     }
   }
 
   submitCommit(event: any): void {
     let value = event.target.value;
     let commentUrl = (this.activeTab === 'list-box') ? 'product' : 'ordered';
-    this.storeService.submitCommit(value, this.store._name, commentUrl)
+    this.storeService.submitCommit(value, this.store.key, commentUrl)
   }
 
   getComments(): void {

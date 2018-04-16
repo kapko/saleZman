@@ -93,7 +93,7 @@ export class StoreBillingPage {
     }, []);
     for (let i in group_to_values) {
       let ob = {};
-      ob['name'] = i;
+      ob['store_key'] = i;
       ob['bill_number'];
       ob['amount'];
       ob['bill_date'];
@@ -145,7 +145,7 @@ export class StoreBillingPage {
       bill_date: date,
       bill_number: +bill.bill_number,
       amount: +bill.amount,
-      store_name: bill.name,
+      store_name: bill.store_key,
       order_by: (this.salezman === 'All') ? bill.data[0].order_by : this.salezman,
       order_date: bill.data[0].order_date,
       order_id: Date.now(),

@@ -1,4 +1,4 @@
-import { Component, PACKAGE_ROOT_URL } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { StoreService } from '../../services/store.service';
 import { AppService } from '../../services/app-service';

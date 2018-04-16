@@ -1,12 +1,9 @@
 <ion-list>
   <ion-item *ngFor="let item of this.storeNames; trackBy: track">
-    <!-- <search-item 
+    <search-item 
       [item]="item" 
       [hideIcons]="personalPage" 
-      [activityDays]="activeDays"></search-item> -->
-      <search-item 
-      [item]="item" 
-      [hideIcons]="personalPage"></search-item>
+      [activityDays]="activeDays"></search-item>
   </ion-item>
 </ion-list>
 

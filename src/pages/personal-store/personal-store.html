@@ -5,14 +5,14 @@
     <h4 (click)="getAllStorePage()">All Stores</h4>
   </div>
   <ion-list>
-    <!-- <ion-item class="activity">
+    <ion-item class="activity">
       <ion-label>Activities last days</ion-label>
       <ion-input
         text-right
-        placeholder="1"
-        (keyup)="filterByDay($event)"
+        placeholder="0"
+        (input)="filterByDay($event)"
         type="number"></ion-input>
-    </ion-item> -->
+    </ion-item>
       
     <ion-item>
       <ion-label>City</ion-label>
@@ -26,14 +26,10 @@
 
   <!-- list -->
   <search-list
-    [personalStore]="true"
-    [searchEvent]="searchEvent"
-    [city]="cityModel"></search-list>
-  <!-- <search-list
     [activityDays]="activityDays"
     [personalStore]="true"
     [searchEvent]="searchEvent"
-    [city]="cityModel"></search-list> -->
+    [city]="cityModel"></search-list>
 </ion-content>
 
 <app-footer></app-footer>

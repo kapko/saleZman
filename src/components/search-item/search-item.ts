@@ -19,10 +19,32 @@ export class SearchItemComponent {
 
   private _hideIcons: boolean;
 
-  // @Input()
-  // set activityDays(days: string[]) {
-  //   console.log('activityDays', days);
-  // }
+  private _dates: string [];
+
+  // date
+  @Input()
+  set activityDays(days: string[]) {
+    this._dates = days;
+  }
+  // store
+  get item(): Object {
+    return this._item;
+  }
+
+  @Input()
+  set item(item: Object) {
+    this._item = item;
+  }
+
+  // hide icons if ROUTE personal Store
+  get hideIcons(): boolean {
+    return this._hideIcons;
+  }
+
+  @Input()
+  set hideIcons(val: boolean) {
+    this._hideIcons = val;
+  }
 
   currentUid: string = this.authService.currentUserId;
 
@@ -34,25 +56,6 @@ export class SearchItemComponent {
     private navController: NavController,
     private modalController: ModalController
   ) {}
-
-  get item(): Object {
-    return this._item;
-  }
-
-  @Input()
-  set item(item: Object) {
-    this._item = item;
-  }
-
-  // hide icons
-  get hideIcons(): boolean {
-    return this._hideIcons;
-  }
-
-  @Input()
-  set hideIcons(val: boolean) {
-    this._hideIcons = val;
-  }
 
   updateMargin(item: Object): void {
     this.modalController

@@ -3,7 +3,6 @@ import { Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
-import { SearchPage } from '../pages/search/search';
 import { AuthService } from '../services/auth.service';
 import { MyWorkPage } from '../pages/my-work/my-work';
 import { MyUsersPage } from '../pages/my-users/my-users';
@@ -34,7 +33,6 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      // this.rootPage = (this.authService.emailVerified) ? SearchPage : LoginPage;
       this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
     });
   }

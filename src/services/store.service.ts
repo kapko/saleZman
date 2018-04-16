@@ -195,6 +195,22 @@ export class StoreService {
     return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${uid}-${this.getDate()}`).valueChanges();
   }
 
+  getStockCountDate(key): Observable<any> {
+    return this.db.object(`/count-stock-date/${key}`).valueChanges();
+  }
+
+  getOrderCountDate(key): Observable<any> {
+    return this.db.object(`/count-order-date/${key}`).valueChanges();
+  }
+
+  getSupplyCountDate(key): Observable<any> {
+    return this.db.object(`/count-supply-date/${key}`).valueChanges();
+  }
+
+  getPaymentCountDate(key): Observable<any> {
+    return this.db.object(`/count-payment-date/${key}`).valueChanges();
+  }
+
   getStoreBillingComment(url): Observable<any> {
     return this.db.object(`${this.commentPath}${url}`).valueChanges();
   }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuController, NavController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 // local
@@ -6,7 +6,6 @@ import { CityService } from '../../services/city.service';
 import { AppService } from '../../services/app-service';
 import { SearchPage } from '../search/search';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { StoreService } from '../../services/store.service';
 
 @Component({
   selector: 'personal-store',
@@ -24,11 +23,8 @@ export class PersonalStorePage {
     private cityService: CityService,
     private appService: AppService,
     private menuController: MenuController,
-    private navController: NavController,
-    private storeService: StoreService
+    private navController: NavController
   ) {
-    this.getSupplyCheckedDay();
-
     this.menuController.enable(true);
     this.cities = this.cityService.getCities().take(1);
     this.date = this.appService.getCurrentDate();
@@ -50,10 +46,6 @@ export class PersonalStorePage {
       });
   }
 
-  getSupplyCheckedDay(): void {
-    // this.storeService.getComment()
-  }
-
   searchItems(e: Event): void {
     this.searchEvent = e;
   }
@@ -67,10 +59,6 @@ export class PersonalStorePage {
       .map(ev => +ev['target'].value)
       .debounceTime(700)
       .take(1);
-  }
-
-  filterByActivity(days): void {
-
   }
 
 }

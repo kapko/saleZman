@@ -1,4 +1,5 @@
 <a (click)="openStore(item)">{{ item.name }}</a>
+
 <!-- margin -->
 <ion-icon
   name="cog"
@@ -24,3 +25,5 @@
   (click)="updatePersonStore(item)"
   [ngClass]="{'remove-circle': checkPersonId(item)}"
   name="{{ (checkPersonId(item)) ? 'remove-circle' : 'add-circle'}}"></ion-icon>
+<!-- store icons -->
+<store-icons [dates]="_dates" [store]="item"></store-icons>

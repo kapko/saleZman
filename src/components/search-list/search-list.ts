@@ -35,11 +35,10 @@ export class SearchListComponent {
     this.getData({limit: this.limit});
   }
 
-  // @Input()
-  // set activityDays(days: string[]) {
-    // console.log('days', days);
-    // this.activeDays = days;
-  // }
+  @Input()
+  set activityDays(days: string[]) {
+    this.activeDays = days;
+  }
 
   // filter by company name
   @Input()

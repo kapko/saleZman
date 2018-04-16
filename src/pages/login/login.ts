@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AppService } from '../../services/app-service';
 import { AuthService } from '../../services/auth.service';
-import { SearchPage } from '../search/search';
+import { PersonalStorePage } from '../personal-store/personal-store';
 
 @Component({
   selector: 'page-login',
@@ -32,7 +32,7 @@ export class LoginPage {
         if (user.emailVerified) {
           this.authService.getCurrentUser();
           this.appService.showToast('Success Logged in');
-          this.navCtrl.setRoot(SearchPage);
+          this.navCtrl.setRoot(PersonalStorePage);
         } else {
           this.appService.showToast('Please verify your email');
         }

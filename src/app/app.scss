@@ -12,12 +12,8 @@ app-component {
 }
 
 .admin-menu {
-  ion-content {
-    background-color: #6ce4ff;
-    button {
-      background-color: #6ce4ff;
-      color:#000;
-    }
+  button.admin-button {
+    color: #02b9e2;
   }
 }
 

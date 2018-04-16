@@ -11,21 +11,34 @@
       <button ion-item>My plan</button>
       <button ion-item>My profile</button>
       <button (click)="logout()" ion-item>Logout</button>
-      <button (click)="showAdmin = true" *ngIf="showAdminButton" ion-item>Admin</button>
+      <button class="admin-button" (click)="showAdmin = true" *ngIf="showAdminButton" ion-item>Admin</button>
     </ion-list>
   </ion-content>
 
   <ion-content *ngIf="showAdmin">
     <ion-list>
-      <button ion-item (click)="navigate('storeBilling')">Store Billing</button>
-      <button ion-item (click)="navigate('myUsers')">My Users</button>
-      <button ion-item (click)="navigate('myUsersWork')">My User Works</button>
-      <button ion-item (click)="navigate('manageProduct')">Manage Products</button>
+      <button 
+        class="admin-button"
+        ion-item (click)="navigate('storeBilling')">Store Billing</button>
+      <button 
+        class="admin-button"
+        ion-item (click)="navigate('myUsers')">My Users</button>
+      <button 
+        class="admin-button"
+        ion-item (click)="navigate('myUsersWork')">My User Works</button>
+      <button 
+        class="admin-button"
+        ion-item (click)="navigate('manageProduct')">Manage Products</button>
       <!-- <button ion-item (click)="navigate('manageStore')">Manage Stores</button> -->
       <!-- <button ion-item>Store pending Payments</button> -->
       <!-- <button ion-item>My Settings - In App Purchase </button> -->
-      <button (click)="logout()" ion-item>Logout</button>
-      <button ion-item (click)="showAdmin = false">User</button>
+      <button 
+        class="admin-button"
+        (click)="logout()" ion-item>Logout</button>
+      <button 
+        class="admin-button" 
+        ion-item 
+        (click)="showAdmin = false">User</button>
     </ion-list>
   </ion-content>
 

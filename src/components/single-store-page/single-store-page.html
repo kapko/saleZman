@@ -1,0 +1,17 @@
+<app-header></app-header>
+<ion-content padding>
+  <h4>{{store?.name}}</h4>
+  <p><b>Adress: </b><span>{{store?.adress_1}}</span></p>
+  <p><b>Adress: </b><span>{{store?.adress_2}}</span></p>
+  <p><b>Area: </b><span>{{store?.area}}</span></p>
+  <p><b>Category: </b><span>{{store?.category}}</span></p>
+  <p><b>City: </b><span>{{store?.city}}</span></p>
+  <p><b>Contact person: </b><span>{{store?.contact_person}}</span></p>
+  <p><b>Description: </b><span>{{store?.description}}</span></p>
+  <p><b>Created by: </b><span>{{(store?.created_by | getEmail | async)?.email}}</span></p>
+  <p><b>Latitude: </b><span>{{store?.latitude}}</span></p>
+  <p><b>Longitude: </b><span>{{store?.longitude}}</span></p>
+  <p><b>Phone: </b><span>{{store?.phone}}</span></p>
+  <p><b>Rating: </b><span>{{store?.rating}}</span></p>
+  <p><b>Zipcode: </b><span>{{store?.zipcode}}</span></p>
+</ion-content>

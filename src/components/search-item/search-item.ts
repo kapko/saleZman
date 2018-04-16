@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { AppService } from '../../services/app-service';
 import { CreateStoreComponent } from '../create-store/create-store';
 import { StoreMarginComponent } from '../store-margin/store-margin';
+import { SingleStorePage } from '../single-store-page/single-store-page';
 
 @Component({
   selector: 'search-item',
@@ -92,8 +93,14 @@ export class SearchItemComponent {
   }
 
   openStore(store: storeName): void {
-    this.storeService.setUserStoreName(store);
-    this.navCtrl.setRoot(StorePage);
+
+    if (this._hideIcons) {
+      this.storeService.setUserStoreName(store);
+      this.navCtrl.setRoot(StorePage);
+    } else {
+      this.navCtrl.push(SingleStorePage, store);
+    }
+
   }
 
   checkPersonId(item: Object): boolean {

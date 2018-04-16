@@ -64,6 +64,7 @@ import { SearchItemComponent } from '../components/search-item/search-item';
 import { PersonalStorePage } from '../pages/personal-store/personal-store';
 import { CreateStoreComponent } from '../components/create-store/create-store';
 import { StoreMarginComponent } from '../components/store-margin/store-margin';
+import { SingleStorePage } from '../components/single-store-page/single-store-page';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -120,7 +121,8 @@ let fireBaseConfig = {
     SearchItemComponent,
     PersonalStorePage,
     CreateStoreComponent,
-    StoreMarginComponent
+    StoreMarginComponent,
+    SingleStorePage
   ],
   imports: [
     BrowserModule,
@@ -178,7 +180,8 @@ let fireBaseConfig = {
     SearchItemComponent,
     PersonalStorePage,
     CreateStoreComponent,
-    StoreMarginComponent
+    StoreMarginComponent,
+    SingleStorePage
   ],
   providers: [
     StatusBar,

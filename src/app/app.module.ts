@@ -67,6 +67,7 @@ import { CreateStoreComponent } from '../components/create-store/create-store';
 import { StoreMarginComponent } from '../components/store-margin/store-margin';
 import { SingleStorePage } from '../components/single-store-page/single-store-page';
 import { StoreIconComponent } from '../components/store-icons/store-icons';
+import { StoreIconService } from '../services/store-icon-serice';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -198,6 +199,7 @@ let fireBaseConfig = {
     MyService,
     MyUserService,
     NotificationService,
+    StoreIconService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -195,10 +195,6 @@ export class StoreService {
     return this.db.object(`${this.commentPath}${storeName}/${commentUrl}-${uid}-${this.getDate()}`).valueChanges();
   }
 
-  getStockCountDate(key): Observable<any> {
-    return this.db.object(`/count-stock-date/${key}`).valueChanges();
-  }
-
   getOrderCountDate(key): Observable<any> {
     return this.db.object(`/count-order-date/${key}`).valueChanges();
   }

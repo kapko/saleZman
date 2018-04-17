@@ -28,6 +28,10 @@ export class PersonalStorePage {
     this.menuController.enable(true);
     this.cities = this.cityService.getCities().take(1);
     this.date = this.appService.getCurrentDate();
+    // set by default 30 days
+    this.activityDays = this.appService
+      .getDates(this.appService
+      .getCustomDate(30), new Date());
   }
 
   filterByDay(event: Event): void {

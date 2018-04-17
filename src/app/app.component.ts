@@ -32,8 +32,6 @@ export class MyApp {
     this.subject = new Subject();
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
     });
   }
 
@@ -51,13 +49,16 @@ export class MyApp {
             this.authService.currentUserStatus = null;
           }
         }
+        // call root page
+        this.splashScreen.hide();
+        this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
       });
   }
 
   ngOnInit(): void {
     this.authService
       .authUserId()
-      .takeUntil(this.subject)
+      .take(1)
       .subscribe(user => {
         if (user) {
           this.getUsersStatus(user.uid);

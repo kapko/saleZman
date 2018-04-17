@@ -145,6 +145,13 @@ export class MyUserService {
       .take(1);
   }
 
+  getSnapShotUsers(): Observable<any> {
+    return this.db
+      .list(this.distributorsUserPath+this.authService.currentUserId)
+      .snapshotChanges()
+      .take(1);
+  }
+
   getMyUserWorks(): Observable<any> {
     return this.getMyUsers()
       .take(1)

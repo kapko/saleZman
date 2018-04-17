@@ -105,7 +105,7 @@ export class CreateStoreComponent {
   }
 
   checkForEmtyFields(key): boolean {
-    if (key === "_name" || key === 'key' || key === 'url' || key === 'created_by' || key === 'personal_description' || key === 'personal_margin') {
+    if (key === "_name" || key === 'key' || key === 'url' || key === 'created_by' || key === 'personal_description' || key === 'personal_margin' || key === 'persons') {
       return false;
     } else {
       return true;

@@ -122,7 +122,7 @@ export class ListComponent {
   getComments(): void {
     let commentUrl = (this.activeTab === 'list-box') ? 'product' : 'ordered';
     this.storeService
-      .getComment(this.store._name, commentUrl)
+      .getComment(this.store.key, commentUrl)
       .take(1)
       .subscribe(message => this.comments = message);
   }

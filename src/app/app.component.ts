@@ -62,6 +62,9 @@ export class MyApp {
       .subscribe(user => {
         if (user) {
           this.getUsersStatus(user.uid);
+        } else {
+          this.splashScreen.hide();
+          this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
         }
       });
   }

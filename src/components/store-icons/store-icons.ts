@@ -72,6 +72,8 @@ export class StoreIconComponent {
 
     if (typeof this.supplyDate === 'string') {
       this.showSupplyIcon = dates.includes(this.supplyDate);
+      console.log(dates.includes(this.supplyDate));
+      console.log('showSupplyIcon', this.showSupplyIcon);
     } else {
       if (this.supplyDate) {
         this.supplyDate.map(item => {
@@ -111,7 +113,7 @@ export class StoreIconComponent {
         });
       // supply
       this.storeIconService
-        .getDateCountOrderById(storeKey)
+        .getDateCountSupplyById(storeKey)
         .take(1)
         .subscribe(items => {
           this.supplyDate = (items) ? items : '';
@@ -119,7 +121,7 @@ export class StoreIconComponent {
         });
       // payment
       this.storeIconService
-        .getDateCountOrderById(storeKey)
+        .getDateCountPaymentById(storeKey)
         .take(1)
         .subscribe(items => {
           this.paymentDate = (items) ? items : '';

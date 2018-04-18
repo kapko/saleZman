@@ -36,6 +36,7 @@ export class StoreIconComponent {
   @Input()
   set dates(dates: string[]) {
     this._dates = dates;
+    this.getData(this._store['key']);
     this.checkIcons(dates);
   }
 

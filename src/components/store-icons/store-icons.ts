@@ -72,8 +72,6 @@ export class StoreIconComponent {
 
     if (typeof this.supplyDate === 'string') {
       this.showSupplyIcon = dates.includes(this.supplyDate);
-      console.log(dates.includes(this.supplyDate));
-      console.log('showSupplyIcon', this.showSupplyIcon);
     } else {
       if (this.supplyDate) {
         this.supplyDate.map(item => {

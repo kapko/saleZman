@@ -49,46 +49,28 @@ export class StoreIconComponent {
     this.getData(this._store['key']);
   }
 
+  getIncludesDate(dates: string [], dataKey: string, iconKey: string): any {
+    if (typeof this[dataKey] === 'string') {
+      this[iconKey] = dates.includes(this[dataKey]);
+    } else {
+      if (this[dataKey]) {
+        // check for including
+        this[dataKey].map(item => {
+          if (dates.includes(item)) {
+            this[iconKey] = true;
+            return;
+          }
+        });
+      }
+    }
+  }
+
   checkIcons(dates: string[]): void {
-    if (typeof this.stockDate === 'string') {
-      this.showStockIcon = dates.includes(this.stockDate);
-    } else {
-      if (this.stockDate) {
-        this.stockDate.map(item => {
-          this.showStockIcon = dates.includes(item);
-        });
-      }
-    }
-
-    if (typeof this.orderDate === 'string') {
-      this.showOrderIcon = dates.includes(this.orderDate);
-    } else {
-      if (this.orderDate) {
-        this.orderDate.map(item => {
-          this.showOrderIcon = dates.includes(item);
-        });
-      }
-    }
-
-    if (typeof this.supplyDate === 'string') {
-      this.showSupplyIcon = dates.includes(this.supplyDate);
-    } else {
-      if (this.supplyDate) {
-        this.supplyDate.map(item => {
-          this.showSupplyIcon = dates.includes(item);
-        });
-      }
-    }
-
-    if (typeof this.paymentDate === 'string') {
-      this.showPaymentIcon = dates.includes(this.paymentDate);
-    } else {
-      if (this.paymentDate) {
-        this.paymentDate.map(item => {
-          this.showPaymentIcon = dates.includes(item);
-        });
-      }
-    }
+    // data: strin, keyOfData: string, iconName: string
+    this.getIncludesDate(dates, 'stockDate', 'showStockIcon');
+    this.getIncludesDate(dates, 'orderDate', 'showOrderIcon');
+    this.getIncludesDate(dates, 'supplyDate', 'showSupplyIcon');
+    this.getIncludesDate(dates, 'paymentDate', 'showPaymentIcon');
   }
 
   getData(storeKey: string) {

@@ -52,7 +52,7 @@
           <div>
             <span><b>Bill amount: </b>{{prod.amount}}</span>
             <span><b>Supplied date: </b>{{prod.supply_date}}</span>
-            <span><b>Ordered date: </b>{{prod.ordered_date}}</span>
+            <span><b>Ordered date: </b>{{prod.order_date}}</span>
             <p><b>Ordered by: </b>{{(prod.order_by | getEmail | async)?.email}}</p>
             <p><b>Supplied by: </b>{{(prod.supplied_by | getEmail | async)?.email}}</p>
           </div>

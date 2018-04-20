@@ -182,10 +182,10 @@ export class StoreBillingPage {
   checkedSubmitedOrder(bill: any): Promise<any> {
     let opt = [];
     for (let prod of bill.data) {
-      let key = prod.key;
+      let key = prod.store_name + prod.key;
       opt.push(
         // set item for test-supply-items
-        this.storeService.setTestSupplyItem(key, prod),
+        this.storeService.setTestSupplyItem(prod.key, prod),
         this.myUserService.clearStoreBillProduct(key)
       )
     }

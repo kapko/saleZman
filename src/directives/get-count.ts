@@ -25,7 +25,7 @@ export class CountDirective {
   }
 
   setTagValue(val: number): void {
-    this.tag.innerText = '' + val;
+    this.tag.innerText = '' + val.toFixed(2);
   }
 
 }

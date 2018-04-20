@@ -2,7 +2,7 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <p>Store Name: <span text-right>{{product.name}}</span></p>
+      <p class="store-name">Store Name: <span text-right>{{(product.store_name | getStoreDetails | async)?.name}}</span></p>
       <ion-item>
         <ion-label color="primary">Bill number: </ion-label>
         <ion-input 

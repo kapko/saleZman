@@ -32,7 +32,6 @@ export class MyApp {
     this.subject = new Subject();
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
     });
   }
 
@@ -55,19 +54,21 @@ export class MyApp {
       });
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.authService
       .authUserId()
       .takeUntil(this.subject)
       .subscribe(user => {
         if (user) {
           this.getUsersStatus(user.uid);
+        } else {
+          this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
         }
+
         // if (user) {
         //   this.getUsersStatus(user.uid);
         // } else {
-        //   this.splashScreen.hide();
-        //   this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
+          // this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
         // }
       });
   }

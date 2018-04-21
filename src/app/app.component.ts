@@ -32,6 +32,7 @@ export class MyApp {
     this.subject = new Subject();
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
   }
 
@@ -64,12 +65,6 @@ export class MyApp {
         } else {
           this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
         }
-
-        // if (user) {
-        //   this.getUsersStatus(user.uid);
-        // } else {
-          // this.rootPage = (this.authService.emailVerified) ? PersonalStorePage : LoginPage;
-        // }
       });
   }
 

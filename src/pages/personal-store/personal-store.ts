@@ -38,7 +38,7 @@ export class PersonalStorePage {
     this.getVal(event)
       .subscribe(val => {
         // check activity for valid
-        if (val > 30 || val <= 0) {
+        if (val > 150 || val <= 0) {
           this.appService.showToast('Invalid number for Activity day ' + val);
           return;
         }

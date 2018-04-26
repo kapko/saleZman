@@ -17,12 +17,21 @@ export class AuthService {
 
   usersPath: string = '/users/';
 
+  configPath: string = '/config/';
+
   constructor(
     private afAuth: AngularFireAuth,
     private appService: AppService,
     private db: AngularFireDatabase,
   ) {
     this.getCurrentUser();
+  }
+
+  getElasticUrl(): Observable<any> {
+    return this.db
+        .object(this.configPath)
+        .valueChanges()
+        .take(1);
   }
 
   getCurrentUser(): void {

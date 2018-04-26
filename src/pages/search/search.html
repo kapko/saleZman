@@ -4,16 +4,9 @@
     <h4 (click)="getMyStorePage()">My Stores</h4>
     <h4 class="active">All Stores</h4>
   </div>
-  <ion-list>
-    <ion-item>
-      <ion-label>City</ion-label>
-      <ion-select [(ngModel)]="cityModel">
-        <ion-option *ngFor="let city of cities | async">{{city.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-  <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
-
+  <ion-searchbar 
+    [debounce]="500" 
+    (ionInput)="searchItems($event)"></ion-searchbar>
   <!-- list -->
   <search-list
     [personalStore]="false"

@@ -7,7 +7,7 @@
   </ion-item>
 </ion-list>
 
-<ion-infinite-scroll (ionInfinite)="loadMore($event)">
+<ion-infinite-scroll *ngIf="showScroll" (ionInfinite)="loadMore($event)">
   <ion-infinite-scroll-content
     loadingText="Loading ...">
   </ion-infinite-scroll-content>

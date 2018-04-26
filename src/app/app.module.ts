@@ -68,6 +68,8 @@ import { StoreMarginComponent } from '../components/store-margin/store-margin';
 import { SingleStorePage } from '../components/single-store-page/single-store-page';
 import { StoreIconComponent } from '../components/store-icons/store-icons';
 import { StoreIconService } from '../services/store-icon-serice';
+import { ElasticSearchService } from '../services/elastic-service';
+import { HttpModule } from '@angular/http';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -143,6 +145,7 @@ let fireBaseConfig = {
     AngularFireModule.initializeApp(fireBaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -200,6 +203,7 @@ let fireBaseConfig = {
     MyUserService,
     NotificationService,
     StoreIconService,
+    ElasticSearchService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

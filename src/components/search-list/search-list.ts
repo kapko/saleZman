@@ -7,6 +7,7 @@ import { storeName } from '../../interfaces/city.store';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
 import { Subject, Observable } from 'rxjs';
+import { ElasticSearchService } from '../../services/elastic-service';
 
 @Component({
   selector: 'search-list',
@@ -15,7 +16,7 @@ import { Subject, Observable } from 'rxjs';
 
 export class SearchListComponent {
   storeNames: storeName[] = [];
-  rawNames: storeName[] = [];
+  rowNames: storeName[] = [];
   cityName: string;
   limit: number = 20;
   infiniteScroll: InfiniteScroll;
@@ -23,9 +24,11 @@ export class SearchListComponent {
   activeDays: string[] = [];
 
   personalPage: boolean = true;
+  showScroll: boolean = true;
 
   constructor(
     private cityService: CityService,
+    private elasticService: ElasticSearchService,
   ) { }
 
   // resolve data
@@ -52,20 +55,20 @@ export class SearchListComponent {
   // search filtering
   @Input()
   set searchEvent(ev: Event) {
-    if (!ev) return;
-    if (!ev.target['value']) {
-      this.storeNames = this.rawNames;
+    let name = (ev) ? ev.target['value'] : null;
+    let length = (name) ? name.length : null;
+    if (!name && !length) {
+      this.showScroll = true;
+      this.storeNames = this.rowNames;
       return;
-    }
-    let val = ev.target['value'];
-
-    if (val && val.trim() === '') {
-      this.storeNames = this.rawNames;
-      return;
-    }
-    this.storeNames = this.rawNames.filter(item => 
-      (item._name.indexOf(val.toLowerCase()) > -1)
-    );
+    };
+    this.elasticService
+      .getStores(name.toLowerCase())
+      .take(1)
+      .subscribe(data => {
+        this.showScroll = false;
+        this.storeNames = data;
+      })
   }
 
   getData(query: any): void {
@@ -93,7 +96,7 @@ export class SearchListComponent {
         )
       .subscribe(names => {
         this.storeNames = names;
-        this.rawNames = names;
+        this.rowNames = names;
       });
   }
 

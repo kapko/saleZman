@@ -1,0 +1,11 @@
+<ion-list>
+  <ion-item *ngFor="let item of this.storeNames; trackBy: track">
+    <search-item 
+      [item]="item" 
+      [hideIcons]="personalPage"
+      [activityDays]="activeDays"></search-item>
+  </ion-item>
+</ion-list>
+
+<button ion-button text-center *ngIf="showScroll" (click)="getMoreStores()">Load More</button>
+

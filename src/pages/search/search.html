@@ -4,14 +4,17 @@
     <h4 (click)="getMyStorePage()">My Stores</h4>
     <h4 class="active">All Stores</h4>
   </div>
-  <ion-searchbar 
-    [debounce]="500" 
-    (ionInput)="searchItems($event)"></ion-searchbar>
-  <!-- list -->
-  <search-list
-    [personalStore]="false"
-    [searchEvent]="searchEvent"
-    [city]="cityModel"></search-list>
+
+  <div class="search-bar-div">
+    <ion-searchbar [(ngModel)]="searchText"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)='searchItems(searchText)'>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </div>
+  <!-- LIST -->
+  <elastic-stores [searchEvent]="searchEvent"></elastic-stores>
 
 </ion-content>
 <app-footer></app-footer>

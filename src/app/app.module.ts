@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -70,6 +71,7 @@ import { StoreIconComponent } from '../components/store-icons/store-icons';
 import { StoreIconService } from '../services/store-icon-serice';
 import { ElasticSearchService } from '../services/elastic-service';
 import { HttpModule } from '@angular/http';
+import { ElasticStoreComponent } from '../components/elastic-stores/elastic-stores';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -129,7 +131,8 @@ let fireBaseConfig = {
     CreateStoreComponent,
     StoreMarginComponent,
     SingleStorePage,
-    StoreIconComponent
+    StoreIconComponent,
+    ElasticStoreComponent,
   ],
   imports: [
     BrowserModule,
@@ -146,6 +149,7 @@ let fireBaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     HttpModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -190,7 +194,8 @@ let fireBaseConfig = {
     CreateStoreComponent,
     StoreMarginComponent,
     SingleStorePage,
-    StoreIconComponent
+    StoreIconComponent,
+    ElasticStoreComponent
   ],
   providers: [
     StatusBar,

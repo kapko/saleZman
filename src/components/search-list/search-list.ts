@@ -44,33 +44,6 @@ export class SearchListComponent {
   }
 
   // filter by company name
-  @Input()
-  set city(city: string) {
-    if (!city) return;
-    this.cityName = city;
-    this.limit = 40;
-    this.getData({city: this.cityName, limit: this.limit});
-  }
-
-  // search filtering
-  @Input()
-  set searchEvent(ev: Event) {
-    let name = (ev) ? ev.target['value'] : null;
-    let length = (name) ? name.length : null;
-    if (!name && !length) {
-      this.showScroll = true;
-      this.storeNames = this.rowNames;
-      return;
-    };
-    this.elasticService
-      .getStores(name.toLowerCase())
-      .take(1)
-      .subscribe(data => {
-        this.showScroll = false;
-        this.storeNames = data;
-      })
-  }
-
   getData(query: any): void {
     if (this.personalPage) {
       // get personal store
@@ -103,10 +76,6 @@ export class SearchListComponent {
   loadMore(infiniteScroll: InfiniteScroll): void {
     this.limit += 20;
     let query = {limit: this.limit += 20};
-
-    if (this.cityName) {
-      query['city'] = this.cityName;
-    }
 
     this.getData(query);
     this.infiniteScroll = infiniteScroll;

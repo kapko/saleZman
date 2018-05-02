@@ -3,9 +3,9 @@
     <search-item 
       [item]="item" 
       [hideIcons]="personalPage"
+      (updateElastic)="getSearchedStores()"
       [activityDays]="activeDays"></search-item>
   </ion-item>
 </ion-list>
 
 <button ion-button text-center *ngIf="showScroll" (click)="getMoreStores()">Load More</button>
-

@@ -1,13 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { InfiniteScroll } from 'ionic-angular';
 import { CityService } from '../../services/city.service';
 // interface
 import { storeName } from '../../interfaces/city.store';
 // rxjs
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/do';
 import { Subject, Observable } from 'rxjs';
-import { ElasticSearchService } from '../../services/elastic-service';
+import { AppService } from '../../services/app-service';
 
 @Component({
   selector: 'search-list',
@@ -19,17 +16,21 @@ export class SearchListComponent {
   rowNames: storeName[] = [];
   cityName: string;
   limit: number = 20;
-  infiniteScroll: InfiniteScroll;
   subject: Subject<any> = new Subject();
   activeDays: string[] = [];
+  storeLength: number;
 
   personalPage: boolean = true;
-  showScroll: boolean = true;
+  showScroll: boolean = false;
 
   constructor(
     private cityService: CityService,
-    private elasticService: ElasticSearchService,
+    private appService: AppService
   ) { }
+
+  ngOnInit(): void {
+    this.appService.presentLoading(true);
+  }
 
   // resolve data
   @Input()
@@ -44,6 +45,26 @@ export class SearchListComponent {
   }
 
   // filter by company name
+  @Input()
+  set city(city: string) {
+    if (!city) return;
+    this.cityName = city;
+    this.limit = 40;
+    this.getData({city: this.cityName, limit: this.limit});
+  }
+
+  // search filtering
+  @Input()
+  set searchEvent(val: string) {
+    if (val && val.trim() === '') {
+      this.storeNames = this.rowNames;
+      return;
+    }
+    this.storeNames = this.rowNames.filter(item => 
+      (item._name.indexOf(val.toLowerCase()) > -1)
+    );
+  }
+
   getData(query: any): void {
     if (this.personalPage) {
       // get personal store
@@ -57,11 +78,18 @@ export class SearchListComponent {
   resolveData(data: Observable<any>): void {
     data
       .takeUntil(this.subject)
-      .do(() => {
-        if (this.infiniteScroll) {
-          this.infiniteScroll.complete();
-          this.infiniteScroll = null;
+      .do(e => {
+        let length = e.length;
+        if (length >= 20) {
+          this.showScroll = true;
         }
+
+        if (this.storeLength === length) {
+          this.showScroll = false;
+        }
+        
+        this.appService.hideLoading();
+        this.storeLength = length;
       })
       .map(data => 
         data.map(c => ({ key: c.payload.key, ...c.payload.val() }))
@@ -73,12 +101,15 @@ export class SearchListComponent {
       });
   }
 
-  loadMore(infiniteScroll: InfiniteScroll): void {
+  loadMore(): void {
     this.limit += 20;
-    let query = {limit: this.limit += 20};
+    let query = {limit: this.limit};
+
+    if (this.cityName) {
+      query['city'] = this.cityName;
+    }
 
     this.getData(query);
-    this.infiniteScroll = infiniteScroll;
   }
 
   track(index: number, item: any): string {

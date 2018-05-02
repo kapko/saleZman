@@ -4,6 +4,7 @@ import { storeName } from '../../interfaces/city.store';
 // rxjs
 import { Subject, Observable } from 'rxjs';
 import { ElasticSearchService } from '../../services/elastic-service';
+import { AppService } from '../../services/app-service';
 
 @Component({
   selector: 'elastic-stores',
@@ -19,6 +20,7 @@ export class ElasticStoreComponent {
 
   constructor(
     private elasticService: ElasticSearchService,
+    private appService: AppService
   ) { }
 
   // search filtering
@@ -51,6 +53,7 @@ export class ElasticStoreComponent {
     return this.elasticService
       .getStores(this.searchName.toLowerCase(), from)
       .take(1)
+      .do(() => this.appService.hideLoading())
       .map(res => {
         // show scroll on UI
         this.showScroll = (res.json().hits && res.json().hits.total > 20)

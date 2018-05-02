@@ -6,6 +6,7 @@ import { CityService } from '../../services/city.service';
 import { AppService } from '../../services/app-service';
 import { SearchPage } from '../search/search';
 import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'personal-store',
@@ -16,14 +17,16 @@ export class PersonalStorePage {
   cities: Observable<any>;
   date: string;
   cityName: string;
-  searchEvent: Event | null = null;
+  searchText: string | null = null;
+  searchEvent: string | null = null;
   activityDays: string[] = [];
 
   constructor(
     private cityService: CityService,
     private appService: AppService,
     private menuController: MenuController,
-    private navController: NavController
+    private navController: NavController,
+    private storage: Storage
   ) {
     this.menuController.enable(true);
     this.cities = this.cityService.getCities().take(1);
@@ -50,8 +53,22 @@ export class PersonalStorePage {
       });
   }
 
-  searchItems(e: Event): void {
-    this.searchEvent = e;
+  ionViewWillEnter(): void{
+    this.storage.get('searchText')
+      .then(text => {
+        if (text) {
+          this.searchText = text;
+          this.searchItems(text);
+        }
+      });
+  }
+
+  ionViewWillLeave(): void {
+    this.storage.set('searchText', this.searchEvent);
+  }
+
+  searchItems(text: string): void {
+    this.searchEvent = text;
   }
 
   getAllStorePage(): void {

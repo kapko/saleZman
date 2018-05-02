@@ -3,6 +3,29 @@ personal-store {
     margin-bottom: 0!important;
   }
 
+  .search-bar-div {
+    ion-searchbar {
+      width: 85%;
+      float: left;
+    }
+    ion-buttons {
+      width: 12%;
+      float: left;
+      margin-top: 4px;
+      button {
+        height: 4.1rem!important;
+      }
+    }
+  }
+  
+  .searchbar input.searchbar-input {
+    padding-left: 20px;
+  }
+
+  .searchbar div.searchbar-search-icon {
+    background-image: none!important;
+  }
+
   h4 {
     text-align: center;
     padding-top: 10px;

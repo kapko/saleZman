@@ -37,6 +37,7 @@ export class SearchPage {
         if (text) {
           this.searchText = text;
           this.searchItems(text);
+          this.appService.presentLoading(true);
         }
       });
   }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { StorePage } from '../../pages/store/store';
 import { storeName } from '../../interfaces/city.store';
@@ -15,6 +15,8 @@ import { SingleStorePage } from '../single-store-page/single-store-page';
 })
 
 export class SearchItemComponent {
+  @Output() updateElastic = new EventEmitter();
+
   private _item: Object;
 
   private _hideIcons: boolean;
@@ -64,6 +66,8 @@ export class SearchItemComponent {
   }
 
   updatePersonStore(item: any): void {
+    this.updateElastic.emit();
+
     if (this.checkPersonId(item)) {
       // remove
       this.storeService.setPersonToStore(item.key, null)
@@ -79,7 +83,6 @@ export class SearchItemComponent {
         })
         .catch(err => console.log(err));
     }
-    
   }
 
   updateItem(item: any, action: string = 'update'): void {

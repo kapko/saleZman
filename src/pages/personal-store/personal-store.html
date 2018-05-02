@@ -5,9 +5,21 @@
     <h4 (click)="getAllStorePage()">All Stores</h4>
   </div>
 
-  <ion-searchbar 
-    [debounce]="500"
-    (ionInput)="searchItems($event)"></ion-searchbar>
+  <div class="search-bar-div">
+    <ion-searchbar [(ngModel)]="searchText"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)='searchItems(searchText)'>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </div>
+
+  <ion-item>
+    <ion-label>City</ion-label>
+    <ion-select [(ngModel)]="cityModel">
+      <ion-option *ngFor="let city of cities | async">{{city.name}}</ion-option>
+    </ion-select>
+  </ion-item>
 
   <ion-list>
     <ion-item class="activity">
@@ -20,11 +32,12 @@
     </ion-item>
   </ion-list>
 
-  <!-- list -->
   <search-list
     [activityDays]="activityDays"
-    [personalStore]="true"></search-list>
-    
+    [personalStore]="true"
+    [searchEvent]="searchEvent"
+    [city]="cityModel"></search-list>
+
 </ion-content>
 
 <app-footer></app-footer>

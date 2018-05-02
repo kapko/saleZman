@@ -8,6 +8,7 @@ import { AppService } from '../../services/app-service';
 import { CreateStoreComponent } from '../create-store/create-store';
 import { StoreMarginComponent } from '../store-margin/store-margin';
 import { SingleStorePage } from '../single-store-page/single-store-page';
+import { ElasticSearchService } from '../../services/elastic-service';
 
 @Component({
   selector: 'search-item',
@@ -56,7 +57,8 @@ export class SearchItemComponent {
     private authService: AuthService,
     private appService: AppService,
     private navController: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private elasticService: ElasticSearchService
   ) {}
 
   updateMargin(item: Object): void {
@@ -66,7 +68,6 @@ export class SearchItemComponent {
   }
 
   updatePersonStore(item: any): void {
-    this.updateElastic.emit();
 
     if (this.checkPersonId(item)) {
       // remove
@@ -75,6 +76,8 @@ export class SearchItemComponent {
           this.appService.showToast(`Store ${item.name} removed from your Person Store List.`);
         })
         .catch(err => console.log(err));
+      // update elastic data
+      this.elasticService.updateStore(item.key, this.getStoreData(item));
     } else {
       // add
       this.storeService.setPersonToStore(item.key)
@@ -82,7 +85,26 @@ export class SearchItemComponent {
           this.appService.showToast(`Store ${item.name} added to you Person Store.`);
         })
         .catch(err => console.log(err));
+      // update elastic data
+      this.elasticService.updateStore(item.key, this.getStoreData(item, true));
     }
+
+    // update elastic
+    this.updateElastic.emit();
+  }
+
+  getStoreData(item: any, add: boolean = false): Object {
+    if (!item.hasOwnProperty('persons')) {
+      item.persons = {};
+    }
+
+    if (add) {
+      item.persons[this.authService.currentUserId] = true;
+    } else {
+      delete item.persons[this.authService.currentUserId];
+    }
+
+    return item;
   }
 
   updateItem(item: any, action: string = 'update'): void {

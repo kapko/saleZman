@@ -34,4 +34,15 @@ export class ElasticSearchService {
     );
   }
 
+  updateStore(key: number, data: Object): any {
+    let _id = key;
+    delete data['key'];
+
+    return this.http.put(
+      `${this.elasticConfig.elasticUrl}stores/store/${_id}`,
+      {body: data},
+      {headers: this.header}
+    );
+  }
+
 }

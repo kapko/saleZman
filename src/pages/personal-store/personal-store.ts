@@ -14,7 +14,7 @@ import { Storage } from '@ionic/storage';
 })
 
 export class PersonalStorePage {
-  cities: Observable<any>;
+  cities: string [] = [];
   date: string;
   cityName: string;
   searchText: string | null = null;
@@ -29,12 +29,15 @@ export class PersonalStorePage {
     private storage: Storage
   ) {
     this.menuController.enable(true);
-    this.cities = this.cityService.getCities().take(1);
     this.date = this.appService.getCurrentDate();
     // set by default 30 days
     this.activityDays = this.appService
       .getDates(this.appService
       .getCustomDate(30), new Date());
+  }
+
+  ngOnInit(): void {
+    this.getCities();
   }
 
   filterByDay(event: Event): void {
@@ -80,6 +83,14 @@ export class PersonalStorePage {
       .map(ev => +ev['target'].value)
       .debounceTime(700)
       .take(1);
+  }
+
+  getCities(): void {
+    this.cityService.getPersonalStores({limit: 100})
+      .map(data => data.map(c => c.payload.val().city))
+      .subscribe(cities => {
+        this.cities = cities;
+      });
   }
 
 }

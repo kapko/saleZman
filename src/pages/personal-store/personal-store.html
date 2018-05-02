@@ -17,7 +17,7 @@
   <ion-item>
     <ion-label>City</ion-label>
     <ion-select [(ngModel)]="cityModel">
-      <ion-option *ngFor="let city of cities | async">{{city.name}}</ion-option>
+      <ion-option *ngFor="let city of cities">{{city}}</ion-option>
     </ion-select>
   </ion-item>
 

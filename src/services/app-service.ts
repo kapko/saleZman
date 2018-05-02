@@ -145,7 +145,7 @@ export class AppService {
       case 'zipcode':
       case 'phone':
       // case 'GST':
-      case 'contact_person':
+      // case 'contact_person':
       // case 'weight':
         type = 'number';
         break;

@@ -37,7 +37,8 @@ export class CityService {
       ref => (query.city) 
         ? ref.orderByChild('city').equalTo(query.city) 
         : ref.limitToFirst(query.limit))
-      .snapshotChanges();
+      .snapshotChanges()
+      .take(1)
   }
 
 }

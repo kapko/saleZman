@@ -84,7 +84,7 @@ export class ListComponent {
     }
 
     this.rowProducts = this.products.filter(item => 
-      (item.name.indexOf(val.toLowerCase()) > -1)
+      (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1)
     );
   }
 

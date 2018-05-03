@@ -35,7 +35,7 @@ export class CreateStoreComponent {
       name: new FormControl('', Validators.required),
       adress_1: new FormControl('', Validators.required),
       adress_2: new FormControl(''),
-      city: new FormControl('', Validators.required),
+      // city: new FormControl('', Validators.required),
       area: new FormControl('', Validators.required),
       zipcode: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
@@ -105,7 +105,7 @@ export class CreateStoreComponent {
   }
 
   checkForEmtyFields(key): boolean {
-    if (key === "_name" || key === 'key' || key === 'url' || key === 'created_by' || key === 'personal_description' || key === 'personal_margin' || key === 'persons') {
+    if (key === "_name" || key === 'key' || key === 'city' || key === 'url' || key === 'created_by' || key === 'personal_description' || key === 'personal_margin' || key === 'persons') {
       return false;
     } else {
       return true;

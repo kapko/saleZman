@@ -37,16 +37,12 @@ export class SearchPage {
         if (text) {
           this.searchText = text;
           this.searchItems(text);
-          this.appService.presentLoading(true);
         }
       });
   }
 
-  ionViewWillLeave(): void {
-    this.storage.set('searchText', this.searchEvent);
-  }
-
   searchItems(text: string): void {
+    this.storage.set('searchText', text);
     this.searchEvent = text;
   }
 

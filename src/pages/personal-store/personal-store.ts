@@ -6,7 +6,6 @@ import { CityService } from '../../services/city.service';
 import { AppService } from '../../services/app-service';
 import { SearchPage } from '../search/search';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'personal-store',
@@ -25,8 +24,7 @@ export class PersonalStorePage {
     private cityService: CityService,
     private appService: AppService,
     private menuController: MenuController,
-    private navController: NavController,
-    private storage: Storage
+    private navController: NavController
   ) {
     this.menuController.enable(true);
     this.date = this.appService.getCurrentDate();
@@ -56,20 +54,6 @@ export class PersonalStorePage {
       });
   }
 
-  ionViewWillEnter(): void{
-    this.storage.get('searchText')
-      .then(text => {
-        if (text) {
-          this.searchText = text;
-          this.searchItems(text);
-        }
-      });
-  }
-
-  ionViewWillLeave(): void {
-    this.storage.set('searchText', this.searchEvent);
-  }
-
   searchItems(text: string): void {
     this.searchEvent = text;
   }
@@ -87,7 +71,19 @@ export class PersonalStorePage {
 
   getCities(): void {
     this.cityService.getPersonalStores({limit: 100})
-      .map(data => data.map(c => c.payload.val().city))
+      .map(data => {
+        let cities = [];
+
+        data.map(c => {
+          let city = c.payload.val().city;
+
+          if (cities.indexOf(city) < 0) {
+            cities.push(city);
+          }
+        });
+
+        return cities;
+      })
       .subscribe(cities => {
         this.cities = cities;
       });

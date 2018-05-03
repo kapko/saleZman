@@ -15,14 +15,14 @@
             [type]="field.type"></ion-input>
         </ion-item>
 
-        <ion-item *ngIf="field.name === 'City'">
+        <!-- <ion-item *ngIf="field.name === 'City'">
           <ion-label>City</ion-label>
           <ion-select [formControlName]="field.controller">
             <ion-option
               *ngFor="let city of cities"
               [value]="city.name">{{city.name}}</ion-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item *ngIf="field.name === 'Description'">
           <ion-label>Description</ion-label>

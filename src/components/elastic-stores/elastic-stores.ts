@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 // interface
 import { storeName } from '../../interfaces/city.store';
 // rxjs
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ElasticSearchService } from '../../services/elastic-service';
 import { AppService } from '../../services/app-service';
 
@@ -28,11 +28,13 @@ export class ElasticStoreComponent {
   set searchEvent(text: string) {
     this.searchName = text;
     if (!this.searchName) return;
+    this.appService.presentLoading(true);
 
     this.getSearchedStores(0)
+      .do(() => this.appService.hideLoading())
       .subscribe(stores => {
         this.storeNames = stores;
-      })
+      });
   }
 
   getMoreStores(): void {
@@ -53,9 +55,10 @@ export class ElasticStoreComponent {
     return this.elasticService
       .getStores(this.searchName.toLowerCase(), from)
       .take(1)
-      .do(() => this.appService.hideLoading())
+      // .do(() => this.appService.hideLoading())
       .map(res => {
         // show scroll on UI
+        // this.appService.hideLoading()
         this.showScroll = (res.json().hits && res.json().hits.total > 20)
         ? true : false;
 

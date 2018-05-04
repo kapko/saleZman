@@ -270,6 +270,13 @@ export class StoreService {
       .push(data);
   }
 
+  getSupplyByKey(key: string): Observable<any> {
+    return this.db
+      .list(this.supplyListPath + key)
+      .snapshotChanges()
+      .map(data => data.map(c => ({ key: c.payload.key, ...c.payload.val() })));
+  }
+
   getTestSupply(salezman: string | null = null): Observable<any> {
     return this.db
       .list(this.testSupplyPath + this.authService.currentUserId, 

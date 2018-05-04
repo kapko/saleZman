@@ -72,6 +72,8 @@ import { StoreIconService } from '../services/store-icon-serice';
 import { ElasticSearchService } from '../services/elastic-service';
 import { HttpModule } from '@angular/http';
 import { ElasticStoreComponent } from '../components/elastic-stores/elastic-stores';
+import { StoreBillingPayment } from '../components/store-billing-payment/store-billing-payment';
+import { BillCountDirective } from '../directives/bill-count';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -133,6 +135,8 @@ let fireBaseConfig = {
     SingleStorePage,
     StoreIconComponent,
     ElasticStoreComponent,
+    StoreBillingPayment,
+    BillCountDirective
   ],
   imports: [
     BrowserModule,
@@ -195,7 +199,8 @@ let fireBaseConfig = {
     StoreMarginComponent,
     SingleStorePage,
     StoreIconComponent,
-    ElasticStoreComponent
+    ElasticStoreComponent,
+    StoreBillingPayment
   ],
   providers: [
     StatusBar,

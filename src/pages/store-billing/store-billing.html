@@ -50,6 +50,9 @@
             [placeholder]="storeDate"
             displayFormat="DD/MM/YYYY"></ion-datetime>
           </ion-item>
+          <!-- custom fileds -->
+          <store-billing-payment [key]="bill.store_key"></store-billing-payment>
+
           <button ion-button (click)="submitValue(bill)" full>submit</button>
         </ion-card-content>
       </ion-card>

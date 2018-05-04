@@ -1,0 +1,21 @@
+store-billing-payment {
+  div.supply-item {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #ecebeb;
+    padding: 2px 0;
+    &:last-child {
+      border-bottom: none;
+    }
+
+    span {
+      float: none;
+    }
+
+    p {
+      flex: 1;
+      color: #ff4747 !important;
+    }
+  }
+  
+}

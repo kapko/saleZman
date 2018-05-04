@@ -1,0 +1,4 @@
+<div class="supply-item" *ngFor="let item of supplyItems">
+  <p><b>Bill no. </b><span>{{item.bill_number}}</span> </p>
+  <p><b>Rs. </b><span bill [key]="item"></span> </p>
+</div>

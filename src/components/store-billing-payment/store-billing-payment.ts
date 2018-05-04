@@ -14,9 +14,7 @@ export class StoreBillingPayment {
     this.getStorePayments(key);
   }
 
-  constructor(
-    private storeService: StoreService,
-  ) {}
+  constructor(private storeService: StoreService) {}
 
   getStorePayments(key: string): void {
     this.storeService.getSupplyByKey(key)

@@ -1,4 +1,7 @@
 <div class="supply-item" *ngFor="let item of supplyItems">
-  <p><b>Bill no. </b><span>{{item.bill_number}}</span> </p>
-  <p><b>Rs. </b><span bill [key]="item"></span> </p>
+  <div *ngIf="item.supply_status === 'supplied'">
+    <p><b>Bill no. </b><span>{{item.bill_number}}</span> </p>
+    <p><b>Bill date: </b><span>{{item.bill_date}}</span> </p>
+    <p><b>Pending payments: </b><span bill [key]="item"></span> </p>
+  </div>
 </div>

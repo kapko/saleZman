@@ -1,20 +1,20 @@
 store-billing-payment {
-  div.supply-item {
-    display: flex;
-    flex-wrap: wrap;
-    border-bottom: 1px solid #ecebeb;
-    padding: 2px 0;
-    &:last-child {
-      border-bottom: none;
-    }
+  display: block;
+  margin-bottom: 20px;
 
-    span {
-      float: none;
+  div.supply-item {
+    padding: 2px 0;
+
+    div {
+      border-bottom: 1px solid #333;
+      &:last-child {
+        border-bottom: none;
+      }
     }
 
     p {
-      flex: 1;
       color: #ff4747 !important;
+      border-bottom: 1px solid #ffcdcd;
     }
   }
   

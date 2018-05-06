@@ -21,6 +21,13 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Day</ion-label>
+    <ion-select [(ngModel)]="dayModel">
+      <ion-option *ngFor="let day of days">{{day}}</ion-option>
+    </ion-select>
+  </ion-item>
+
   <ion-list>
     <ion-item class="activity">
       <ion-label>Activities last days</ion-label>
@@ -33,6 +40,7 @@
   </ion-list>
 
   <search-list
+    [currentDay]="dayModel"
     [activityDays]="activityDays"
     [personalStore]="true"
     [searchEvent]="searchEvent"

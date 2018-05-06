@@ -10,12 +10,11 @@ import { AppService } from '../../services/app-service';
 
 export class StoreMarginComponent {
   days: string[] = this.appService.getDays();
-  currentDay: string = this.appService.getCurrentDay();
 
   private storeKey: string;
   private personal_margin: string;
   private personal_description: string;
-  private personal_day: string = this.currentDay;
+  private personal_day: string = this.appService.getCurrentDay();
   private storeName: string;
 
   constructor(

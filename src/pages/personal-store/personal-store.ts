@@ -13,9 +13,12 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 })
 
 export class PersonalStorePage {
+  days: string[] = this.appService.getDays();
+
   cities: string [] = [];
   date: string;
   cityName: string;
+  dayModel: string;
   searchText: string | null = null;
   searchEvent: string | null = null;
   activityDays: string[] = [];
@@ -24,14 +27,20 @@ export class PersonalStorePage {
     private cityService: CityService,
     private appService: AppService,
     private menuController: MenuController,
-    private navController: NavController
+    private navController: NavController,
   ) {
+    this.days.push('Others');
+
     this.menuController.enable(true);
     this.date = this.appService.getCurrentDate();
     // set by default 30 days
     this.activityDays = this.appService
       .getDates(this.appService
       .getCustomDate(30), new Date());
+  }
+
+  ionViewDidLoad(): void {
+    this.dayModel = this.appService.getCurrentDay();
   }
 
   ngOnInit(): void {

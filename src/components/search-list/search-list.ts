@@ -19,6 +19,7 @@ export class SearchListComponent {
   subject: Subject<any> = new Subject();
   activeDays: string[] = [];
   storeLength: number;
+  _currentDay: string;
 
   personalPage: boolean = true;
   showScroll: boolean = false;
@@ -30,6 +31,14 @@ export class SearchListComponent {
 
   ngOnInit(): void {
     this.appService.presentLoading(true);
+  }
+
+  // current day
+  @Input()
+  set currentDay(day: string) {
+    if (day) {
+      this._currentDay = day;
+    }
   }
 
   // resolve data

@@ -16,6 +16,12 @@
         placeholder="****"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label>Day</ion-label>
+      <ion-select [(ngModel)]="personal_day">
+        <ion-option *ngFor="let day of days">{{day}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
       <ion-label color="primary">Description: </ion-label>
       <ion-textarea 
         text-right

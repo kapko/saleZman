@@ -19,6 +19,15 @@ export class AppService {
     this.loading.present();
   }
 
+  getDays(): string[] {
+    return ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  }
+
+  getCurrentDay(): string {
+    let d = new Date().getDay();
+    return this.getDays()[(!d) ? 6 : d - 1];
+  }
+
   showToast(message: string, duration: number = 3e3): Promise<any> {
     if (this.toast) {
       return;

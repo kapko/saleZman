@@ -9,9 +9,13 @@ import { AppService } from '../../services/app-service';
 })
 
 export class StoreMarginComponent {
+  days: string[] = this.appService.getDays();
+  currentDay: string = this.appService.getCurrentDay();
+
   private storeKey: string;
   private personal_margin: string;
   private personal_description: string;
+  private personal_day: string = this.currentDay;
   private storeName: string;
 
   constructor(
@@ -32,7 +36,7 @@ export class StoreMarginComponent {
         this.storeName = store.name;
 
         this.personal_description = (store.hasOwnProperty('personal_description')) ? store.personal_description : '';
-
+        this.personal_day = (store.hasOwnProperty('personal_day')) ? store.personal_day : '';
         this.personal_margin = (store.hasOwnProperty('personal_margin')) ? store.personal_margin : '';
       })
   }
@@ -45,7 +49,8 @@ export class StoreMarginComponent {
 
     let data = {
       personal_description: (this.personal_description) ? this.personal_description : null,
-      personal_margin: (this.personal_margin) ? this.personal_margin : null
+      personal_margin: (this.personal_margin) ? this.personal_margin : null,
+      personal_day: (this.personal_day) ? this.personal_day : null
     }
 
     this.storeService

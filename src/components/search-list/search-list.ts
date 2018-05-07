@@ -38,6 +38,7 @@ export class SearchListComponent {
   set currentDay(day: string) {
     if (day) {
       this._currentDay = day;
+      this.getData({limit: this.limit});
     }
   }
 
@@ -45,7 +46,7 @@ export class SearchListComponent {
   @Input()
   set personalStore(val: boolean | null) {
     this.personalPage = val;
-    this.getData({limit: this.limit});
+    // this.getData({limit: this.limit});
   }
 
   @Input()
@@ -84,29 +85,37 @@ export class SearchListComponent {
     }
   }
 
+  filterByDay(data: any): storeName[] {
+    return data.filter(item => {
+      let isPerosnalDay = item.hasOwnProperty('personal_day');
+      // cases
+      switch (this._currentDay) {
+        case 'All days':
+          if (isPerosnalDay) return true;
+          break;
+        case 'Not Set':
+          if (!isPerosnalDay) return true;
+          break;
+        default:
+          if (item.personal_day === this._currentDay) return true;
+      }
+    });
+  }
+
   resolveData(data: Observable<any>): void {
     data
       .takeUntil(this.subject)
-      .do(e => {
-        let length = e.length;
-        if (length >= 20) {
-          this.showScroll = true;
-        }
-
-        if (this.storeLength === length) {
-          this.showScroll = false;
-        }
-        
-        this.appService.hideLoading();
-        this.storeLength = length;
-      })
+      .do(e => this.appService.hideLoading())
       .map(data => 
         data.map(c => ({ key: c.payload.key, ...c.payload.val() }))
           .sort((a, b) => a._name.localeCompare(b._name))
         )
       .subscribe(names => {
-        this.storeNames = names;
-        this.rowNames = names;
+        let data = this.filterByDay(names);
+        this.showScroll = this.getLoaderStatus(data.length);
+
+        this.storeNames = data;
+        this.rowNames = data;
       });
   }
 
@@ -119,6 +128,18 @@ export class SearchListComponent {
     }
 
     this.getData(query);
+  }
+
+  getLoaderStatus(length: number): boolean {
+    if (length >= 20) {
+      return true;
+    }
+
+    if (this.storeLength === length) {
+      return false;
+    }
+
+    this.storeLength = length;
   }
 
   track(index: number, item: any): string {

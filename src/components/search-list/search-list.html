@@ -1,6 +1,6 @@
 <ion-list>
   <div *ngFor="let item of this.storeNames; trackBy: track">
-    <ion-item *ngIf="item | personalDay : _currentDay">
+    <ion-item>
       <search-item 
         [item]="item" 
         [hideIcons]="personalPage" 
@@ -8,5 +8,4 @@
     </ion-item>
   </div>
 </ion-list>
- 
 <button ion-button text-center *ngIf="showScroll" (click)="loadMore()">Load More</button>

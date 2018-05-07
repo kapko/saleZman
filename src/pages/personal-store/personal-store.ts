@@ -29,7 +29,8 @@ export class PersonalStorePage {
     private menuController: MenuController,
     private navController: NavController,
   ) {
-    this.days.push('Others');
+    this.days.push('All days');
+    this.days.push('Not Set');
 
     this.menuController.enable(true);
     this.date = this.appService.getCurrentDate();

@@ -74,6 +74,7 @@ import { HttpModule } from '@angular/http';
 import { ElasticStoreComponent } from '../components/elastic-stores/elastic-stores';
 import { StoreBillingPayment } from '../components/store-billing-payment/store-billing-payment';
 import { BillCountDirective } from '../directives/bill-count';
+import { PersonalDayPipe } from '../pipe/personal-day-pipe';
 
 let fireBaseConfig = {
   apiKey: "AIzaSyA2aEZm0QjHcfEDNidxMTS3L0TByeQHpDw",
@@ -124,6 +125,7 @@ let fireBaseConfig = {
     ManageProductPage,
     ManageStorePage,
     DemicalPipe,
+    PersonalDayPipe,
     AddCompanyComponent,
     AddProductComponent,
     ManageProductListCompany,

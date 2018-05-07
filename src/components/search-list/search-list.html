@@ -1,6 +1,6 @@
 <ion-list>
   <div *ngFor="let item of this.storeNames; trackBy: track">
-    <ion-item *ngIf="(_currentDay === 'Others') || item.personal_day === _currentDay">
+    <ion-item *ngIf="item | personalDay : _currentDay">
       <search-item 
         [item]="item" 
         [hideIcons]="personalPage" 

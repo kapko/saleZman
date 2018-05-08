@@ -5,6 +5,16 @@ search-item {
     display: block;
   }
 
+  div {
+    display: inline-block;
+    width: 90%;
+    overflow: hidden;
+    b {
+      display: inline-block;
+      width: 40px;
+    }
+  }
+
   .remove-circle {
     color: #fc5353;
   }

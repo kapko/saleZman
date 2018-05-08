@@ -71,7 +71,8 @@ export class SearchListComponent {
       return;
     }
     this.storeNames = this.rowNames.filter(item => 
-      (item._name.indexOf(val.toLowerCase()) > -1)
+      (item._name.indexOf(val.toLowerCase()) > -1 
+      || item.city.toLowerCase().indexOf(val.toLowerCase()) > -1)
     );
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
+import 'firebase';
 
 @Injectable()
 export class CityService {
@@ -22,21 +23,13 @@ export class CityService {
     return this.db.list(this.cityPath, ref => ref.orderByChild('name')).valueChanges();
   }
 
-  getStoreNames(query: any): Observable<any> {
-    return this.db.list(
-      this.storeNamesPath,
-      ref => (query.city) 
-        ? ref.orderByChild('city').equalTo(query.city) 
-        : ref.limitToFirst(query.limit))
-      .snapshotChanges();
-  }
-
-  getPersonalStores(query: any): Observable<any> {
+  getPersonalStores(key: string = null): any {
     return this.db.list(
       this.personalStorePath + this.authService.currentUserId,
-      ref => (query.city) 
-        ? ref.orderByChild('city').equalTo(query.city) 
-        : ref.limitToFirst(query.limit))
+      ref => (key)
+        ? ref.orderByKey().endAt(key).limitToLast(20)
+        : ref.limitToLast(20)
+      )
       .snapshotChanges()
       .take(1)
   }

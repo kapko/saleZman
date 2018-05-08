@@ -15,13 +15,6 @@
   </div>
 
   <ion-item>
-    <ion-label>City</ion-label>
-    <ion-select [(ngModel)]="cityModel">
-      <ion-option *ngFor="let city of cities">{{city}}</ion-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
     <ion-label>Day</ion-label>
     <ion-select [(ngModel)]="dayModel">
       <ion-option *ngFor="let day of days">{{day}}</ion-option>
@@ -43,8 +36,7 @@
     [currentDay]="dayModel"
     [activityDays]="activityDays"
     [personalStore]="true"
-    [searchEvent]="searchEvent"
-    [city]="cityModel"></search-list>
+    [searchEvent]="searchEvent"></search-list>
 
 </ion-content>
 

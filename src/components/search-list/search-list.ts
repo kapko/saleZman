@@ -14,12 +14,11 @@ import { AppService } from '../../services/app-service';
 export class SearchListComponent {
   storeNames: storeName[] = [];
   rowNames: storeName[] = [];
-  cityName: string;
-  limit: number = 20;
   subject: Subject<any> = new Subject();
   activeDays: string[] = [];
   storeLength: number;
   _currentDay: string;
+  lastKey: string;
 
   personalPage: boolean = true;
   showScroll: boolean = false;
@@ -30,15 +29,18 @@ export class SearchListComponent {
   ) { }
 
   ngOnInit(): void {
-    this.appService.presentLoading(true);
+    // this.appService.presentLoading(true);
   }
 
   // current day
   @Input()
   set currentDay(day: string) {
     if (day) {
+      this.storeNames = [];
+      this.rowNames = [];
+
       this._currentDay = day;
-      this.getData({limit: this.limit});
+      this.getData();
     }
   }
 
@@ -54,15 +56,6 @@ export class SearchListComponent {
     this.activeDays = days;
   }
 
-  // filter by company name
-  @Input()
-  set city(city: string) {
-    if (!city) return;
-    this.cityName = city;
-    this.limit = 40;
-    this.getData({city: this.cityName, limit: this.limit});
-  }
-
   // search filtering
   @Input()
   set searchEvent(val: string) {
@@ -74,16 +67,11 @@ export class SearchListComponent {
       (item._name.indexOf(val.toLowerCase()) > -1 
       || item.city.toLowerCase().indexOf(val.toLowerCase()) > -1)
     );
+    this.showScroll = this.getLoaderStatus(this.storeNames.length);
   }
 
-  getData(query: any): void {
-    if (this.personalPage) {
-      // get personal store
-      this.resolveData(this.cityService.getPersonalStores(query));
-    } else {
-      // get common store
-      this.resolveData(this.cityService.getStoreNames(query));
-    }
+  getData(key: string = null): void {
+    this.resolveData(this.cityService.getPersonalStores(key));
   }
 
   filterByDay(data: any): storeName[] {
@@ -112,27 +100,30 @@ export class SearchListComponent {
           .sort((a, b) => a._name.localeCompare(b._name))
         )
       .subscribe(names => {
+        // key for pagination
+        this.lastKey = names[0]['key'];
+
         let data = this.filterByDay(names);
         this.showScroll = this.getLoaderStatus(data.length);
-
-        this.storeNames = data;
-        this.rowNames = data;
+        this.filterByDay(names).forEach(item => {
+          this.storeNames.push(item);
+          this.rowNames.push(item);
+        });
       });
   }
 
   loadMore(): void {
-    this.limit += 20;
-    let query = {limit: this.limit};
-
-    if (this.cityName) {
-      query['city'] = this.cityName;
+    let key;
+    if (this.lastKey === key) {
+      this.showScroll = false;
     }
-
-    this.getData(query);
+  
+    key = this.lastKey;
+    this.getData(this.lastKey);
   }
 
   getLoaderStatus(length: number): boolean {
-    if (length >= 20) {
+    if (length >= 19) {
       return true;
     }
 

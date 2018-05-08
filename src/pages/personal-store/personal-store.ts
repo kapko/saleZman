@@ -15,9 +15,7 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 export class PersonalStorePage {
   days: string[] = this.appService.getDays();
 
-  cities: string [] = [];
   date: string;
-  cityName: string;
   dayModel: string;
   searchText: string | null = null;
   searchEvent: string | null = null;
@@ -42,10 +40,6 @@ export class PersonalStorePage {
 
   ionViewDidLoad(): void {
     this.dayModel = this.appService.getCurrentDay();
-  }
-
-  ngOnInit(): void {
-    this.getCities();
   }
 
   filterByDay(event: Event): void {
@@ -77,26 +71,6 @@ export class PersonalStorePage {
       .map(ev => +ev['target'].value)
       .debounceTime(700)
       .take(1);
-  }
-
-  getCities(): void {
-    this.cityService.getPersonalStores({limit: 100})
-      .map(data => {
-        let cities = [];
-
-        data.map(c => {
-          let city = c.payload.val().city;
-
-          if (cities.indexOf(city) < 0) {
-            cities.push(city);
-          }
-        });
-
-        return cities;
-      })
-      .subscribe(cities => {
-        this.cities = cities;
-      });
   }
 
 }

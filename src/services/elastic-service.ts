@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Http, Headers } from '@angular/http';
+import {elasticConfig} from './elastic.config';
 
 @Injectable()
 export class ElasticSearchService {
   url: string;
-  elasticConfig: any;
+  elasticConfig: any = elasticConfig;
   header: Headers = new Headers();
 
   constructor(

@@ -23,15 +23,14 @@ export class CityService {
     return this.db.list(this.cityPath, ref => ref.orderByChild('name')).valueChanges();
   }
 
-  getPersonalStores(key: string = null): any {
+  getPersonalStores(key: null | string = null): any {
     return this.db.list(
       this.personalStorePath + this.authService.currentUserId,
       ref => (key)
         ? ref.orderByKey().endAt(key).limitToLast(20)
         : ref.limitToLast(20)
       )
-      .valueChanges()
+      .snapshotChanges()
       .take(1)
   }
-
 }

@@ -39,7 +39,8 @@ export class MyApp {
   getUsersStatus(uid: string): void {
     this.authService
       .getProfile(uid)
-      .takeUntil(this.subject)
+      // .takeUntil(this.subject)
+      .take(1)
       .subscribe(profile => {
         if (profile && profile.email === this.authService.currentUserEmail) {
           if (profile.status) {

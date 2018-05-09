@@ -10,8 +10,8 @@
       <button ion-item>My search</button>
       <button ion-item>My plan</button>
       <button ion-item>My profile</button>
-      <button (click)="logout()" ion-item>Logout</button>
-      <button class="admin-button" (click)="showAdmin = true" *ngIf="showAdminButton" ion-item>Admin</button>
+      <a (click)="logout()" ion-item>Logout</a>
+      <a class="admin-button" (click)="showAdmin = true" *ngIf="showAdminButton" ion-item>Admin</a>
     </ion-list>
   </ion-content>
 
@@ -32,13 +32,11 @@
       <!-- <button ion-item (click)="navigate('manageStore')">Manage Stores</button> -->
       <!-- <button ion-item>Store pending Payments</button> -->
       <!-- <button ion-item>My Settings - In App Purchase </button> -->
-      <button 
-        class="admin-button"
-        (click)="logout()" ion-item>Logout</button>
-      <button 
+      <a (click)="logout()" ion-item>Logout</a>
+      <a 
         class="admin-button" 
         ion-item 
-        (click)="showAdmin = false">User</button>
+        (click)="showAdmin = false">User</a>
     </ion-list>
   </ion-content>
 

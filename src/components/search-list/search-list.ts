@@ -95,13 +95,17 @@ export class SearchListComponent {
     data
       .takeUntil(this.subject)
       .do(e => this.appService.hideLoading())
-      .map(data => data.sort((a, b) => a._name.localeCompare(b._name)) )
-      .subscribe(names => {
+      .map(data => {
         // key for pagination
-        this.lastKey = names[0]['key'];
-
+        this.lastKey = data[0]['key'];
+  
+        return data.map(c => c.payload.val()).reverse();
+          // .sort((a, b) => a._name.localeCompare(b._name))
+      })
+      .subscribe(names => {
         let data = this.filterByDay(names);
         this.showScroll = this.getLoaderStatus(data.length);
+
         this.filterByDay(names).forEach(item => {
           this.storeNames.push(item);
           this.rowNames.push(item);
@@ -120,7 +124,7 @@ export class SearchListComponent {
   }
 
   getLoaderStatus(length: number): boolean {
-    if (length >= 19) {
+    if (length >= 20) {
       return true;
     }
 

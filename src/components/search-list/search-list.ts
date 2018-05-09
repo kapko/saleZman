@@ -95,10 +95,7 @@ export class SearchListComponent {
     data
       .takeUntil(this.subject)
       .do(e => this.appService.hideLoading())
-      .map(data => 
-        data.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-          .sort((a, b) => a._name.localeCompare(b._name))
-        )
+      .map(data => data.sort((a, b) => a._name.localeCompare(b._name)) )
       .subscribe(names => {
         // key for pagination
         this.lastKey = names[0]['key'];

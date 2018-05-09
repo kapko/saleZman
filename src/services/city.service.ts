@@ -30,7 +30,7 @@ export class CityService {
         ? ref.orderByKey().endAt(key).limitToLast(20)
         : ref.limitToLast(20)
       )
-      .snapshotChanges()
+      .valueChanges()
       .take(1)
   }
 

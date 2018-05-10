@@ -71,47 +71,63 @@ export class SearchListComponent {
   }
 
   getData(key: string = null): void {
-    this.resolveData(this.cityService.getPersonalStores(key));
-  }
-
-  filterByDay(data: any): storeName[] {
-    return data.filter(item => {
-      let isPerosnalDay = item.hasOwnProperty('personal_day');
-      // cases
-      switch (this._currentDay) {
-        case 'All days':
-          if (isPerosnalDay) return true;
-          break;
-        case 'Not Set':
-          if (!isPerosnalDay) return true;
-          break;
-        default:
-          if (item.personal_day === this._currentDay) return true;
-      }
-    });
-  }
-
-  resolveData(data: Observable<any>): void {
-    data
-      .takeUntil(this.subject)
-      .do(e => this.appService.hideLoading())
-      .map(data => {
+    this.cityService
+      .getPersonalStores(key, this._currentDay)
+      .do(e => {
         // key for pagination
-        this.lastKey = data[0]['key'];
-  
-        return data.map(c => c.payload.val()).reverse();
-          // .sort((a, b) => a._name.localeCompare(b._name))
+        this.lastKey = e[0]['key'];
+        this.appService.hideLoading();
       })
       .subscribe(names => {
-        let data = this.filterByDay(names);
-        this.showScroll = this.getLoaderStatus(data.length);
-
-        this.filterByDay(names).forEach(item => {
-          this.storeNames.push(item);
-          this.rowNames.push(item);
-        });
+        this.showScroll = this.getLoaderStatus(names.length);
+        
+        this.rowNames = names;
+        this.storeNames = names;
       });
   }
+
+  // getData(key: string = null): void {
+  //   this.resolveData(this.cityService.getPersonalStores(key));
+  // }
+
+  // filterByDay(data: any): storeName[] {
+  //   return data.filter(item => {
+  //     let isPerosnalDay = item.hasOwnProperty('personal_day');
+  //     // cases
+      // switch (this._currentDay) {
+      //   case 'All days':
+      //     if (isPerosnalDay) return true;
+      //     break;
+      //   case 'Not Set':
+      //     if (!isPerosnalDay) return true;
+      //     break;
+      //   default:
+      //     if (item.personal_day === this._currentDay) return true;
+      // }
+  //   });
+  // }
+
+  // resolveData(data: Observable<any>): void {
+  //   data
+  //     .takeUntil(this.subject)
+  //     .do(e => this.appService.hideLoading())
+  //     .map(data => {
+  //       // key for pagination
+  //       this.lastKey = data[0]['key'];
+  
+  //       return data.map(c => c.payload.val()).reverse();
+  //         // .sort((a, b) => a._name.localeCompare(b._name))
+  //     })
+  //     .subscribe(names => {
+  //       let data = this.filterByDay(names);
+        // this.showScroll = this.getLoaderStatus(data.length);
+
+  //       this.filterByDay(names).forEach(item => {
+  //         this.storeNames.push(item);
+  //         this.rowNames.push(item);
+  //       });
+  //     });
+  // }
 
   loadMore(): void {
     let key;

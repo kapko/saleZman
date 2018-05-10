@@ -14,6 +14,8 @@ export class CityService {
 
   personalStorePath: string = '/personal-store/';
 
+  personalStoreDayPath: string = '/personal-store-day/';
+
   constructor(
     private db: AngularFireDatabase,
     private authService: AuthService
@@ -23,14 +25,40 @@ export class CityService {
     return this.db.list(this.cityPath, ref => ref.orderByChild('name')).valueChanges();
   }
 
-  getPersonalStores(key: null | string = null): any {
+  getPersonalStores(key: null | string = null, currentDay: string): any {
+    switch (currentDay) {
+      case 'Not Set':
+        return this.getPersonalStoreByDay(key);
+      default:
+        let day = currentDay.toLocaleLowerCase();
+        return this.getPersonalStoreByDay(key, day);
+    }
+  }
+
+  getPersonalStoreByDay(key: string | null, day: string | null = null): Observable<any> {
+    let URL;
+    if (!day) {
+      URL = this.personalStorePath + this.authService.currentUserId;
+    } else {
+      URL = `${this.personalStoreDayPath}${this.authService.currentUserId}/${day}`;
+    }
+
     return this.db.list(
-      this.personalStorePath + this.authService.currentUserId,
+      URL,
       ref => (key)
         ? ref.orderByKey().endAt(key).limitToLast(20)
         : ref.limitToLast(20)
       )
       .snapshotChanges()
       .take(1)
+      .map(data => {
+        if (!day) {
+          return data
+            .filter(item => (!item.payload.val().hasOwnProperty('personal_day')))
+            .map(c => c.payload.val()).reverse()
+        } else {
+          return data.map(c => c.payload.val()).reverse();
+        }
+      });
   }
 }

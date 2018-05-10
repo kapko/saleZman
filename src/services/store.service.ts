@@ -240,8 +240,11 @@ export class StoreService {
 
   getPersonalStoreById(key: string): Observable<any> {
     return this.db
-      .object(`${this.persolanStorePath}${this.authService.currentUserId}/${key}`)
-      .valueChanges();
+      .list(`${this.persolanStorePath}${this.authService.currentUserId}`, 
+      ref => ref.orderByChild('key').equalTo(key))
+      .snapshotChanges()
+      .take(1)
+      .map(data => data.map(c => ({ _id: c.payload.key, ...c.payload.val() }))[0])
   }
 
   // balance

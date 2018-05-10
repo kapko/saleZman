@@ -32,6 +32,7 @@ export class ElasticStoreComponent {
 
     this.getSearchedStores(0)
       .do(() => this.appService.hideLoading())
+      .map(data => data.map(item => (item.hasOwnProperty('body')) ? item.body : item))
       .subscribe(stores => {
         this.storeNames = stores;
       });

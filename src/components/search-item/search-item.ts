@@ -77,7 +77,9 @@ export class SearchItemComponent {
         })
         .catch(err => console.log(err));
       // update elastic data
-      this.elasticService.updateStore(item.key, this.getStoreData(item));
+      this.elasticService
+        .updateStore(item.key, this.getStoreData(item))
+        .subscribe(res => res);
     } else {
       // add
       this.storeService.setPersonToStore(item.key)
@@ -86,7 +88,9 @@ export class SearchItemComponent {
         })
         .catch(err => console.log(err));
       // update elastic data
-      this.elasticService.updateStore(item.key, this.getStoreData(item, true));
+      this.elasticService
+        .updateStore(item.key, this.getStoreData(item, true))
+        .subscribe(res => res);
     }
 
     // update elastic

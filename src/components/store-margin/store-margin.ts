@@ -23,15 +23,14 @@ export class StoreMarginComponent {
     private params: NavParams,
     private appService: AppService
   ) {
-    this.storeKey = this.params.get('key');
-    this.getPersonStore(this.storeKey);
+    this.getPersonStore(this.params.get('key'));
   }
 
   getPersonStore(key: string): void {
     this.storeService
       .getPersonalStoreById(key)
-      .take(1)
       .subscribe(store => {
+        this.storeKey = store._id;
         this.storeName = store.name;
 
         this.personal_description = (store.hasOwnProperty('personal_description')) ? store.personal_description : '';

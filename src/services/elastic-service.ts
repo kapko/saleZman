@@ -43,7 +43,8 @@ export class ElasticSearchService {
       `${this.elasticConfig.elasticUrl}stores/store/${_id}`,
       {body: data},
       {headers: this.header}
-    );
+    )
+    .take(1)
   }
 
 }

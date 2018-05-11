@@ -42,6 +42,7 @@ export class ElasticStoreComponent {
     this.scrollCount ++;
     let from = 20 * this.scrollCount;
     this.getSearchedStores(from)
+      .map(data => data.map(item => (item.hasOwnProperty('body')) ? item.body : item))
       .subscribe(stores => {
         if (!stores.length) {
           this.showScroll = false;

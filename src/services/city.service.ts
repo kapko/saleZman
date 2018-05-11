@@ -27,6 +27,8 @@ export class CityService {
 
   getPersonalStores(key: null | string = null, currentDay: string): any {
     switch (currentDay) {
+      case 'All days':
+        return this.getPersonalStoreByDay(key, 'all');
       case 'Not Set':
         return this.getPersonalStoreByDay(key);
       default:
@@ -42,7 +44,7 @@ export class CityService {
     } else {
       URL = `${this.personalStoreDayPath}${this.authService.currentUserId}/${day}`;
     }
-
+    console.log('URL', URL);
     return this.db.list(
       URL,
       ref => (key)
@@ -55,9 +57,9 @@ export class CityService {
         if (!day) {
           return data
             .filter(item => (!item.payload.val().hasOwnProperty('personal_day')))
-            .map(c => c.payload.val()).reverse()
+            .map(c => ({_id: c.key, ...c.payload.val()})).reverse()
         } else {
-          return data.map(c => c.payload.val()).reverse();
+          return data.map(c => ({_id: c.key, ...c.payload.val()})).reverse();
         }
       });
   }

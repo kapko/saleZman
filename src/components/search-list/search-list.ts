@@ -75,14 +75,17 @@ export class SearchListComponent {
       .getPersonalStores(key, this._currentDay)
       .do(e => {
         // key for pagination
-        this.lastKey = e[0]['key'];
+        this.lastKey = e[(e) ? e.length - 1 : 0]['_id'];
         this.appService.hideLoading();
       })
       .subscribe(names => {
         this.showScroll = this.getLoaderStatus(names.length);
-        
-        this.rowNames = names;
-        this.storeNames = names;
+        // names
+        names.forEach(item => {
+          this.storeNames.push(item);
+          this.rowNames.push(item);
+        });
+
       });
   }
 
@@ -122,10 +125,10 @@ export class SearchListComponent {
   //       let data = this.filterByDay(names);
         // this.showScroll = this.getLoaderStatus(data.length);
 
-  //       this.filterByDay(names).forEach(item => {
-  //         this.storeNames.push(item);
-  //         this.rowNames.push(item);
-  //       });
+        // this.filterByDay(names).forEach(item => {
+        //   this.storeNames.push(item);
+        //   this.rowNames.push(item);
+        // });
   //     });
   // }
 

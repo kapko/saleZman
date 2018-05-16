@@ -94,7 +94,7 @@ export class SearchListComponent {
     if (this.lastKey === key) {
       this.showScroll = false;
     }
-  
+
     key = this.lastKey;
     this.getData(this.lastKey, true);
   }

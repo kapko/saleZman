@@ -70,11 +70,12 @@ export class SearchListComponent {
     this.showScroll = this.getLoaderStatus(this.storeNames.length);
   }
 
-  getData(key: string = null): void {
+  getData(key: string = null, load: boolean = false): void {
     this.cityService
       .getPersonalStores(key, this._currentDay)
       .do(e => {
         this.showScroll = this.getLoaderStatus(e.length);
+        if (load) {e.splice(0, 1)}
         // key for pagination
         this.lastKey = e[(e) ? e.length - 1 : 0]['_id'];
         this.appService.hideLoading();
@@ -85,7 +86,6 @@ export class SearchListComponent {
           this.storeNames.push(item);
           this.rowNames.push(item);
         });
-
       });
   }
 
@@ -96,7 +96,7 @@ export class SearchListComponent {
     }
   
     key = this.lastKey;
-    this.getData(this.lastKey);
+    this.getData(this.lastKey, true);
   }
 
   getLoaderStatus(length: number): boolean {
